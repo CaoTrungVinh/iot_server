@@ -1,17 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
-use App\Models\NVZ1;
+use App\Models\Light;
 
-class NVZ1Controller extends Controller
+class LightController extends Controller
 {
     public function store(Request $request)
     {
-        $nv = NVZ1::create([
+        $nv = Light::create([
             "light" => $request->get("light"),
             "description" => $request->get("description"),
             "created_at" => $request->get("created_at"),
@@ -21,12 +20,12 @@ class NVZ1Controller extends Controller
     }
     public function getdata()
     {
-        $nvz = NVZ1::all();
+        $nvz = Light::all();
         return \response()->json($nvz, 200);
     }
     public function getlightlast()
     {
-        $nvz = NVZ1::all()->last();
+        $nvz = Light::all()->last();
         $abc = $nvz->light;
         return \response()->json($abc, 200);
     }

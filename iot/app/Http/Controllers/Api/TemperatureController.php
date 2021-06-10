@@ -12,25 +12,27 @@ use App\Models\Warning_Temp;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
-use App\Models\DS18B20;
+use App\Models\Temperature;
 
-class DS18B20Controller extends Controller
+class TemperatureController extends Controller
 {
     public function store(Request $request)
     {
-        $ds = DS18B20::create([
-            "temperature" => $request->get("temperature")
+        $ds = Temperature::create([
+            "temperature" => $request->get("temperature"),
+            "created_at" => $request->get("created_at"),
         ]);
         return \response()->json($ds, 200);
     }
+
     public function getdata()
     {
-        $ds18 = DS18B20::all();
+        $ds18 = Temperature::all();
         return \response()->json($ds18, 200);
     }
     public function gettemplast()
     {
-        $ds18 = DS18B20::all()->last();
+        $ds18 = Temperature::all()->last();
         $abc = $ds18->temperature;
         return \response()->json($abc, 200);
     }
