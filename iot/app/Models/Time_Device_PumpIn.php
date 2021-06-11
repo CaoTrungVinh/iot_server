@@ -14,4 +14,9 @@ class Time_Device_PumpIn extends Model
     protected $fillable = ['id_pump_in', 'timer_on','timer_off'];
 
     public $timestamps = false;
+
+//    public function pumpIn()
+//    {
+//        return $this->belongsTo(Device_PumpIn::class);
+//    }
 }

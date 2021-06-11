@@ -50,16 +50,20 @@ Route::get("/ph_safe", [\App\Http\Controllers\Api\PHController::class, 'ph_safe'
 
 // bơm vào
 Route::post("/on_off_pumpin", [Device_PumpIn_Controller::class, 'on_off']);
+Route::post("/timer_on_off_pumpin", [Device_PumpIn_Controller::class, 'timer_on_off']);
 Route::get("/get_pump_in", [Device_PumpIn_Controller::class, 'get_pump_in']);
 
 //bơm ra
 Route::post("/on_off_pumpout", [Device_PumpOut_Controller::class, 'on_off']);
+Route::post("/timer_on_off_pumpout", [Device_PumpOut_Controller::class, 'timer_on_off']);
 Route::get("/get_pump_out", [Device_PumpOut_Controller::class, 'get_pump_out']);
 
 //đèn
 Route::post("/on_off_lamp", [Device_Lamp_Controller::class, 'on_off']);
+Route::post("/timer_on_off_lamp", [Device_Lamp_Controller::class, 'timer_on_off']);
 Route::get("/get_lamp", [Device_Lamp_Controller::class, 'get_lamp']);
 
 //quạt oxy
 Route::post("/on_off_oxygen_fan", [Device_Oxygen_Fan_Controller::class, 'on_off']);
+Route::post("/timer_on_off_oxygen_fan", [Device_Oxygen_Fan_Controller::class, 'timer_on_off']);
 Route::get("/get_oxygen_fan", [Device_Oxygen_Fan_Controller::class, 'get_oxygen_fan']);

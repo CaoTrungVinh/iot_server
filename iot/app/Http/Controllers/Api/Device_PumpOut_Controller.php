@@ -9,6 +9,7 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Device_PumpOut;
+use App\Models\Time_Device_PumpOut;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -29,5 +30,20 @@ class Device_PumpOut_Controller extends Controller
             "created_at" => $request->get("created_at"),
         ]);
         return \response()->json($dpo, 200);
+    }
+
+    public function timer_on_off(Request $request)
+    {
+        $dpo = Device_PumpOut::create([
+            "control" => $request->get("control"),
+            "description" => $request->get("description"),
+            "created_at" => $request->get("created_at"),
+        ]);
+        $tof = Time_Device_PumpOut::create([
+            "id_pump_out" => $dpo->id,
+            "timer_on" => $request->get("timer_on"),
+            "timer_off" => $request->get("timer_off"),
+        ]);
+        return \response()->json([$dpo,$tof], 200);
     }
 }

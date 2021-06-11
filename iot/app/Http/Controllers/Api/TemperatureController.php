@@ -18,7 +18,11 @@ class TemperatureController extends Controller
 {
     public function store(Request $request)
     {
+        $warning = Warning_Temp::all()->last();
+        $id_warning = $warning->id;
+
         $ds = Temperature::create([
+            "id_warning" => $id_warning,
             "temperature" => $request->get("temperature"),
             "created_at" => $request->get("created_at"),
         ]);

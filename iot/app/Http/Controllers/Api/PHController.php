@@ -12,7 +12,11 @@ class PHController extends Controller
 {
     public function store(Request $request)
     {
+        $warning = Warning_Ph::all()->last();
+        $id_warning = $warning->id;
+
         $ph = PH::create([
+            "id_warning" => $id_warning,
             "value" => $request->get("value"),
             "created_at" => $request->get("created_at"),
             "updated_at" => $request->get("updated_at")

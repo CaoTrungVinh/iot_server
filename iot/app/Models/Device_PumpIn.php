@@ -14,4 +14,9 @@ class Device_PumpIn extends Model
     protected $fillable = ['control', 'description','created_at'];
 
     public $timestamps = false;
+
+//    public function timer_pumpIn()
+//    {
+//        return $this->hasOne(Time_Device_PumpIn::class);
+//    }
 }
