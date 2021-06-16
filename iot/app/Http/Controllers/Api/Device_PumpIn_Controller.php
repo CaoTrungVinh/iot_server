@@ -22,6 +22,23 @@ class Device_PumpIn_Controller extends Controller
         return \response()->json($abc, 200);
     }
 
+    public function timer_pump_in_on_off()
+    {
+        $dpi = Device_PumpIn::all()->last();
+        $device = $dpi->control;
+
+        $tof = Time_Device_PumpIn::all()->last();
+        $timer = $tof->timer_on. '#' .$tof->timer_off;
+        return \response()->json([$device,$timer], 200);
+    }
+
+    public function timer_pump_in()
+    {
+        $tof = Time_Device_PumpIn::all()->last();
+        $timer = $tof->timer_on. '#' .$tof->timer_off;
+        return \response()->json($timer, 200);
+    }
+
     public function on_off(Request $request)
     {
         $dpi = Device_PumpIn::create([

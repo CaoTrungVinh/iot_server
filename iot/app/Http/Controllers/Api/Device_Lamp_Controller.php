@@ -15,6 +15,16 @@ class Device_Lamp_Controller extends Controller
         return \response()->json($abc, 200);
     }
 
+    public function timer_lamp_on_off()
+    {
+        $dpo = Device_Lamp::all()->last();
+        $device = $dpo->control;
+
+        $tof = Timer_Device_Lamp::all()->last();
+        $timer = $tof->timer_on. '#' .$tof->timer_off;
+        return \response()->json([$device,$timer], 200);
+    }
+
     public function on_off(Request $request)
     {
         $dl = Device_Lamp::create([

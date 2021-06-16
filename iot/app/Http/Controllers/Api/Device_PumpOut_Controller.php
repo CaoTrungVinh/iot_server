@@ -22,6 +22,16 @@ class Device_PumpOut_Controller extends Controller
         return \response()->json($abc, 200);
     }
 
+    public function timer_pump_out_on_off()
+    {
+        $dpo = Device_PumpOut::all()->last();
+        $device = $dpo->control;
+
+        $tof = Time_Device_PumpOut::all()->last();
+        $timer = $tof->timer_on. '#' .$tof->timer_off;
+        return \response()->json([$device,$timer], 200);
+    }
+
     public function on_off(Request $request)
     {
         $dpo = Device_PumpOut::create([
