@@ -63,5 +63,4 @@ class Device_PumpIn_Controller extends Controller
         ]);
         return \response()->json([$dpi,$tof], 200);
     }
-
 }

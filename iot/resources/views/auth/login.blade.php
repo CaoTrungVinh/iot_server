@@ -12,42 +12,23 @@
         <div class="col-md-6 col-sm-6 col-12 login-box-form p-4">
             <h3 class="mb-2">Login</h3>
             <small class="text-muted bc-description">Sign in with your credentials</small>
-
-            <form method="post" action="{{route('postAdLogin')}}" class="mt-2">
-                @csrf
-                @error('mes')
-                <small class="form-text text-danger">{{ $message }}</small>
-                @enderror
-
-                @if(Session::has('ok'))
-                    <small class="form-text text-success">{{ Session::get('ok') }}</small>
-                @endif
-                <p class="form">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                        </div>
-                        <input type="text" class="form-control mt-0" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1" name="email" id="email" value="{{ old('email') }}" />
+            <form action="" class="mt-2">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
                     </div>
-                @error('email')
-                <small class="form-text text-danger">{{ $message }}</small>
-                @enderror
-                </p>
+                    <input type="text" class="form-control mt-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
 
-                <p class="form">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>
-                        </div>
-                        <input type="password" class="form-control mt-0" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" name="pass" id="pass" />
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>
                     </div>
-                @error('pass')
-                <small class="form-text text-danger">{{ $message }}</small>
-                @enderror
-                </p>
+                    <input type="text" class="form-control mt-0" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                </div>
 
                 <div class="form-group">
-                    <input type="submit" class="btn btn-theme btn-block p-2 mb-1" name="login" value="Login" />
+                    <button class="btn btn-theme btn-block p-2 mb-1">Login</button>
                     <a href="{{route('forgot_password')}}">
                         <small class="text-theme"><strong>Forgot password?</strong></small>
                     </a>
@@ -56,4 +37,4 @@
         </div>
     </div>
 </div>
-@endsection()
+@endsection

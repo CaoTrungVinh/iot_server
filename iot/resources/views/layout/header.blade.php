@@ -140,7 +140,7 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#"><i class="fa fa-book pr-2"></i> Projects</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{route('getAdLogout')}}"><i class="fa fa-power-off pr-2"></i> Logout</a>
+                        <a class="dropdown-item" href="#"><i class="fa fa-power-off pr-2"></i> Logout</a>
                     </div>
                 </div>
             </div>

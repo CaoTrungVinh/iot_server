@@ -52,18 +52,23 @@ Route::get("/ph_safe", [\App\Http\Controllers\Api\PHController::class, 'ph_safe'
 Route::post("/on_off_pumpin", [Device_PumpIn_Controller::class, 'on_off']);
 Route::post("/timer_on_off_pumpin", [Device_PumpIn_Controller::class, 'timer_on_off']);
 Route::get("/get_pump_in", [Device_PumpIn_Controller::class, 'get_pump_in']);
+Route::get("/timer_pump_in", [Device_PumpIn_Controller::class, 'timer_pump_in']);
+Route::get("/timer_pump_in_on_off", [Device_PumpIn_Controller::class, 'timer_pump_in_on_off']);
 
 //bơm ra
 Route::post("/on_off_pumpout", [Device_PumpOut_Controller::class, 'on_off']);
 Route::post("/timer_on_off_pumpout", [Device_PumpOut_Controller::class, 'timer_on_off']);
 Route::get("/get_pump_out", [Device_PumpOut_Controller::class, 'get_pump_out']);
+Route::get("/timer_pump_out_on_off", [Device_PumpOut_Controller::class, 'timer_pump_out_on_off']);
 
 //đèn
 Route::post("/on_off_lamp", [Device_Lamp_Controller::class, 'on_off']);
 Route::post("/timer_on_off_lamp", [Device_Lamp_Controller::class, 'timer_on_off']);
 Route::get("/get_lamp", [Device_Lamp_Controller::class, 'get_lamp']);
+Route::get("/timer_lamp_on_off", [Device_Lamp_Controller::class, 'timer_lamp_on_off']);
 
 //quạt oxy
 Route::post("/on_off_oxygen_fan", [Device_Oxygen_Fan_Controller::class, 'on_off']);
 Route::post("/timer_on_off_oxygen_fan", [Device_Oxygen_Fan_Controller::class, 'timer_on_off']);
 Route::get("/get_oxygen_fan", [Device_Oxygen_Fan_Controller::class, 'get_oxygen_fan']);
+Route::get("/timer_oxygen_fan_on_off", [Device_Oxygen_Fan_Controller::class, 'timer_oxygen_fan_on_off']);
