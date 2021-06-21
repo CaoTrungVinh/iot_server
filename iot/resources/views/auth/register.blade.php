@@ -11,37 +11,58 @@
         <div class="col-md-6 col-sm-6 col-12 login-box-form p-4">
             <h3 class="mb-2">Sign up</h3>
             <small class="text-muted bc-description">Create new account</small>
-            <form action="" class="mt-2">
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
-                    </div>
-                    <input type="text" class="form-control mt-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
 
+{{--          form Register         --}}
+            <form method="post" action="{{route('register')}}" class="register">
+                @csrf
+                <p class="form">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
+                        </div>
+                        <input type="text" class="form-control mt-0" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" name="r_userName" id="r_userName" value="{{old('r_firstname')}}" />
+                    </div>
+                    @error('r_userName')
+                    <small class="form-text text-danger">{{ $message }}</small>
+                    @enderror
+                </p>
+                <p class="form">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-envelope"></i></span>
                     </div>
-                    <input type="email" class="form-control mt-0" placeholder="johndoe@gmail.com" aria-label="email" aria-describedby="basic-addon1">
+                    <input type="email" class="form-control mt-0" placeholder="Email" aria-label="email" aria-describedby="basic-addon1" name="r_email" id="r_email" value="{{old('r_email')}}" />
                 </div>
-
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-phone"></i></span>
-                    </div>
-                    <input type="text" class="form-control mt-0" placeholder="555-098-444" aria-label="phone" aria-describedby="basic-addon1">
-                </div>
-
+                @error('r_email')
+                <small class="form-text text-danger">{{ $message }}</small>
+                @enderror
+                </p>
+                <p class="form">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>
                     </div>
-                    <input type="text" class="form-control mt-0" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1">
+                    <input type="password" class="form-control mt-0" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" name="r_pass" id="r_pass" />
                 </div>
+                @error('r_pass')
+                <small class="form-text text-danger">{{ $message }}</small>
+                @enderror
+                </p>
+                <p class="form">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>
+                    </div>
+                    <input type="password" class="form-control mt-0" placeholder="Repeat Password" aria-label="Repeat Password" aria-describedby="basic-addon1" name="r_repass" id="r_repass" />
+                </div>
+                @error('r_repass')
+                <small class="form-text text-danger">{{ $message }}</small>
+                @enderror
+                </p>
 
                 <div class="form-group">
-                    <button class="btn btn-theme btn-block p-2 mb-1">Register</button>
+                    <input type="submit" class="btn btn-theme btn-block p-2 mb-1" name="register" value="Register" />
+{{--                    <button class="btn btn-theme btn-block p-2 mb-1">Register</button>--}}
                 </div>
             </form>
         </div>
@@ -49,3 +70,15 @@
 </div>
 
 @endsection
+
+<!-- Script to active register
+    ================================================== -->
+@section('lastScript')
+    @if ($register ?? ''!='')
+        <script>
+            $( document ).ready(function() {
+                $('.tabs-nav a[href$="{{$register}}"]').parent("li").click();
+            });
+        </script>
+    @endif
+@endsection()
