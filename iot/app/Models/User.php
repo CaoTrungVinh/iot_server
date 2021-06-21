@@ -16,10 +16,15 @@ class User extends Authenticatable
      *
      * @var array
      */
+    protected $table = 'users';
     protected $fillable = [
-        'name',
         'email',
         'password',
+        'name',
+        'random_key',
+        'role_id',
+        'key_time',
+        'active'
     ];
 
     /**
@@ -37,6 +42,14 @@ class User extends Authenticatable
      *
      * @var array
      */
+    public function role() {
+        return $this->belongsTo( Role::class);
+    }
+
+//    public function posts() {
+//        return $this->hasMany('App\Models\Posts');
+//    }
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];

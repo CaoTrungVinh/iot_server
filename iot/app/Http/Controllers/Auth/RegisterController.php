@@ -73,6 +73,7 @@ class RegisterController extends Controller
             ->first();
 
         if ( $u == null ) {
+            dd($u);
             return redirect( 'login' )->withErrors( [ 'mes' => 'Xác nhận email không thành công! Email hoặc mã xác thực không đúng. ' ] );
         } else {
             $kt  = Carbon::parse( $u->key_time );
