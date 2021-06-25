@@ -12,6 +12,7 @@
         "kreait/laravel-firebase": "^3.1",
         "laravel-notification-channels/fcm": "~2.0",
         "laravel/framework": "^8.12",
+        "laravel/passport": "^10.1",
         "laravel/tinker": "^2.5"
     },
     "require-dev": {

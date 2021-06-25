@@ -18,9 +18,30 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+
+
+Route::group([
+    'prefix' => 'auth'
+], function () {
+    Route::post('login', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'login']);
+    Route::post('register', 'Api\Auth\UserAuthController@register');
+    Route::group([
+        'middleware' => 'auth:api'
+    ], function () {
+        Route::get('logout', 'Api\Auth\UserAuthController@logout');
+        Route::get('user', 'Api\Auth\UserAuthController@user');
+
+        Route::get('profile','Api\Auth\ProfileUser@profile');
+        Route::get('updateProfile','Api\Auth\ProfileUser@updateProfile');
+
+        // change pass
+        Route::post('changePassword','Api\Auth\ProfileUser@changePassword');
+    });
 });
+
 
 // Lấy danh sách
 //Route::get('temp', 'Api\DHT11Controller@index')->name('temp.index');
