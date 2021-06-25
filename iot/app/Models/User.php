@@ -49,7 +49,10 @@ class User extends Authenticatable
 //    public function posts() {
 //        return $this->hasMany('App\Models\Posts');
 //    }
-
+    public function routeNotificationForFcm()
+    {
+        return ['ewNf0t3USXOEIPN0muewVZ:APA91bGQAI5P2Vjy1NQ28aqoJ8qMqxMOlyQ3xMv73LrvcfNlG_PuMEZWkABtX7XKvrqT8RLaMYOiGWVU0yVZu3XotA9e8OUuwWuvIxX9nH7pm_2POOX-aacR8D_LRrpfvceFpj2iZVQE'];
+    }
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];

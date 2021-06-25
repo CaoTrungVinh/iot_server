@@ -11,7 +11,10 @@ use App\Http\Controllers\DHT11Controller;
 //    return view('pages.dht11');
 //})->name('dht11');
 
-Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
+Route::get('/fcm', [App\Http\Controllers\Controller::class, 'index'])->name('fcm');
+Route::get('/send-notification', [App\Http\Controllers\Controller::class, 'sendNotification'])->name('send-notification');
+
+//Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
