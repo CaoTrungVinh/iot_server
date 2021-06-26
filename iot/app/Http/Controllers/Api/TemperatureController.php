@@ -23,21 +23,31 @@ class TemperatureController extends Controller
 {
     public function store(Request $request)
     {
-    $warning = Warning_Temp::all()->last();
-    $id_warning = $warning->id;
-    $ds = Temperature::create([
-        "id_warning" => $id_warning,
-        "temperature" => $request->get("temperature"),
-        "created_at" => $request->get("created_at"),
-    ]);
-    $teamp = $request->get("temperature"); Log::info("$teamp");
-    if($teamp<=$warning->temperature_min||$teamp>=$warning->temperature_max){
-        $user = new User();
-        $user->notify(new WarningTemp("Cảnh báo","Nhiệt độ hiện tại đang ở mức không an toàn"));
-    }
-    return \response()->json($ds, 200);
+        $warning = Warning_Temp::all()->last();
+        $id_warning = $warning->id;
+        $ds = Temperature::create([
+            "id_warning" => $id_warning,
+            "temperature" => $request->get("temperature"),
+            "created_at" => $request->get("created_at"),
+        ]);
+        $teamp = $request->get("temperature"); Log::info("$teamp");
+        if ($warning->warning_id == 1){
+            if($teamp<=$warning->temperature_min||$teamp>=$warning->temperature_max){
+                $user = new User();
+                $user->notify(new WarningTemp("Cảnh báo nhiệt độ","Nhiệt độ trong ao nuôi vượt mức an toàn"));
+            }
+        }
+        return \response()->json($ds, 200);
     }
 
+    public function set_warning(Request $request)
+    {
+        $warning =Warning_Temp::all()->last();
+        $warning_id = $warning->id;
+        $warning_onoff =Warning_Temp::find($warning_id);
+        $warning_onoff->update($request->all());
+        return \response()->json($warning_onoff, 200);
+    }
 
     public function getdata()
     {
@@ -61,9 +71,12 @@ class TemperatureController extends Controller
 
     public function warning_temp(Request $request)
     {
+        $warning =Warning_Temp::all()->last();
+        $warning_id = $warning->warning_id;
         $warning = Warning_Temp::create([
             "temperature_min" => $request->get("temperature_min"),
-            "temperature_max" => $request->get("temperature_max")
+            "temperature_max" => $request->get("temperature_max"),
+            "warning_id" => $warning_id
         ]);
         return \response()->json($warning, 200);
     }

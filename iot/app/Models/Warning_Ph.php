@@ -15,6 +15,6 @@ class Warning_Ph extends Model
     use HasFactory;
 
     protected $table = "warning_ph";
-    protected $fillable = ['ph_min', 'ph_max'];
+    protected $fillable = ['ph_min', 'ph_max', 'warning_id'];
     public $timestamps = false;
 }
