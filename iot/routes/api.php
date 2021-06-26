@@ -57,6 +57,7 @@ Route::get('/datatemplast', [\App\Http\Controllers\Api\TemperatureController::cl
 Route::post("/warningtemp", [\App\Http\Controllers\Api\TemperatureController::class, 'warning_temp']);
 Route::get("/temp_safe", [\App\Http\Controllers\Api\TemperatureController::class, 'temp_safe']);
 Route::put("/set_warning_temp", [\App\Http\Controllers\Api\TemperatureController::class, 'set_warning']);
+Route::get("/get_warning_temp", [\App\Http\Controllers\Api\TemperatureController::class, 'get_warning']);
 
 // ánh sáng
 Route::post("/storelight", [\App\Http\Controllers\Api\LightController::class, 'store']);
@@ -70,6 +71,7 @@ Route::get('/dataphlast', [\App\Http\Controllers\Api\PHController::class, 'getph
 Route::post("/warningph", [\App\Http\Controllers\Api\PHController::class, 'warning_ph']);
 Route::get("/ph_safe", [\App\Http\Controllers\Api\PHController::class, 'ph_safe']);
 Route::put("/set_warning_ph", [\App\Http\Controllers\Api\PHController::class, 'set_warning']);
+Route::get("/get_warning_ph", [\App\Http\Controllers\Api\PHController::class, 'get_warning']);
 
 // bơm vào
 Route::post("/on_off_pumpin", [Device_PumpIn_Controller::class, 'on_off']);

@@ -48,6 +48,12 @@ class TemperatureController extends Controller
         $warning_onoff->update($request->all());
         return \response()->json($warning_onoff, 200);
     }
+    public function get_warning()
+    {
+        $warning =Warning_Temp::all()->last();
+        $warning_id = $warning->warning_id;
+        return \response()->json($warning_id, 200);
+    }
 
     public function getdata()
     {

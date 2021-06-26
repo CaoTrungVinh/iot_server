@@ -43,6 +43,13 @@ class PHController extends Controller
         return \response()->json($warning_onoff, 200);
     }
 
+    public function get_warning(Request $request)
+    {
+        $warning =Warning_Ph::all()->last();
+        $warning_id = $warning->warning_id;
+        return \response()->json($warning_id, 200);
+    }
+
     public function getdata()
     {
         $ph = PH::all();
