@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class UserAuthController extends Controller
@@ -16,20 +17,29 @@ class UserAuthController extends Controller
 
     public function register(Request $request)
     {
-
-        $request->validate([
-            'email' => 'required|email',
-            'pass' => 'required|min:8',
-            'repass' => 'required|same:pass',
-        ], $this->messages());
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'email' => 'required|string|email',
+            'password' => 'required|min:8',
+            'repassword' => 'required|same:password'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fails',
+                'message' => $validator->errors()->first(),
+                'errors' => $validator->errors()->toArray(),
+            ], 401);
+        }
         $user = User::where('email', '=', $request->email)->first();
         // email không tồn tại gửi email mơi
         if ($user == null) {
             $token = Str::random(40);
             $user = User::create([
+                'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->pass),
+                'password' => Hash::make($request->password),
                 'random_key' => $token,
+                'role_id' => 1,
                 'key_time' =>Carbon::now()->addHour(12)->format('Y-m-d H:i:s')
             ]);
             $user->notify(new ActiveAccount());
@@ -41,8 +51,8 @@ class UserAuthController extends Controller
             } else {
                 // email tồn tại active = 0 gửi lại email
                 $token = Str::random(40);
-                $user->keyActive = $token;
-                $user->keyTime =Carbon::now()->addHour(12)->format('Y-m-d H:i:s');
+                $user->random_key = $token;
+                $user->key_time =Carbon::now()->addHour(12)->format('Y-m-d H:i:s');
                 $user->update();
                 $user->notify(new ActiveAccount());
                 return response()->json(['message'=>"Kiểm tra email để xác nhận tài khoản"],200);
@@ -50,7 +60,7 @@ class UserAuthController extends Controller
         }
     }
 
-    function login(Request $request)
+    public function login(Request $request)
     {
         // kiem tra user trong database
         if (Auth::attempt(['email' => $request->get("email"), 'password' => $request->get("password")])) {
@@ -79,17 +89,18 @@ class UserAuthController extends Controller
         }
     }
 
-    private function messages()
-    {
-        return [
-            'email.required' => 'Email is required.',
-            'email.email' => 'Wrong email format.',
-            'email.unique' => 'Email is available',
-            'name.required' => 'Name is required',
-            'pass.required' => 'Password is required',
-            'pass.min' => 'Password is required at least 8 characters',
-            'pass.required' => 'Repassword is required',
-            'repass.same' => 'Password and repassword do not match',
-        ];
-    }
+    public function user(Request $request)
+{
+    return response()->json($request->user());
+}
+
+    public function logout(Request $request)
+{
+    // xoa token trong table user
+    $request->user()->token()->revoke();
+    return response()->json([
+        'status' => "200",
+        'message' => 'Successfully logged out'
+    ]);
+}
 }

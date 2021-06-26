@@ -31,14 +31,12 @@ Route::group([
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
-        Route::get('logout', 'Api\Auth\UserAuthController@logout');
-        Route::get('user', 'Api\Auth\UserAuthController@user');
-
-        Route::get('profile','Api\Auth\ProfileUser@profile');
-        Route::get('updateProfile','Api\Auth\ProfileUser@updateProfile');
-
-        // change pass
-        Route::post('changePassword','Api\Auth\ProfileUser@changePassword');
+        Route::get('logout', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'logout']);
+        Route::get('user', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'user']);
+//        Route::get('profile','Api\Auth\ProfileUser@profile');
+//        Route::get('updateProfile','Api\Auth\ProfileUser@updateProfile');
+//        // change pass
+//        Route::post('changePassword','Api\Auth\ProfileUser@changePassword');
     });
 });
 
