@@ -27,7 +27,7 @@ Route::group([
     'prefix' => 'auth'
 ], function () {
     Route::post('login', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'login']);
-    Route::post('register', 'Api\Auth\UserAuthController@register');
+    Route::post('register', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'register']);
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
