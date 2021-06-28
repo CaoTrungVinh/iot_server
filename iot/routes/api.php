@@ -28,15 +28,16 @@ Route::group([
 ], function () {
     Route::post('login', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'login']);
     Route::post('register', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'register']);
+    Route::post('forgetPass', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'forgetPass']);
     Route::group([
         'middleware' => 'auth:api'
     ], function () {
         Route::get('logout', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'logout']);
         Route::get('user', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'user']);
-//        Route::get('profile','Api\Auth\ProfileUser@profile');
-//        Route::get('updateProfile','Api\Auth\ProfileUser@updateProfile');
-//        // change pass
-//        Route::post('changePassword','Api\Auth\ProfileUser@changePassword');
+        Route::get('profile',[\App\Http\Controllers\Api\Auth\ProfileUser::class, 'profile']);
+        Route::post('updateProfile',[\App\Http\Controllers\Api\Auth\ProfileUser::class, 'updateProfile']);
+        // change pass
+        Route::post('changePassword',[\App\Http\Controllers\Api\Auth\ProfileUser::class, 'changePassword']);
     });
 });
 

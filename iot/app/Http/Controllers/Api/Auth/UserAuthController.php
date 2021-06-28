@@ -17,6 +17,7 @@ class UserAuthController extends Controller
 
     public function register(Request $request)
     {
+//        check dữ liệu nhập vào các thẻ input có hợp lệ hay không
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|string|email',
@@ -88,6 +89,39 @@ class UserAuthController extends Controller
             return response()->json(['mesage' => 'Unauthorized']);
         }
     }
+
+    public function forgetPass(Request $request){
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|min:8',
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'fails',
+                'message' => $validator->errors()->first(),
+                'errors' => $validator->errors()->toArray(),
+            ], 401);
+        }
+        $user = User::where('email', '=', $request->email)->first();
+        // email không tồn tại hoặc chưa được active
+        if ($user == null) {
+            return response()->json(['message'=>"Tài khoản không tồn tại!"],401);
+        }else{
+            if ($user->active == 0) {
+                return response()->json(['message'=>"Tài khoản chưa được kích hoạt!"],401);
+            } else {
+                $token = Str::random(40);
+                $user->random_key = $token;
+                $user->password = Hash::make($request->password);
+                $user->active = 0;
+                $user->key_time = Carbon::now()->addHour(12)->format('Y-m-d H:i:s');
+                $user->update();
+                $user->notify(new ActiveAccount());
+                return response()->json(['message'=>"Kiểm tra email để xác nhận tài khoản"],200);
+            }
+        }
+    }
+
 
     public function user(Request $request)
 {
