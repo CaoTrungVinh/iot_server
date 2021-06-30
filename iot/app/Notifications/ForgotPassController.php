@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ActiveAccount extends Notification implements ShouldQueue
+class ForgotPassController extends Notification
 {
     use Queueable;
 
@@ -41,17 +41,12 @@ class ActiveAccount extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return ( new MailMessage )
-            ->subject( "Kích hoạt tài khoản hệ thống đo chỉ số nước ao nuôi cá" )
+            ->subject( "Xác nhận tài khoản hệ thống đo chỉ số nước ao nuôi cá" )
             ->greeting( "Xin chào! " )
-            ->line( 'Tài khoản của bạn vừa được yêu cầu xác nhận.' )
-            ->line( 'Nếu bạn thực sự thực hiện yêu cầu trên vui lòng nhấn nút kích hoạt ở dưới.' )
-            ->action( 'ActiveAcount', route( 'confirmemail', [
-                'email' => $notifiable->email,
-                'key'   => $notifiable->random_key
-            ] ) )
-            ->line('Password là: ')
+            ->line( 'Tài khoản của bạn được tạo thành công!' )
+            ->line( 'Password là : ' )
             ->line($notifiable->random_key)
-            ->line( "Ngược lại nếu bạn không thực hiện yêu cầu trên bạn có thể bỏ qua email này." )
+            ->line( "Hãy đăng nhập vào hệ thống và đổi lại password." )
             ->line( "Lưu ý: Link có thời gian sử dụng là 12 giờ." )
             ->line( 'Thank you for using our application!' );
     }

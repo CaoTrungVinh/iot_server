@@ -39,7 +39,7 @@ class RegisterController extends Controller
 
             $user->notify( new ActiveAccount() );
 
-            return redirect( 'login' )->with( 'ok', 'Bạn đăng ký thành công vui lòng check Email để kích hoạt tài khoản' );
+            return redirect( 'adminLogin' )->with( 'ok', 'Bạn đăng ký thành công vui lòng check Email để kích hoạt tài khoản' );
         } else {
             // đã tồn tại active 1 thông báo lỗi
             if ($user->active == 1) {
@@ -52,7 +52,7 @@ class RegisterController extends Controller
                 $user->update();
                 $user->notify(new ActiveAccount());
 
-                return redirect('login')->with('ok', 'Bạn đăng ký thành công vui lòng check Email để kích hoạt tài khoản');
+                return redirect('adminLogin')->with('ok', 'Bạn đăng ký thành công vui lòng check Email để kích hoạt tài khoản');
             }
         }
     }
@@ -60,7 +60,7 @@ class RegisterController extends Controller
     public function register() {
         Session::put( 'signup', true );
 
-        return redirect( 'login' );
+        return redirect( 'adminLogin' );
     }
 
     public function confirmEmail( $email, $key ) {
@@ -73,8 +73,7 @@ class RegisterController extends Controller
             ->first();
 
         if ( $u == null ) {
-            dd($u);
-            return redirect( 'login' )->withErrors( [ 'mes' => 'Xác nhận email không thành công! Email hoặc mã xác thực không đúng. ' ] );
+            return redirect( '404' )->withErrors( [ 'mes' => 'Xác nhận email không thành công! Email hoặc mã xác thực không đúng. ' ] );
         } else {
             $kt  = Carbon::parse( $u->key_time );
             $now = Carbon::now();
@@ -83,15 +82,15 @@ class RegisterController extends Controller
                 $u->key_time   = null;
                 $u->random_key = null;
                 $u->update();
-                $role = Role::find(1);
-                $u ->update(['role_id' => $role->id]);
-
-                return redirect( 'login' )->with( 'ok', 'Xác nhận email thành công! Bạn có thể đăng nhập.' );
+//                $role = Role::find(1);
+//                $u ->update(['role_id' => $role->id]);
+                return redirect( 'verifile' )->with( 'ok', 'Xác nhận email thành công! Bạn có thể đăng nhập.' );
             } else {
-                return redirect( 'login' )->withErrors( [ 'mes' => 'Liên kết đã hết hạn!' ] );
+                return redirect( '404' )->withErrors( [ 'mes' => 'Liên kết đã hết hạn!' ] );
             }
         }
     }
+
 
     private function messages() {
         return [

@@ -15,7 +15,7 @@ Route::get('/fcm', [App\Http\Controllers\Controller::class, 'index'])->name('fcm
 Route::get('/send-notification', [App\Http\Controllers\Controller::class, 'sendNotification'])->name('send-notification');
 
 //Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
-Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::get('register', [\App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
@@ -24,15 +24,30 @@ Route::get('register', [\App\Http\Controllers\Auth\RegisterController::class, 's
 Route::get( 'confirmemail/{email}/{key}', [\App\Http\Controllers\Auth\RegisterController::class, 'confirmEmail'] )->name( 'confirmemail' );
 
 //  route admin
-Route::get('login', [\App\Http\Controllers\Admin\AdminLoginController::class, 'showLogin'])->name('login');
+Route::get('adminLogin', [\App\Http\Controllers\Admin\AdminLoginController::class, 'showLogin'])->name('adLogin');
 Route::post('postAdminLogin', [\App\Http\Controllers\Admin\AdminLoginController::class, 'postLogin'])->name('postAdLogin');
 Route::get('getAdminLogout', [\App\Http\Controllers\Admin\AdminLoginController::class, 'getLogout'])->name('getAdLogout');
+
+Route::get('adminForgotPass', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showForgotPass'])->name('AdForgotPass');
+Route::post('postAdminForgotPass', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'doForgotPass'])->name('postAdForgotPass');
+
+Route::group(['middleware' => 'checkAdminLogin'], function () {
+    Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('adminProfile', [\App\Http\Controllers\Admin\ProfileAdminController::class, 'showProfile'])->name('adProfile');
+});
 
 //Route::get('/DHT11', 'DHT11Controller@index');
 Route::get('/DHT11', [\App\Http\Controllers\Admin\DHT11Controller::class, 'index']);
 Route::get('/DHT11/{id}', 'DHT11Controller@view');
 
 
+Route::get('verifile', function () {
+    return view('pages.showRegister');
+})->name('verifile');
+
+Route::get('/404.html', function () {
+    return view('pages.error.401');
+})->name('404');
 
 Route::get('/forgot_password', function () {
     return view('auth.forgot-password');

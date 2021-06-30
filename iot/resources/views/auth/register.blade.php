@@ -6,7 +6,7 @@
             <div class="col-md-6 col-sm-6 col-12 login-box-info">
                 <h3 class="mb-4">Sign in</h3>
                 <p class="mb-4">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch.</p>
-                <p class="text-center"><a href="{{route('login')}}" class="btn btn-light">Login here</a></p>
+                <p class="text-center"><a href="{{route('adLogin')}}" class="btn btn-light">Login here</a></p>
             </div>
             <div class="col-md-6 col-sm-6 col-12 login-box-form p-4">
                 <h3 class="mb-2">Sign up</h3>
