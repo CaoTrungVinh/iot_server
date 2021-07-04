@@ -2,19 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: Admin
- * Date: 6/5/2021
- * Time: 2:18 PM
+ * Date: 7/2/2021
+ * Time: 4:53 PM
  */
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Warning_Ph extends Model
+class Toolkit extends Model
 {
     use HasFactory;
 
-    protected $table = "warning_ph";
-    protected $fillable = ['ph_min', 'ph_max', 'warning_id'];
+    protected $table = "temperatures";
+
+    protected $fillable = ['id_temperature','id_ph','id_light'];
+
     public $timestamps = false;
 }

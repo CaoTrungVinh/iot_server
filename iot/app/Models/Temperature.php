@@ -10,7 +10,7 @@ class Temperature extends Model
 
     protected $table = "temperatures";
 
-    protected $fillable = ['id_warning','temperature','created_at','updated_at'];
+    protected $fillable = ['temperature','temperature_min','temperature_max','warning','created_at'];
 
     public $timestamps = false;
 }

@@ -77,6 +77,10 @@ class UserAuthController extends Controller
                 'id' => $user->id,
                 'email' => $user->email,
                 'name' => $user->name,
+                'birthday' => $user->birthday,
+                'phone' => $user->phone,
+                'gender' => $user->gender,
+                'address' => $user->address,
                 'role_id' => $user->role_id
             ]);
             return response()->json([
