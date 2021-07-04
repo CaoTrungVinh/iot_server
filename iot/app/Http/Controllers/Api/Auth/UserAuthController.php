@@ -96,7 +96,7 @@ class UserAuthController extends Controller
     }
 
 
-    public function forgetPass(Request $request){
+    public function forgotPass(Request $request){
         $validator = Validator::make($request->all(), [
             'email' => 'required|string|email',
         ]);
@@ -121,7 +121,6 @@ class UserAuthController extends Controller
                 $user->key_time = Carbon::now()->addHour(12)->format('Y-m-d H:i:s');
                 $user->update();
                 $user->notify(new ForgotPassController());
-
                 $user->random_key = null;
                 $user->key_time = null;
                 $user->update();
