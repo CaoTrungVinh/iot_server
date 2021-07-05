@@ -2,20 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: Admin
- * Date: 7/2/2021
- * Time: 4:53 PM
+ * Date: 7/5/2021
+ * Time: 12:21 PM
  */
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-class Toolkit extends Model
+class Oxygen_fan extends Model
 {
     use HasFactory;
 
-    protected $table = "toolkits";
+    protected $table = "oxygen_fan";
 
-    protected $fillable = ['name','address'];
+    protected $fillable = ['status','timer_on','timer_off'];
 
     public $timestamps = false;
 }

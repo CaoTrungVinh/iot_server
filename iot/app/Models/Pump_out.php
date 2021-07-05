@@ -2,21 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: Admin
- * Date: 6/7/2021
- * Time: 11:31 AM
+ * Date: 7/5/2021
+ * Time: 12:20 PM
  */
-namespace App\Models;
 
+namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class Device_PumpOut extends Model
+class Pump_out extends Model
 {
     use HasFactory;
 
-    protected $table = "device_pump_out";
+    protected $table = "pump_out";
 
-    protected $fillable = ['control', 'description','created_at'];
+    protected $fillable = ['status','timer_on','timer_off'];
 
     public $timestamps = false;
 }

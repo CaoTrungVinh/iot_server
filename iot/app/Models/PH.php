@@ -10,7 +10,7 @@ class PH extends Model
     use HasFactory;
 
     protected $table = "phs";
-    protected $fillable = ['id_warning','value','created_at','updated_at'];
+    protected $fillable = ['value','ph_min','ph_max','warning','created_at'];
 
     public $timestamps = false;
 }

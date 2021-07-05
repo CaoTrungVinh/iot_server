@@ -42,4 +42,25 @@ Route::group([
 });
 
 Route::get('/pond', [\App\Http\Controllers\Api\PondController::class, 'pond']);
+Route::get('/toolkit', [\App\Http\Controllers\Api\PondController::class, 'toolkit']);
+Route::get('/control', [\App\Http\Controllers\Api\PondController::class, 'control']);
+Route::get('/temperature', [\App\Http\Controllers\Api\PondController::class, 'temperature']);
+Route::get('/light', [\App\Http\Controllers\Api\PondController::class, 'light']);
+Route::get('/ph', [\App\Http\Controllers\Api\PondController::class, 'ph']);
+Route::put('/setWarningTemp', [\App\Http\Controllers\Api\PondController::class, 'setWarningTemp']);
+Route::put('/setWarningPh', [\App\Http\Controllers\Api\PondController::class, 'setWarningPh']);
+Route::put('/setWarningTemp_onoff', [\App\Http\Controllers\Api\PondController::class, 'setWarningTemp_onoff']);
+Route::put('/setWarningPh_onoff', [\App\Http\Controllers\Api\PondController::class, 'setWarningPh_onoff']);
+Route::get('/pump_in', [\App\Http\Controllers\Api\PondController::class, 'pump_in']);
+Route::put('/setPumpIn_onoff', [\App\Http\Controllers\Api\PondController::class, 'setPumpIn_onoff']);
+Route::get('/pump_out', [\App\Http\Controllers\Api\PondController::class, 'pump_out']);
+Route::put('/setPumpOut_onoff', [\App\Http\Controllers\Api\PondController::class, 'setPumpOut_onoff']);
+Route::get('/lamp', [\App\Http\Controllers\Api\PondController::class, 'lamp']);
+Route::put('/setLamp_onoff', [\App\Http\Controllers\Api\PondController::class, 'setLamp_onoff']);
+Route::get('/oxygen_fan', [\App\Http\Controllers\Api\PondController::class, 'oxygen_fan']);
+Route::put('/setOxygen_fan_onoff', [\App\Http\Controllers\Api\PondController::class, 'setOxygen_fan_onoff']);
+Route::put('/set_timer_pump_in', [\App\Http\Controllers\Api\PondController::class, 'set_timer_pump_in']);
+Route::put('/set_timer_pump_out', [\App\Http\Controllers\Api\PondController::class, 'set_timer_pump_out']);
+Route::put('/set_timer_lamp', [\App\Http\Controllers\Api\PondController::class, 'set_timer_lamp']);
+Route::put('/set_timer_oxygen_fan', [\App\Http\Controllers\Api\PondController::class, 'set_timer_oxygen_fan']);
 

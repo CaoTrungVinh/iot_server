@@ -10,7 +10,7 @@ class Light extends Model
     use HasFactory;
 
     protected $table = "lights";
-    protected $fillable = ['light','description','created_at','updated_at'];
+    protected $fillable = ['light','description','warning','created_at'];
 
     public $timestamps = false;
 }
