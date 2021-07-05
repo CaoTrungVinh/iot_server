@@ -28,7 +28,7 @@ Route::group([
 ], function () {
     Route::post('login', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'login']);
     Route::post('register', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'register']);
-    Route::post('forgetPass', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'forgetPass']);
+    Route::post('forgotPass', [\App\Http\Controllers\Api\Auth\UserAuthController::class, 'forgotPass']);
     Route::group([
         'middleware' => 'auth:api'
     ], function () {

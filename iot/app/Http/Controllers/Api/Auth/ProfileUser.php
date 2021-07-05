@@ -85,8 +85,8 @@ class ProfileUser extends Controller
         $account->password =  Hash::make($newPassword);
         if ($account->save())
             return response()
-                ->json(['successMessage' => 'Thay đổi mật khẩu thành công!']);
+                ->json(['successMessage' => 'Thay đổi mật khẩu thành công!'], 200);
         return response()
-            ->json(['errorMessage' => 'Thay đổi mật khẩu thất bại!']);
+            ->json(['errorMessage' => 'Thay đổi mật khẩu thất bại!'], 401);
     }
 }
