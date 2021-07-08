@@ -19,9 +19,9 @@ Route::get('/send-notification', [App\Http\Controllers\Controller::class, 'sendN
 
 
 Route::get('register', [\App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
-Route::post( 'register', [\App\Http\Controllers\Auth\RegisterController::class, 'doRegister'])->name( 'register' );
+Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'doRegister'])->name('register');
 Route::get('register', [\App\Http\Controllers\Auth\RegisterController::class, 'showRegister'])->name('register');
-Route::get( 'confirmemail/{email}/{key}', [\App\Http\Controllers\Auth\RegisterController::class, 'confirmEmail'] )->name( 'confirmemail' );
+Route::get('confirmemail/{email}/{key}', [\App\Http\Controllers\Auth\RegisterController::class, 'confirmEmail'])->name('confirmemail');
 
 //  route admin
 Route::get('adminLogin', [\App\Http\Controllers\Admin\AdminLoginController::class, 'showLogin'])->name('adLogin');
@@ -34,12 +34,10 @@ Route::post('postAdminForgotPass', [\App\Http\Controllers\Auth\ForgotPasswordCon
 Route::group(['middleware' => 'checkAdminLogin'], function () {
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('adminProfile', [\App\Http\Controllers\Admin\ProfileAdminController::class, 'showProfile'])->name('adProfile');
+
+    ///////
+    Route::get('/user', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
 });
-
-//Route::get('/DHT11', 'DHT11Controller@index');
-Route::get('/DHT11', [\App\Http\Controllers\Admin\DHT11Controller::class, 'index']);
-Route::get('/DHT11/{id}', 'DHT11Controller@view');
-
 
 Route::get('verifile', function () {
     return view('pages.showRegister');

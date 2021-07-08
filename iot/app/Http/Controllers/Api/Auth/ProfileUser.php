@@ -30,6 +30,7 @@ class ProfileUser extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:30',
             'phone' => 'nullable|regex:/^[\d\s]*$/|max:10|min:10',
+            'birthday' => 'required',
             'gender'=>'required|string|max:4',
             'address' => 'required|string|max:255'
         ]);
@@ -44,9 +45,10 @@ class ProfileUser extends Controller
         $accountID = $user->getAuthIdentifier();
         $acc = User::find($accountID);
         $acc->name = $request->name;
-        $acc->address = $request->address;
+        $acc->birthday = $request->birthday;
         $acc->phone = $request->phone;
         $acc->gender = $request->gender;
+        $acc->address = $request->address;
         if ($acc->save())
             return response()
                 ->json(['successMessage' => 'Thay đổi thông tin thành công!']);
