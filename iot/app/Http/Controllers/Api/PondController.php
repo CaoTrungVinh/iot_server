@@ -22,6 +22,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
+use NotificationChannels\Fcm\FcmChannel;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Notification;
+use App\Models\User;
+use Illuminate\Support\Facades\Response;
+use App\Notifications\WarningTemp;
 
 class PondController extends Controller
 {
@@ -190,5 +196,70 @@ class PondController extends Controller
                 'timer_on' => $request->get("timer_on"),
                 'timer_off' => $request->get("timer_off")]);
         return \response()->json($pond, 200);
+    }
+
+    public function server_temp(Request $request)
+    {
+        $update_temp = DB::table('temperatures')
+            ->where('id', $request->get("id"))
+            ->update([
+                'temperature' => $request->get("temperature"),
+                'created_at' => $request->get("created_at"),]);
+
+        $temp = $request->get("temperature"); Log::info("$temp");
+        $warning = DB::table('temperatures')->where('id', $request->get("id"))->value('warning');
+        $temp_min = DB::table('temperatures')->where('id', $request->get("id"))->value('temperature_min');
+        $temp_max = DB::table('temperatures')->where('id', $request->get("id"))->value('temperature_max');
+
+        if ($warning == 1){
+            if($temp<=$temp_min||$temp>=$temp_max){
+                $user = new User();
+                $user->notify(new WarningTemp("Cảnh báo","Nhiệt độ ao nuôi $temp*C vượt mức an toàn"));
+            }
+        }
+        return \response()->json($update_temp, 200);
+    }
+    public function server_ph(Request $request)
+    {
+        $update_ph = DB::table('phs')
+            ->where('id', $request->get("id"))
+            ->update([
+                'value' => $request->get("value"),
+                'created_at' => $request->get("created_at"),
+                ]);
+
+        $ph = $request->get("value"); Log::info("$ph");
+        $warning = DB::table('phs')->where('id', $request->get("id"))->value('warning');
+        $ph_min = DB::table('phs')->where('id', $request->get("id"))->value('ph_min');
+        $ph_max = DB::table('phs')->where('id', $request->get("id"))->value('ph_max');
+
+        if ($warning == 1){
+            if($ph<=$ph_min||$ph>=$ph_max){
+                $user = new User();
+                $user->notify(new WarningTemp("Cảnh báo","Độ Ph ao nuôi $ph vượt mức an toàn"));
+            }
+        }
+        return \response()->json($update_ph, 200);
+    }
+    public function server_light(Request $request)
+    {
+        $update_light = DB::table('lights')
+            ->where('id', $request->get("id"))
+            ->update([
+                'light' => $request->get("light"),
+                'description' => $request->get("description"),
+                'created_at' => $request->get("created_at"),
+                ]);
+
+        $light = $request->get("light"); Log::info("$light");
+        $warning = DB::table('lights')->where('id', $request->get("id"))->value('warning');
+
+        if ($warning == 1){
+            if($light == 1){
+                $user = new User();
+                $user->notify(new WarningTemp("Cảnh báo","Ao nuôi trời tối nguy hiểm"));
+            }
+        }
+        return \response()->json($update_light, 200);
     }
 }

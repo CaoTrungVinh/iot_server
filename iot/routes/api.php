@@ -64,3 +64,8 @@ Route::put('/set_timer_pump_out', [\App\Http\Controllers\Api\PondController::cla
 Route::put('/set_timer_lamp', [\App\Http\Controllers\Api\PondController::class, 'set_timer_lamp']);
 Route::put('/set_timer_oxygen_fan', [\App\Http\Controllers\Api\PondController::class, 'set_timer_oxygen_fan']);
 
+
+Route::put('/server_temp', [\App\Http\Controllers\Api\PondController::class, 'server_temp']);
+Route::put('/server_ph', [\App\Http\Controllers\Api\PondController::class, 'server_ph']);
+Route::put('/server_light', [\App\Http\Controllers\Api\PondController::class, 'server_light']);
+

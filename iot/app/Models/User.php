@@ -58,7 +58,7 @@ class User extends Authenticatable
 
     public function routeNotificationForFcm()
     {
-        return ['fidsHcYJSTy4witt66dqwO:APA91bEOX-_4soWrDNJX41JlVOpMtAzyRQt9I6eTXBZxGk0FBnL---NKbf7aXc3N0tLx7D38bbGC4UTHLkKd-TdnrIHdCMMxFUXcSLMXQ3lHoaRVgiBQ-OCohUVY1iR2233yTIKITNzY'];
+        return ['c63zyjhoQLSmarRcfwLP4E:APA91bEe7Nju2xX9ZXSKMa1z_EznyDBiKvSk450kTqpDSxe9J0QG7ZpT121y8V9YbadYNn91x1oJCmsNkLmOKTU8c5K8QbwLEYNkcByejLkfWzbg6yXvGkPPH4C9AlGBoidgSSTLBgJc'];
     }
     protected $casts = [
         'email_verified_at' => 'datetime',
