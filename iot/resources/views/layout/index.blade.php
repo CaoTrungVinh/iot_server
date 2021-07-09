@@ -122,8 +122,14 @@
 <script src="assets/js/jquery.dataTables.min.js"></script>
 <script src="assets/js/dataTables.bootstrap4.min.js"></script>
 
+<!--Nice select-->
+<script src="assets/js/jquery.nice-select.min.js"></script>
+
 <script>
-    $('#example').DataTable();
+    //Order list dataTable
+    $("#productList").DataTable();
+    //Nice select
+    $('.bulk-actions').niceSelect();
 </script>
 
 </body>
