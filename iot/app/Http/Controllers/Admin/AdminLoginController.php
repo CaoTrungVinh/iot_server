@@ -33,7 +33,7 @@ class AdminLoginController extends Controller
         } else {
             if ( Hash::check($request->pass, $u->password)) {
                 Session::put('AdminID', $u->id);
-                Session::put('AdminEmail', $u->email);
+                Session::put('Auth', $u);
                  return redirect()->route('home');
             } else {
                 return redirect()->back()->withInput($request->only('pass'))->withErrors(['mes' => 'Bạn đã nhập sai Password!']);
@@ -45,7 +45,7 @@ class AdminLoginController extends Controller
     public function getLogout(Request $request)
     {
         Session::forget('AdminID');
-        Session::forget('AdminEmail');
+        Session::forget('Auth');
         return redirect('adminLogin');
     }
 
