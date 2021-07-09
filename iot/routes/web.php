@@ -37,6 +37,7 @@ Route::group(['middleware' => 'checkAdminLogin'], function () {
 
     ///////
     Route::get('/user', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
+    Route::get('/user_edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user_edit');
 });
 
 Route::get('verifile', function () {

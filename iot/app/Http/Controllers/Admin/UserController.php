@@ -17,4 +17,9 @@ class UserController extends Controller
         $data = User::all();
         return view('users.index', compact('data'));
     }
+
+    public function edit(){
+        $data = User::all();
+        return view('users.edit');
+    }
 }
