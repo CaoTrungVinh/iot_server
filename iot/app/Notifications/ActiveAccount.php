@@ -49,11 +49,11 @@ class ActiveAccount extends Notification implements ShouldQueue
                 'email' => $notifiable->email,
                 'key'   => $notifiable->random_key
             ] ) )
-            ->line('Password là: ')
+            ->line('Mật khẩu của bạn là: ')
             ->line($notifiable->random_key)
             ->line( "Ngược lại nếu bạn không thực hiện yêu cầu trên bạn có thể bỏ qua email này." )
             ->line( "Lưu ý: Link có thời gian sử dụng là 12 giờ." )
-            ->line( 'Thank you for using our application!' );
+            ->line( 'Cảm ơn bạn đã sử dụng hệ thống của chúng tôi!!!' );
     }
 
     /**

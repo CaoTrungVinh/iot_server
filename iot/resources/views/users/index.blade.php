@@ -2,8 +2,12 @@
 @section('content')
     <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
         <h5 class="mb-0" ><strong>Tài khoản</strong></h5>
-        <span class="text-secondary">Trang chủ <i class="fa fa-angle-right"></i> tài khoản</span>
-        <span class="bt_addUser"><i class="fas fa-plus"></i></span>
+        <span class="text-secondary">Trang chủ <i class="fa fa-angle-right"></i> Tài khoản</span>
+
+        <a href="{{route('add_user')}}">
+            <small class="bt_addUser"><strong><i class="fas fa-plus"></i></strong></small>
+        </a>
+
         <div class="mt-4 mb-4 p-3 bg-white border shadow-sm lh-sm">
             <!--Order Listing-->
             <div class="product-list">
@@ -19,7 +23,7 @@
                             <th>Số điện thoại</th>
                             <th>Giới tính</th>
                             <th>Địa chỉ</th>
-                            <th>Phân quyền</th>
+                            <th>Quyền</th>
                             <th>Trạng thái</th>
                             <th>Quản lý</th>
                         </tr>

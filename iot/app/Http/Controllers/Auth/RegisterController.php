@@ -20,39 +20,54 @@ class RegisterController extends Controller
 
     public function doRegister(Request $request){
         $request->validate([
-            'r_userName' => 'required|min:3|max:50',
             'r_email'     => 'required|email',
-            'r_pass'      => 'required|min:8',
-            'r_repass'    => 'required|same:r_pass',
+            'r_userName' => 'required|min:3|max:50',
+            'r_birthday'     => 'required|min:4|max:10',
+            'r_gender'     => 'required|max:20',
+            'r_phone'     => 'required|min:10|max:11',
+            'r_address'     => 'required',
         ], $this->messages());
         $user = User::where( 'email', '=', $request->r_email )->first();
         // email không tồn tại gửi email mơi
         if ( $user == null ) {
-            $token = Str::random( 40 );
+            $token = Str::random( 10 );
             $user  = User::create( [
                 'email'      => $request->r_email,
-                'password'   => Hash::make( $request->input( 'r_pass' ) ),
+                'password'   => Hash::make($token),
                 'name' => $request->r_userName,
+                'birthday' => $request->r_birthday,
+                'gender' => $request->r_gender,
+                'phone' => $request->r_phone,
+                'address' => $request->r_address,
                 'random_key' => $token,
+                'role_id' => 1,
                 'key_time'   => Carbon::now()->addHour( 12 )->format( 'Y-m-d H:i:s' )
             ] );
 
             $user->notify( new ActiveAccount() );
 
-            return redirect( 'adminLogin' )->with( 'ok', 'Bạn đăng ký thành công vui lòng check Email để kích hoạt tài khoản' );
+            return redirect()->back()->withInput($request->only('ok'))->withErrors(['ok' => 'Tạo tài khoản thành công - kiểm tra email để kích hoạt tài khoản và lấy mật khẩu đăng nhập.']);
         } else {
             // đã tồn tại active 1 thông báo lỗi
             if ($user->active == 1) {
-                return redirect()->back()->withErrors(['r_email' => 'Email đã tồn tại!']);
+                return redirect()->back()->withErrors(['r_email' => 'Email này đã được đăng ký tài khoản khác!']);
             } else {
                 // email tồn tại active =0 gửi lại email
-                $token = Str::random(40);
+                $token = Str::random(10);
+                $user->email = $request->r_email;
+                $user->password = Hash::make($token);
+                $user->name = $request->r_userName;
+                $user->birthday = $request->r_birthday;
+                $user->gender = $request->r_gender;
+                $user->phone = $request->r_phone;
+                $user->address = $request->r_address;
+                $user->role_id = 1;
                 $user->random_key = $token;
                 $user->key_time = Carbon::now()->addHour(12)->format('Y-m-d H:i:s');
                 $user->update();
                 $user->notify(new ActiveAccount());
 
-                return redirect('adminLogin')->with('ok', 'Bạn đăng ký thành công vui lòng check Email để kích hoạt tài khoản');
+                return redirect()->back()->withInput($request->only('ok'))->withErrors(['ok' => 'Tạo tài khoản thành công - kiểm tra email để kích hoạt tài khoản và lấy mật khẩu đăng nhập.']);
             }
         }
     }
@@ -94,19 +109,21 @@ class RegisterController extends Controller
 
     private function messages() {
         return [
-            'r_firstname.required' => 'Bạn cần nhập họ tên',
-            'r_firstname.min'      => 'Họ tên cần lớn hơn 3 kí tự',
-            'r_firstname.max'      => 'Họ tên cần bé hơn 50 kí tự',
-            'r_lastname.required'  => 'Bạn cần nhập họ tên',
-            'r_lastname.min'       => 'Họ tên cần lớn hơn 3 kí tự',
-            'r_lastname.max'       => 'Họ tên cần bé hơn 50 kí tự',
-            'r_email.required'     => 'Bạn cần phải nhập Email.',
+            'r_userName.required' => 'Bạn cần nhập họ tên',
+            'r_userName.min'      => 'Họ tên cần lớn hơn 3 kí tự',
+            'r_userName.max'      => 'Họ tên cần bé hơn 50 kí tự',
+            'r_email.required'     => 'Bạn cần nhập Email.',
             'r_email.email'        => 'Định dạng Email bị sai.',
             'r_email.unique'       => 'Email đã tồn tại',
-            'r_pass.required'      => 'Bạn cần phải nhập Password.',
-            'r_pass.min'           => 'Password phải nhiều hơn 8 ký tự.',
-            'r_repass.same'        => 'RePassword không trùng với password',
-            'r_pass.required'      => 'Bạn cần nhập Repassword',
+            'r_birthday.required'      => 'Bạn cần nhập ngày tháng năm sinh.',
+            'r_birthday.min'           => 'Tối thiểu bạn phải nhập năm sinh gồm 4 số',
+            'r_birthday.max'        => 'Bạn đã nhập quá kí tự cho phép. VD: 01/01/2021',
+            'r_gender.required'      => 'Bạn cần nhập giới tính',
+            'r_gender.max'        => 'Giới tính cần bé hơn 20 kí tự',
+            'r_phone.required'      => 'Bạn cần nhập số điện thoại liên lạc.',
+            'r_phone.min'           => 'Số điện thoại phải tối thiểu đủ 10 số',
+            'r_phone.max'        => 'Số điện thoại không được quá 11 số',
+            'r_address.required'      => 'Bạn cần nhập địa chỉ.',
         ];
     }
 }
