@@ -3,20 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DHT11Controller;
 
-
-//Route::get('/', function () {
-//    return view('pages.home');
-//})->name('home');
-//Route::get('/dht11', function () {
-//    return view('pages.dht11');
-//})->name('dht11');
-
 Route::get('/fcm', [App\Http\Controllers\Controller::class, 'index'])->name('fcm');
 Route::get('/send-notification', [App\Http\Controllers\Controller::class, 'sendNotification'])->name('send-notification');
-
-//Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
-//Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 
 Route::get('register', [\App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
 Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'doRegister'])->name('register');
@@ -38,6 +26,8 @@ Route::group(['middleware' => 'checkAdminLogin'], function () {
     ///////
     Route::get('/user', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
     Route::get('/user_edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user_edit');
+    ///pond
+    Route::get('/pond', [\App\Http\Controllers\Admin\PondController::class, 'index'])->name('pond');
 });
 
 Route::get('verifile', function () {

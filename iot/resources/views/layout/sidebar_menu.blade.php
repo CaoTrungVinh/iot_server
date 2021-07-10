@@ -26,7 +26,7 @@
                         <span class="none">Quản lý ao nuôi<i class="fa fa-angle-down pull-right align-bottom"></i></span>
                     </a>
                     <ul class="children" id="charts">
-                        <li class="child"><a href="chart.html" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Ao nuôi</a></li>
+                        <li class="child"><a href="{{route('pond')}}" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Ao nuôi</a></li>
                         <li class="child"><a href="chartist.html" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Thiết bị đo</a></li>
                         <li class="child"><a href="echarts.html" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Bộ điều khiển</a></li>
                     </ul>
