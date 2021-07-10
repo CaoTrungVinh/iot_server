@@ -15,7 +15,11 @@ class Pond extends Model
 
     protected $table = "ponds";
 
-    protected $fillable = ['name','address'];
+    protected $fillable = ['id_user','name','address'];
+
+    public function users() {
+        return $this->belongsTo(User::class);
+    }
 
     public $timestamps = false;
 }

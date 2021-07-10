@@ -52,9 +52,9 @@ class User extends Authenticatable
         return $this->belongsTo( Role::class);
     }
 
-//    public function posts() {
-//        return $this->hasMany('App\Models\Posts');
-//    }
+    public function ponds() {
+        return $this->hasMany('App\Models\Pond');
+    }
 
     public function routeNotificationForFcm()
     {

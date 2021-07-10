@@ -24,11 +24,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {{--@foreach($data as $data)--}}
+                        @foreach($ponds as $ponds)
                         <tr>
-                            <td>ádghfsd</td>
-                            <td>sfgkh</td>
-                            <td>sdfghjk</td>
+                            <td>{{$ponds->name}}</td>
+                            <td>{{$ponds->name_user}}</td>
+                            <td>{{$ponds->address}}</td>
 
                             <td class="align-middle text-center">
                                 <button class="btn btn-theme" data-toggle="modal" data-target="#orderInfo"><i class="fa fa-eye"></i></button>
@@ -37,7 +37,7 @@
                             </td>
 
                         </tr>
-                        {{--@endforeach--}}
+                        @endforeach
                         </tbody>
                     </table>
                 </div>

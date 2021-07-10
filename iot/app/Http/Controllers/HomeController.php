@@ -9,7 +9,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $u_id = session('AdminID');
-        return view('pages.home')->with(['u_id' => $u_id]);
+        return view('pages.home');
     }
 }
