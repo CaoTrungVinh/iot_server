@@ -8,9 +8,7 @@
             App IoT Admin</h1>
         <div class="column">
             <div class="login-box-form" style="width: 400px; text-align: center; margin: auto">
-                <h3 class="mb-2">Login</h3>
-                <small class="text-muted bc-description">Sign in with your credentials</small>
-
+                <h3 class="mb-2" style="margin-bottom: 20px!important;">Đăng nhập</h3>
                 <form method="post" action="{{route('postAdLogin')}}" class="mt-2">
                     @csrf
                     @error('mes')
@@ -45,9 +43,9 @@
                     </p>
 
                     <div class="form-group">
-                        <input type="submit" class="btn btn-theme btn-block p-2 mb-1" name="login" value="Login" />
-                        <a href="{{route('forgot_password')}}">
-                            <small class="text-theme"><strong>Forgot password?</strong></small>
+                        <input type="submit" class="btn btn-theme btn-block p-2 mb-1" name="login" value="Đăng nhập" />
+                        <a href="{{route('AdForgotPass')}}">
+                            <small class="text-theme" style="font-style: italic"><strong>Quên mật khẩu?</strong></small>
                         </a>
                     </div>
                 </form>

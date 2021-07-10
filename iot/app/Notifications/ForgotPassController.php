@@ -41,14 +41,13 @@ class ForgotPassController extends Notification
     public function toMail($notifiable)
     {
         return ( new MailMessage )
-            ->subject( "Xác nhận tài khoản hệ thống đo chỉ số nước ao nuôi cá" )
+            ->subject( "Cấp mật khẩu mới cho tài khoản hệ thống đo chỉ số nước ao nuôi cá" )
             ->greeting( "Xin chào! " )
-            ->line( 'Tài khoản của bạn được tạo thành công!' )
-            ->line( 'Password là : ' )
+            ->line( "Mật khẩu mới của bạn là : " )
             ->line($notifiable->random_key)
             ->line( "Hãy đăng nhập vào hệ thống và đổi lại password." )
             ->line( "Lưu ý: Link có thời gian sử dụng là 12 giờ." )
-            ->line( 'Thank you for using our application!' );
+            ->line( 'Cảm ơn bạn đã sử dụng hệ thống của chúng tôi!!!' );
     }
 
     /**

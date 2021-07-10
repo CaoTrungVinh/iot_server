@@ -1,0 +1,10 @@
+.bt_addUser{
+    float: right;
+    font-size: 35px;
+    color: blue;
+    margin-right: 20px;
+}
+.bt_addUser:hover{
+    cursor: pointer;
+    color: #0445a3;
+}

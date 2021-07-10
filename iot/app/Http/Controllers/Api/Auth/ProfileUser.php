@@ -39,7 +39,7 @@ class ProfileUser extends Controller
                 'status' => 'fails',
                 'message' => $validator->errors()->first(),
                 'errors' => $validator->errors()->toArray(),
-            ]);
+            ], 401);
         }
         $user = Auth::user();
         $accountID = $user->getAuthIdentifier();
@@ -53,7 +53,7 @@ class ProfileUser extends Controller
             return response()
                 ->json(['successMessage' => 'Thay đổi thông tin thành công!']);
         return  response()
-            ->json(['errMessage' => 'Thay đổi thông tin thất bại!']);
+            ->json(['errMessage' => 'Thay đổi thông tin thất bại!'], 401);
 
     }
 

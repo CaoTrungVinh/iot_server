@@ -3,31 +3,31 @@
     <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
         <h5 class="mb-0"><strong>User profile</strong></h5>
         <span class="text-secondary">Pages <i class="fa fa-angle-right"></i> User profile</span>
-        <div class="row mt-3">
-            <div class="col-sm-12">
-                <!--User profile header-->
-                <div class="mt-1 mb-3 button-container bg-white border shadow-sm">
-                    <div class="profile-bg p-5">
-                        <img src="assets/img/jd-150.png" height="125px" width="125px"
-                             class="rounded-circle shadow profile-img"/>
-                    </div>
-                    <div class="profile-bio-main container-fluid">
-                        <div class="row">
-                            <div class="col-md-5 offset-md-3 col-sm-12 offset-sm-0 col-12 bio-header">
-                                <h3 class="mt-4">Mario Mendez</h3>
-                                <span class="text-muted mt-0 bio-request">Senior Architect</span>
-                            </div>
-                            <div class="col-md-4 col-sm-12 col-12 px-5 text-right pt-4 bio-comment">
-                                <button type="button" class="btn btn-default">
-                                    <i class="far fa-comment"></i>
-                                </button>
-                                <button type="button" class="btn btn-theme">Request</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+{{--        <div class="row mt-3">--}}
+{{--            <div class="col-sm-12">--}}
+{{--                <!--User profile header-->--}}
+{{--                <div class="mt-1 mb-3 button-container bg-white border shadow-sm">--}}
+{{--                    <div class="profile-bg p-5">--}}
+{{--                        <img src="assets/img/jd-150.png" height="125px" width="125px"--}}
+{{--                             class="rounded-circle shadow profile-img"/>--}}
+{{--                    </div>--}}
+{{--                    <div class="profile-bio-main container-fluid">--}}
+{{--                        <div class="row">--}}
+{{--                            <div class="col-md-5 offset-md-3 col-sm-12 offset-sm-0 col-12 bio-header">--}}
+{{--                                <h3 class="mt-4">Mario Mendez</h3>--}}
+{{--                                <span class="text-muted mt-0 bio-request">Senior Architect</span>--}}
+{{--                            </div>--}}
+{{--                            <div class="col-md-4 col-sm-12 col-12 px-5 text-right pt-4 bio-comment">--}}
+{{--                                <button type="button" class="btn btn-default">--}}
+{{--                                    <i class="far fa-comment"></i>--}}
+{{--                                </button>--}}
+{{--                                <button type="button" class="btn btn-theme">Request</button>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
         <div class="row mt-3">
             <!--User profile content-->
@@ -36,7 +36,7 @@
 
                     <nav>
                         <div class="nav nav-tabs nav-fill" id="nav-customContent" role="tablist">
-                            <a class="nav-item nav-link" id="nav-profile" data-toggle="tab" href="#custom-profile"
+                            <a class="nav-item nav-link active" id="nav-profile" data-toggle="tab" href="#custom-profile"
                                role="tab" aria-controls="nav-profile" aria-selected="false">
                                 <i class="fa fa-file-text-o"></i> Personal Info
                             </a>
@@ -49,7 +49,7 @@
 
                     <div class="tab-content py-3 px-3 px-sm-0" id="nav-customContent">
                         <!--Personal info tab-->
-                        <div class="tab-pane fade p-4" id="custom-profile" role="tabpanel"
+                        <div class="tab-pane fade show active p-4" id="custom-profile" role="tabpanel"
                              aria-labelledby="nav-profile">
                             <div class="table-responsive mb-4">
                                 <table class="table table-borderless table-striped m-0">
@@ -78,28 +78,28 @@
                                 </table>
                             </div>
 
-                            <div class="dropdown-divider"></div>
+{{--                            <div class="dropdown-divider"></div>--}}
 
-                            <div class="mt-4 mb-4">
-                                <h6 class="mb-2">Biography</h6>
-                                <p class="p-typo">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                    It has survived not only five centuries
-                                </p>
-                                <p class="p-typo">
-                                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem
-                                    Ipsum passages, and more recently with desktop publishing software like Aldus
-                                    PageMaker including versions of Lorem Ipsum.
-                                </p>
-                                <p class="p-typo">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                    unknown printer took a galley of type and scrambled it to make a type specimen book.
-                                    It has survived not only five centuries
-                                </p>
-                            </div>
+{{--                            <div class="mt-4 mb-4">--}}
+{{--                                <h6 class="mb-2">Biography</h6>--}}
+{{--                                <p class="p-typo">--}}
+{{--                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem--}}
+{{--                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an--}}
+{{--                                    unknown printer took a galley of type and scrambled it to make a type specimen book.--}}
+{{--                                    It has survived not only five centuries--}}
+{{--                                </p>--}}
+{{--                                <p class="p-typo">--}}
+{{--                                    It was popularised in the 1960s with the release of Letraset sheets containing Lorem--}}
+{{--                                    Ipsum passages, and more recently with desktop publishing software like Aldus--}}
+{{--                                    PageMaker including versions of Lorem Ipsum.--}}
+{{--                                </p>--}}
+{{--                                <p class="p-typo">--}}
+{{--                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem--}}
+{{--                                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an--}}
+{{--                                    unknown printer took a galley of type and scrambled it to make a type specimen book.--}}
+{{--                                    It has survived not only five centuries--}}
+{{--                                </p>--}}
+{{--                            </div>--}}
 
                         </div>
                         <!--/Personal info tab-->

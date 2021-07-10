@@ -20,11 +20,13 @@ Route::get('adminForgotPass', [\App\Http\Controllers\Auth\ForgotPasswordControll
 Route::post('postAdminForgotPass', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'doForgotPass'])->name('postAdForgotPass');
 
 Route::group(['middleware' => 'checkAdminLogin'], function () {
+    Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('adminProfile', [\App\Http\Controllers\Admin\ProfileAdminController::class, 'showProfile'])->name('adProfile');
 
     ///////
     Route::get('/user', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
+    Route::get('/addUser', [\App\Http\Controllers\Admin\UserController::class, 'showAddUser'])->name('add_user');
     Route::get('/user_edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user_edit');
     ///pond
     Route::get('/pond', [\App\Http\Controllers\Admin\PondController::class, 'index'])->name('pond');
@@ -38,6 +40,3 @@ Route::get('/404.html', function () {
     return view('pages.error.401');
 })->name('404');
 
-Route::get('/forgot_password', function () {
-    return view('auth.forgot-password');
-})->name('forgot_password');
