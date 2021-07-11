@@ -30,6 +30,7 @@ Route::group(['middleware' => 'checkAdminLogin'], function () {
     Route::get('/user_edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user_edit');
     ///pond
     Route::get('/pond', [\App\Http\Controllers\Admin\PondController::class, 'index'])->name('pond');
+    Route::get('/pond_edit', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond_edit');
 });
 
 Route::get('verifile', function () {

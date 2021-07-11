@@ -23,4 +23,9 @@ class PondController extends Controller
           WHERE ponds.id_user=users.id');
         return view('ponds.index', compact('ponds'));
     }
+
+    public function edit()
+    {
+        return view('ponds.edit');
+    }
 }
