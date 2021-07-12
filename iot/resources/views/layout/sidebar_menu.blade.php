@@ -27,8 +27,8 @@
                     </a>
                     <ul class="children" id="charts">
                         <li class="child"><a href="{{route('pond')}}" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Ao nuôi</a></li>
-                        <li class="child"><a href="chartist.html" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Thiết bị đo</a></li>
-                        <li class="child"><a href="echarts.html" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Bộ điều khiển</a></li>
+                        <li class="child"><a href="{{route('toolkit')}}" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Bộ đo</a></li>
+                        <li class="child"><a href="{{route('control')}}" class="ml-4"><i class="fa fa-angle-right mr-2"></i>Bộ điều khiển</a></li>
                     </ul>
                 </li>
             </ul>
