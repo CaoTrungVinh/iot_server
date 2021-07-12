@@ -57,7 +57,7 @@
 
                             <td class="align-middle text-center">
                                 <button class="btn btn-theme" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>
-                                <button class="btn btn-success" data-toggle="modal"><a style="color: white" href="/pond/{{ $ponds->id }}/edit"><i class="fa fa-pencil"></i></a></button>
+                                <button class="btn btn-success" data-toggle="modal"><a style="color: white" href="/pond/{{$ponds->id}}/edit"><i class="fa fa-pencil"></i></a></button>
                                 <button class="btn btn-danger"><a style="color: white" href="/pond/{{ $ponds->id }}/delete"><i class="fas fa-trash"></i></a></button>
                             </td>
 

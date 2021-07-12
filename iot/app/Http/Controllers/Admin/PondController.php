@@ -63,11 +63,14 @@ class PondController extends Controller
 
     public function edit($id)
     {
-        $getData = DB::table('ponds')->select('id','name','address')->where('id',$id)->get();
-        return view('ponds.edit')->with('getPondById',$getData);
+//        $getData = DB::table('ponds')->select('id','name','address')->where('id',$id)->get();
+//        return view('ponds.edit')->with('getPondById',$getData);
+        return view('ponds.edit');
+    }
+    public function update(Request $request){
+
     }
 
-    
     public function delete($id)
     {
         $deleteData = DB::table('ponds')->where('id', '=', $id)->delete();

@@ -32,8 +32,8 @@ Route::group(['middleware' => 'checkAdminLogin'], function () {
     Route::get('/pond', [\App\Http\Controllers\Admin\PondController::class, 'index'])->name('pond');
     Route::get('/pond_create', [\App\Http\Controllers\Admin\PondController::class, 'create'])->name('pond_create');
     Route::post('/pond_create', [\App\Http\Controllers\Admin\PondController::class, 'store'])->name('pond_store');
-    Route::get('/pond_edit', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond_edit');
-    Route::get('/pond/{id}/edit', [\App\Http\Controllers\Admin\PondController::class, 'edit']);
+//    Route::get('/pond_edit', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond_edit');
+    Route::get('/pond/{id}/edit', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond/{id}/edit');
     Route::get('/pond/{id}/delete', [\App\Http\Controllers\Admin\PondController::class, 'delete'])->name('pond/{id}/delete');
     ////toolkit
     Route::get('/toolkit', [\App\Http\Controllers\Admin\ToolkitController::class, 'index'])->name('toolkit');
