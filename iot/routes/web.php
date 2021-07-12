@@ -30,7 +30,20 @@ Route::group(['middleware' => 'checkAdminLogin'], function () {
     Route::get('/user_edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user_edit');
     ///pond
     Route::get('/pond', [\App\Http\Controllers\Admin\PondController::class, 'index'])->name('pond');
+    Route::get('/pond_create', [\App\Http\Controllers\Admin\PondController::class, 'create'])->name('pond_create');
+    Route::post('/pond_create', [\App\Http\Controllers\Admin\PondController::class, 'store'])->name('pond_store');
     Route::get('/pond_edit', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond_edit');
+    Route::get('/pond/{id}/edit', [\App\Http\Controllers\Admin\PondController::class, 'edit']);
+    Route::get('/pond/{id}/delete', [\App\Http\Controllers\Admin\PondController::class, 'delete'])->name('pond/{id}/delete');
+    ////toolkit
+    Route::get('/toolkit', [\App\Http\Controllers\Admin\ToolkitController::class, 'index'])->name('toolkit');
+    Route::get('/toolkit_store', [\App\Http\Controllers\Admin\ToolkitController::class, 'store'])->name('toolkit_store');
+    Route::get('/toolkit_edit', [\App\Http\Controllers\Admin\ToolkitController::class, 'edit'])->name('toolkit_edit');
+    ////control
+    Route::get('/control', [\App\Http\Controllers\Admin\ControlController::class, 'index'])->name('control');
+    Route::get('/control_store', [\App\Http\Controllers\Admin\ControlController::class, 'store'])->name('control_store');
+    Route::get('/control_edit', [\App\Http\Controllers\Admin\ControlController::class, 'edit'])->name('control_edit');
+
 });
 
 Route::get('verifile', function () {

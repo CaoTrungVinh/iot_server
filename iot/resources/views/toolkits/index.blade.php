@@ -1,39 +1,14 @@
 @extends('layout.index')
 @section('content')
-
-
     <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
-        <?php //Hiển thị thông báo thành công?>
-
-        @if ( Session::has('success') )
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <strong>{{ Session::get('success') }}</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
-                </button>
-            </div>
-        @endif
-
-        <?php //Hiển thị thông báo lỗi?>
-        @if ( Session::has('error') )
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <strong>{{ Session::get('error') }}</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
-                </button>
-            </div>
-        @endif
-
         <div class="mt-4 mb-4 p-3 bg-white border shadow-sm lh-sm">
             <!--Order Listing-->
             <div class="product-list">
                 <div class="row border-bottom mb-4">
-                    <div class="col-sm-8 pt-2"><h5 class="mb-0" ><strong>Quản lý ao nuôi</strong></h5></div>
+                    <div class="col-sm-8 pt-2"><h5 class="mb-0" ><strong>Quản lý bộ đo</strong></h5></div>
                     <div class="col-sm-4 text-right pb-3">
                         <button type="button" class="btn btn-danger shadow pull-right">
-                            <a style="color: white; font-weight: normal" href="{{route('pond_create')}}">Thêm ao</a>
+                            <a style="color: white; font-weight: normal" href="{{route('toolkit_store')}}">Thêm bộ đo</a>
                         </button>
                     </div>
                 </div>
@@ -43,25 +18,41 @@
                         <thead>
                         <tr style="color: #f6f6f7;background: #007bff;">
                             <th>Tên ao</th>
-                            <th>Người sở hữu</th>
-                            <th>Địa chỉ ao</th>
+                            <th>Tên bộ đo</th>
+                            <th>Vị trí</th>
+                            <th>Nhiệt độ</th>
+                            {{--<th>Nhiệt độ an toàn</th>--}}
+                            {{--<th>Ph an toàn</th>--}}
+                            <th>Độ Ph</th>
+                            <th>Ánh sáng</th>
                             <th>Quản lý</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($ponds as $ponds)
-                        <tr>
-                            <td>{{$ponds->name}}</td>
-                            <td>{{$ponds->name_user}}</td>
-                            <td>{{$ponds->address}}</td>
+                        @foreach($toolkits as $toolkits)
+                            <tr>
+                                <td>{{$toolkits->name_pond}}</td>
+                                <td>{{$toolkits->name_toolkit}}</td>
+                                <td>{{$toolkits->address}}</td>
+                                <td>{{$toolkits->temperature}}</td>
+                                {{--<td>{{$toolkits->temperature}}</td>--}}
+                                {{--<td>{{$toolkits->temperature}}</td>--}}
+                                <td>{{$toolkits->value}}</td>
+                                <td>
+                                    @if ($toolkits->light == 0)
+                                        Ban ngày
+                                    @else
+                                        Ban đêm
+                                    @endif
+                                </td>
 
-                            <td class="align-middle text-center">
-                                <button class="btn btn-theme" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>
-                                <button class="btn btn-success" data-toggle="modal"><a style="color: white" href="/pond/{{ $ponds->id }}/edit"><i class="fa fa-pencil"></i></a></button>
-                                <button class="btn btn-danger"><a style="color: white" href="/pond/{{ $ponds->id }}/delete"><i class="fas fa-trash"></i></a></button>
-                            </td>
+                                <td class="align-middle text-center">
+                                    <button class="btn btn-theme" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>
+                                    <button class="btn btn-success" data-toggle="modal"><a style="color: white" href="{{route('toolkit_edit')}}"><i class="fa fa-pencil"></i></a></button>
+                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                </td>
 
-                        </tr>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>
