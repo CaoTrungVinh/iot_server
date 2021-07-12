@@ -27,7 +27,8 @@ Route::group(['middleware' => 'checkAdminLogin'], function () {
     ///////
     Route::get('/user', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
     Route::get('/addUser', [\App\Http\Controllers\Admin\UserController::class, 'showAddUser'])->name('add_user');
-    Route::get('/user_edit', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user_edit');
+    Route::get('/user_edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'showEditUser'])->name('user_edit');
+//    Route::get('/user_edit', [\App\Http\Controllers\Admin\UserController::class, 'showEditUser'])->name('user_edit');
     ///pond
     Route::get('/pond', [\App\Http\Controllers\Admin\PondController::class, 'index'])->name('pond');
     Route::get('/pond_edit', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond_edit');

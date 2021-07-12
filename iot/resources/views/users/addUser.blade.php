@@ -10,7 +10,7 @@
                 <div class="mt-4 mb-3 p-3 button-container bg-white border shadow-sm">
                     <h6 class="mb-3">Tạo tài khoản người dùng</h6>
 
-                    <form form method="post" action="{{route('register')}}">
+                    <form method="post" action="{{route('register')}}">
                         @csrf
                         @error('ok')
                         <small class="form-text text-danger" style="font-size: 15px">{{ $message }}</small>
