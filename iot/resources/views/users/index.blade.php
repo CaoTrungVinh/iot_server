@@ -19,9 +19,9 @@
                         <tr>
                             <th>Tên</th>
                             <th>Email</th>
-                            <th>Ngày sinh</th>
+{{--                            <th>Ngày sinh</th>--}}
                             <th>Số điện thoại</th>
-                            <th>Giới tính</th>
+{{--                            <th>Giới tính</th>--}}
                             <th>Địa chỉ</th>
                             <th>Quyền</th>
                             <th>Trạng thái</th>
@@ -33,9 +33,9 @@
                         <tr>
                             <td>{{$data->name}}</td>
                             <td>{{$data->email}}</td>
-                            <td>{{$data->birthday}}</td>
+{{--                            <td>{{$data->birthday}}</td>--}}
                             <td>{{$data->phone}}</td>
-                            <td>{{$data->gender}}</td>
+{{--                            <td>{{$data->gender}}</td>--}}
                             <td>{{$data->address}}</td>
                             <td>
                                 @if ($data->role_id == 2)
@@ -55,7 +55,7 @@
                             <td class="align-middle text-center">
                                 {{--<button class="btn btn-theme" data-toggle="modal" data-target="#orderInfo"><i class="fa fa-eye"></i></button>--}}
                                 <button class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><i class="fa fa-eye"></i></button>
-                                <button class="btn btn-link text-themestyle p-1" data-toggle="modal" data-target="#orderUpdate"><i class="fa fa-pencil"></i></button>
+                                <a href="{{route('user_edit', $data->id)}}" class="btn btn-link text-themestyle p-1"><i class="fa fa-pencil"></i></a>
                                 <button class="btn btn-link text-danger p-1"><i class="fas fa-trash"></i></button>
                             </td>
 
@@ -115,70 +115,70 @@
             <!--Order Info Modal-->
 
             <!--Order Update Modal-->
-            <div class="modal fade" id="orderUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Ord#13 details update</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th scope="row">Item</th>
-                                    <th class="order-qty-head">Quantity</th>
-                                    <th>Unit price</th>
-                                    <th>Total</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="align-middle">01</td>
-                                    <td scope="row" class="align-middle">Red Shoes</td>
-                                    <td class="text-center align-middle"><input type="text" value="2" class="order-qty"></td>
-                                    <td class="align-middle">$400</td>
-                                    <td class="align-middle">$800</td>
-                                    <td style="width: 120px;" class="align-middle">
-                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">02</td>
-                                    <td class="align-middle" scope="row">Blue shirt</td>
-                                    <td class="text-center align-middle"><input type="text" value="1" class="order-qty"></td>
-                                    <td class="align-middle">$400</td>
-                                    <td class="align-middle">$400</td>
-                                    <td class="align-middle">
-                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">03</td>
-                                    <td class="align-middle" scope="row">Knickers</td>
-                                    <td class="text-center align-middle"><input type="text" value="3" class="order-qty"></td>
-                                    <td class="align-middle">$300</td>
-                                    <td class="align-middle">$900</td>
-                                    <td class="align-middle">
-                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{--            <div class="modal fade" id="orderUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
+{{--                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">--}}
+{{--                    <div class="modal-content">--}}
+{{--                        <div class="modal-header">--}}
+{{--                            <h5 class="modal-title" id="exampleModalLongTitle">Ord#13 details update</h5>--}}
+{{--                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
+{{--                                <span aria-hidden="true">&times;</span>--}}
+{{--                            </button>--}}
+{{--                        </div>--}}
+{{--                        <div class="modal-body">--}}
+{{--                            <table class="table table-striped table-bordered">--}}
+{{--                                <thead>--}}
+{{--                                <tr>--}}
+{{--                                    <th>#</th>--}}
+{{--                                    <th scope="row">Item</th>--}}
+{{--                                    <th class="order-qty-head">Quantity</th>--}}
+{{--                                    <th>Unit price</th>--}}
+{{--                                    <th>Total</th>--}}
+{{--                                    <th>Action</th>--}}
+{{--                                </tr>--}}
+{{--                                </thead>--}}
+{{--                                <tbody>--}}
+{{--                                <tr>--}}
+{{--                                    <td class="align-middle">01</td>--}}
+{{--                                    <td scope="row" class="align-middle">Red Shoes</td>--}}
+{{--                                    <td class="text-center align-middle"><input type="text" value="2" class="order-qty"></td>--}}
+{{--                                    <td class="align-middle">$400</td>--}}
+{{--                                    <td class="align-middle">$800</td>--}}
+{{--                                    <td style="width: 120px;" class="align-middle">--}}
+{{--                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>--}}
+{{--                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+{{--                                <tr>--}}
+{{--                                    <td class="align-middle">02</td>--}}
+{{--                                    <td class="align-middle" scope="row">Blue shirt</td>--}}
+{{--                                    <td class="text-center align-middle"><input type="text" value="1" class="order-qty"></td>--}}
+{{--                                    <td class="align-middle">$400</td>--}}
+{{--                                    <td class="align-middle">$400</td>--}}
+{{--                                    <td class="align-middle">--}}
+{{--                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>--}}
+{{--                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+{{--                                <tr>--}}
+{{--                                    <td class="align-middle">03</td>--}}
+{{--                                    <td class="align-middle" scope="row">Knickers</td>--}}
+{{--                                    <td class="text-center align-middle"><input type="text" value="3" class="order-qty"></td>--}}
+{{--                                    <td class="align-middle">$300</td>--}}
+{{--                                    <td class="align-middle">$900</td>--}}
+{{--                                    <td class="align-middle">--}}
+{{--                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>--}}
+{{--                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+{{--                                </tbody>--}}
+{{--                            </table>--}}
+{{--                        </div>--}}
+{{--                        <div class="modal-footer">--}}
+{{--                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <!--Order Update Modal-->
         </div>
 

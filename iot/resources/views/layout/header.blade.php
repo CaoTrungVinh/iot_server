@@ -26,10 +26,10 @@
 
             <!--Search box and avatar-->
             <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
-                <div class="search-rounded mr-3" style="width: inherit">
+                <div class="search-rounded mr-3">
                     <input type="text" class="form-control search-box" placeholder="Enter keywords.." />
                 </div>
-                <div class="mr-4" style="width: inherit">
+                <div class="mr-4" style="margin-top: -6px">
                     <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="{{route('adProfile')}}"><i class="fa fa-user pr-2"></i> Profile</a>
                         <div class="dropdown-divider"></div>
@@ -38,8 +38,8 @@
                         <a class="dropdown-item" href="{{route('getAdLogout')}}"><i class="fa fa-power-off pr-2"></i> Logout</a>
                     </div>
                         <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="assets/img/icon_nam.png" alt="Adam" class="rounded-circle" width="40px" height="40px" style="float: right; margin-left: 5px">
-                            <p style="font-size: 15px; color: #6c757d"> {{Session::get('Auth')->name}} <br> {{Session::get('Auth')->phone}} </br> </p>
+                            <img src="assets/img/icon_nam.png" alt="Adam" class="rounded-circle" style="width:40px; height:40px; margin-bottom: -2px">
+                            <p style="font-size: 13px; color: #6c757d; margin-bottom: 0px"> {{Session::get('Auth')->name}}</p>
                         </a>
                 </div>
             </div>
