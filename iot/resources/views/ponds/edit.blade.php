@@ -6,36 +6,59 @@
             <div class="col-sm-12">
                 <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
                     <h5 class="mb-0"><strong>Chỉnh sửa ao nuôi</strong></h5>
-                    <form class="form-horizontal mt-4 mb-5">
+                    <form action="{{route('pond_update')}}" method="post" class="form-horizontal mt-4 mb-5">
+                        {{--<input type="hidden" id="_token" name="_token" value="{!! csrf_token() !!}" />--}}
+                        @csrf
+                        <input type="hidden" id="id" name="id" value="{{$getDataId->id}}" />
+                        
                         <div class="form-group row">
                             <div class="col-sm-6">
-                                <label class="control-label" for="input-1">Tên ao nuôi</label>
-                                <input type="text" class="form-control" id="input-1" placeholder=""/>
+                                <p class="form">
+                                    <label class="control-label" for="name">Tên ao nuôi</label>
+                                    <input type="text" class="form-control" name="name" id="name"
+                                           value="{{$getDataId->name}}" placeholder=""/>
+                                    @error('name')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                    @enderror
+                                </p>
                             </div>
                             <div class="col-sm-6">
-                                <label class="control-label" for="input-2">Địa chỉ</label>
-                                <input type="text" class="form-control" id="input-2" placeholder=""/>
+                                <p class="form">
+                                    <label class="control-label" for="address">Địa chỉ</label>
+                                    <input type="text" class="form-control" name="address" id="address"
+                                           value="{{$getDataId->address}}" placeholder=""/>
+                                    @error('address')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                    @enderror
+                                </p>
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <div class="col-sm-6">
-                                <label class="control-label" for="exampleFormControlSelect1">Người sở hữu</label>
-                                <select class="form-control" id="exampleFormControlSelect1">
-                                    <option>Choose ...</option>
-                                    <option>Nam</option>
-                                    <option>Nữ</option>
-                                    <option>Khác</option>
-                                </select>
+                                <p class="form">
+                                    <label class="control-label" for="exampleFormControlSelect1">Người sở hữu</label>
+                                    <select name="user" class="form-control" id="exampleFormControlSelect1">
+                                        <option value="{{$getDataId->users->id}}">{{$getDataId->users->name}}</option>
+
+                                        @foreach($getData as $getData)
+                                            <option value="{{$getData->id}}">{{$getData->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('user')
+                                    <small class="form-text text-danger">{{ $message }}</small>
+                                    @enderror
+                                </p>
                             </div>
                         </div>
 
                         <div class="form-group row" style="margin-top: 40px">
                             <div class="col-sm-6">
-                                <button class="col-sm-12 btn btn-danger">Hủy</button>
+                                <button class="col-sm-12 btn btn-danger"><a style="color: white; font-weight: normal"
+                                                                            href="{{route('pond')}}">Hủy</a></button>
                             </div>
                             <div class="col-sm-6">
-                                <button class="col-sm-12 btn btn-theme">Đồng ý</button>
+                                <input type="submit" class="col-sm-12 btn btn-theme" value="Đồng ý"/>
                             </div>
                         </div>
                     </form>
