@@ -33,7 +33,7 @@
                     <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="{{route('adProfile')}}"><i class="fa fa-user pr-2"></i> Profile</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#"><i class="fa fa-lock pr-2"></i> Change Password</a>
+                        <a class="dropdown-item" href="{{route('adChangePass')}}"><i class="fa fa-lock pr-2"></i> Change Password</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{route('getAdLogout')}}"><i class="fa fa-power-off pr-2"></i> Logout</a>
                     </div>

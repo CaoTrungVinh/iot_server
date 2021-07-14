@@ -8,6 +8,11 @@
             App IoT Admin</h1>
         <div class="column">
             <div class="login-box-form" style="width: 400px; text-align: center; margin: auto">
+                <p class="form" style="color: red; font-size: 15px!important;">
+                    @error('changePass')
+                    <small class="form-text text-danger">{{ $message }}</small>
+                    @enderror
+                </p>
                 <h3 class="mb-2" style="margin-bottom: 20px!important;">Đăng nhập</h3>
                 <form method="post" action="{{route('postAdLogin')}}" class="mt-2">
                     @csrf

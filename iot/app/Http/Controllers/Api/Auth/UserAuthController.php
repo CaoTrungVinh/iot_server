@@ -68,7 +68,7 @@ class UserAuthController extends Controller
         if (Auth::attempt(['email' => $request->get("email"), 'password' => $request->get("password")])) {
             // laays user tu database
             $user = Auth::user();
-            if($user->active==1){
+            if($user->active==1 && $user->role_id==1){
             // get accesstoken
             $accessToken = $user->createToken('AccessToken');
             // tra vee json chứa accesstoken
@@ -92,7 +92,7 @@ class UserAuthController extends Controller
                 'user' => $u,
             ], 200);
             }else{
-                return response()->json(['mesage' => 'Tài khoản chưa được kích hoạt'], 401);
+                return response()->json(['mesage' => 'Tài khoản chưa được kích hoạt hoặc không phải là người dùng'], 401);
             }
         } else {
             return response()->json(['mesage' => 'Unauthorized'], 401);

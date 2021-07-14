@@ -3,15 +3,17 @@
     <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
         <h5 class="mb-0" ><strong>Tài khoản</strong></h5>
         <span class="text-secondary">Trang chủ <i class="fa fa-angle-right"></i> Tài khoản</span>
-
-        <a href="{{route('add_user')}}">
-            <small class="bt_addUser"><strong><i class="fas fa-plus"></i></strong></small>
-        </a>
-
         <div class="mt-4 mb-4 p-3 bg-white border shadow-sm lh-sm">
             <!--Order Listing-->
             <div class="product-list">
-
+                <div class="row border-bottom mb-4">
+                    <div class="col-sm-8 pt-2"><h5 class="mb-0" ><strong>Quản lý tài khoản</strong></h5></div>
+                    <div class="col-sm-4 text-right pb-3">
+                        <button type="button" class="btn btn-danger shadow pull-right">
+                            <a style="color: white; font-weight: normal" href="{{route('create_user')}}">Thêm tài khoản</a>
+                        </button>
+                    </div>
+                </div>
                 <div class="table-responsive product-list">
 
                     <table class="table table-bordered mt-3" id="productList">
@@ -54,7 +56,7 @@
 
                             <td class="align-middle text-center">
                                 {{--<button class="btn btn-theme" data-toggle="modal" data-target="#orderInfo"><i class="fa fa-eye"></i></button>--}}
-                                <button class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><i class="fa fa-eye"></i></button>
+                                <button href="#" id="bt_view" class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><i class="fa fa-eye"></i></button>
                                 <a href="{{route('user_edit', $data->id)}}" class="btn btn-link text-themestyle p-1"><i class="fa fa-pencil"></i></a>
                                 <button class="btn btn-link text-danger p-1"><i class="fas fa-trash"></i></button>
                             </td>
@@ -66,7 +68,6 @@
                 </div>
             </div>
             <!--/Order Listing-->
-
             <!--Order Info Modal-->
             <div class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -92,16 +93,31 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+{{--                                @foreach($data as $data)--}}
+
                                 <tr>
-                                    <td scope="row">Red Shoes</td>
-                                    <td>2</td>
-                                    <td>$400</td>
-                                    <td>$800</td>
-                                    <td>$800</td>
-                                    <td>$800</td>
-                                    <td>$800</td>
-                                    <td>$800</td>
+                                    <td>{{$data->name}}</td>
+                                    <td>{{$data->email}}</td>
+                                    <td>{{$data->birthday}}</td>
+                                    <td>{{$data->phone}}</td>
+                                    <td>{{$data->gender}}</td>
+                                    <td>{{$data->address}}</td>
+                                    <td>
+                                        @if ($data->role_id == 2)
+                                            Admin
+                                        @else
+                                            Người dùng
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($data->active == 1)
+                                            <span class="badge badge-success">Hoạt động</span>
+                                        @else
+                                            <span class="badge badge-danger">Tạm khóa</span>
+                                        @endif
+                                    </td>
                                 </tr>
+{{--                                @endforeach--}}
                                 </tbody>
                             </table>
 
@@ -113,7 +129,18 @@
                 </div>
             </div>
             <!--Order Info Modal-->
+{{--<script>--}}
+{{--    $(document).ready(function() {--}}
+{{--        $('#bt_view').click(function(e) {--}}
+{{--            e.preventDefault();--}}
+{{--            $.get('vidu1.html', function(ketqua) {--}}
+{{--                $('#noidung').html(ketqua);--}}
+{{--                $('#noidung').html($('#chuoi-can-lay').html());--}}
+{{--            });--}}
 
+{{--        });--}}
+{{--    });--}}
+{{--</script>--}}
             <!--Order Update Modal-->
 {{--            <div class="modal fade" id="orderUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
 {{--                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">--}}

@@ -11,7 +11,7 @@
                         <div class="form-group row">
                             <div class="col-sm-6">
                                 <label class="control-label" for="input-1">Họ tên</label>
-                                <input type="text" class="form-control" id="input-1" placeholder=""/>
+                                <input type="text" class="form-control" id="input-1" placeholder="{{$user->name}}"/>
                             </div>
                             <div class="col-sm-6">
                                 <label class="control-label" for="input-2">Email người dùng</label>

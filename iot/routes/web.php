@@ -6,29 +6,39 @@ use App\Http\Controllers\DHT11Controller;
 Route::get('/fcm', [App\Http\Controllers\Controller::class, 'index'])->name('fcm');
 Route::get('/send-notification', [App\Http\Controllers\Controller::class, 'sendNotification'])->name('send-notification');
 
-Route::get('register', [\App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
-Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'doRegister'])->name('register');
-Route::get('register', [\App\Http\Controllers\Auth\RegisterController::class, 'showRegister'])->name('register');
-Route::get('confirmemail/{email}/{key}', [\App\Http\Controllers\Auth\RegisterController::class, 'confirmEmail'])->name('confirmemail');
+//  Đăng ký, active tài khoản
+//Route::get('register', [\App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
+//Route::post('register', [\App\Http\Controllers\Auth\RegisterController::class, 'doRegister'])->name('register');
+//Route::get('register', [\App\Http\Controllers\Auth\RegisterController::class, 'showRegister'])->name('register');
+//Route::get('confirmemail/{email}/{key}', [\App\Http\Controllers\Auth\RegisterController::class, 'confirmEmail'])->name('confirmemail');
 
 //  route admin
 Route::get('adminLogin', [\App\Http\Controllers\Admin\AdminLoginController::class, 'showLogin'])->name('adLogin');
 Route::post('postAdminLogin', [\App\Http\Controllers\Admin\AdminLoginController::class, 'postLogin'])->name('postAdLogin');
 Route::get('getAdminLogout', [\App\Http\Controllers\Admin\AdminLoginController::class, 'getLogout'])->name('getAdLogout');
-
+//      Quên mật khẩu của admin
 Route::get('adminForgotPass', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showForgotPass'])->name('AdForgotPass');
 Route::post('postAdminForgotPass', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'doForgotPass'])->name('postAdForgotPass');
 
 Route::group(['middleware' => 'checkAdminLogin'], function () {
     Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
     Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    Route::get('adminProfile', [\App\Http\Controllers\Admin\ProfileAdminController::class, 'showProfile'])->name('adProfile');
-
-    ///////
+//      Đổi pass
+    Route::get('/adminChangePass', [\App\Http\Controllers\Auth\ChangePasswordController::class, 'showChangePass'])->name('adChangePass');
+    Route::post('/postAdminChangePass', [\App\Http\Controllers\Auth\ChangePasswordController::class, 'doChangePass'])->name('postAdChangePass');
+//      Profile, update profile
+    Route::get('/adminProfile', [\App\Http\Controllers\Admin\ProfileAdminController::class, 'showProfile'])->name('adProfile');
+    Route::post('/UpdateAdminProfile', [\App\Http\Controllers\Admin\ProfileAdminController::class, 'updateProfile'])->name('updateAdProfile');
+//    Quản lý tài khoản, thêm, sửa, xóa User
     Route::get('/user', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
-    Route::get('/addUser', [\App\Http\Controllers\Admin\UserController::class, 'showAddUser'])->name('add_user');
-    Route::get('/user_edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'showEditUser'])->name('user_edit');
+    Route::get('/view_user/{id}', [\App\Http\Controllers\Admin\UserController::class, 'viewUser'])->name('view_user');
+    Route::get('/createUser', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('create_user');
+    Route::post('/storeUser', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('store_user');
+    Route::get('confirmemail/{email}/{key}', [\App\Http\Controllers\Admin\UserController::class, 'confirmEmail'])->name('confirmemail');
+    Route::get('/user_edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user_edit');
 //    Route::get('/user_edit', [\App\Http\Controllers\Admin\UserController::class, 'showEditUser'])->name('user_edit');
+
+
     ///pond
     Route::get('/pond', [\App\Http\Controllers\Admin\PondController::class, 'index'])->name('pond');
     Route::get('/pond_create', [\App\Http\Controllers\Admin\PondController::class, 'create'])->name('pond_create');
@@ -36,6 +46,9 @@ Route::group(['middleware' => 'checkAdminLogin'], function () {
 //    Route::get('/pond_edit', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond_edit');
     Route::get('/pond/{id}/edit', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond/{id}/edit');
     Route::get('/pond/{id}/delete', [\App\Http\Controllers\Admin\PondController::class, 'delete'])->name('pond/{id}/delete');
+
+
+
     ////toolkit
     Route::get('/toolkit', [\App\Http\Controllers\Admin\ToolkitController::class, 'index'])->name('toolkit');
     Route::get('/toolkit_store', [\App\Http\Controllers\Admin\ToolkitController::class, 'store'])->name('toolkit_store');

@@ -3,6 +3,29 @@
     <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
         <h5 class="mb-0"><strong>Thông tin tài khoản</strong></h5>
         <span class="text-secondary"> Trang chủ <i class="fa fa-angle-right"></i> Thông tin tài khoản </span>
+        <?php //Hiển thị thông báo thành công?>
+
+        @if ( Session::has('success') )
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <strong style="color: blue">{{ Session::get('success') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+        @endif
+
+        <?php //Hiển thị thông báo lỗi?>
+        @if ( Session::has('error') )
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <strong style="color:red;">{{ Session::get('error') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+        @endif
+
         <div class="row mt-3">
             <!--User profile content-->
             <div class="col-sm-12 col-md-8" style="flex:0 0 100%; max-width: 100%">
@@ -90,50 +113,75 @@
                                 </div>
                                 <div class="dropdown-divider"></div>
                             </form>
-
                         </div>
                         <!--/Personal info tab-->
 
                         <!--Resume tab-->
                         <div class="tab-pane fade p-4" id="custom-contact" role="tabpanel"
                              aria-labelledby="nav-contact">
-                            <form class="form-horizontal mt-4 mb-5" style="margin-top: 0px!important;">
+                            <form method="post" action="{{route('updateAdProfile')}}" class="form-horizontal mt-4 mb-5" style="margin-top: 0px!important;">
+                                @csrf
                                 <div class="form-group row">
                                     <div class="col-sm-6">
+                                        <p class="form">
                                         <label class="control-label" for="input-1">Tên người dùng</label>
-                                        <input type="text" class="form-control" id="input-1" placeholder="{{Session::get('Auth')->name}}"/>
+                                        <input type="text" class="form-control" id="input-1" name="p_name" value="{{Session::get('Auth')->name}}"/>
+                                            @error('mes')
+                                            <small class="form-text text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </p>
                                     </div>
                                     <div class="col-sm-6">
+                                        <p class="form">
                                         <label class="control-label" for="input-3">Ngày sinh</label>
-                                        <input type="text" class="form-control" id="input-3" placeholder="{{Session::get('Auth')->birthday}}"/>
+                                        <input type="text" class="form-control" id="input-3" name="p_birthday" value="{{Session::get('Auth')->birthday}}"/>
+                                            @error('mes')
+                                            <small class="form-text text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6">
                                         <label class="control-label" for="exampleFormControlSelect1">Giới tính</label>
-                                        <select class="form-control" id="exampleFormControlSelect1">
-                                            <option>{{Session::get('Auth')->gender}}</option>
-                                            <option>Nam</option>
-                                            <option>Nữ</option>
-                                            <option>Khác</option>
+                                        <select class="form-control" id="exampleFormControlSelect1" name="p_gender">
+                                            <option value="{{Session::get('Auth')->gender}}">{{Session::get('Auth')->gender}}</option>
+                                            <option value="Nam">Nam</option>
+                                            <option value="Nữ">Nữ</option>
+                                            <option value="Khác">Khác</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-6">
+                                        <p class="form">
                                         <label class="control-label" for="input-4">Số điện thoại</label>
-                                        <input type="number" maxlength="5" class="form-control" id="input-4"
-                                               placeholder="{{Session::get('Auth')->phone}}"/>
+                                        <input type="number" maxlength="5" class="form-control" name="p_phone" id="input-4"
+                                               value="{{Session::get('Auth')->phone}}"/>
+                                        @error('mes')
+                                        <small class="form-text text-danger">{{ $message }}</small>
+                                        @enderror
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6">
+                                        <p class="form">
                                         <label class="control-label" for="input-5">Địa chỉ</label>
-                                        <input type="text" class="form-control" id="input-5" placeholder="{{Session::get('Auth')->address}}"
+                                        <input type="text" class="form-control" id="input-5" name="p_address" value="{{Session::get('Auth')->address}}"
                                                style="width: 915px"/>
+                                        @error('mes')
+                                        <small class="form-text text-danger">{{ $message }}</small>
+                                        @enderror
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="form-group row" style="margin-top: 40px">
                                     <div class="col-sm-6" style="margin: auto">
-                                        <button class="col-sm-12 btn btn-theme">Cập nhật thông tin</button>
+                                        <p class="form">
+                                        <input type="submit" class="col-sm-12 btn btn-theme" name="update" value="Cập nhật thông tin" />
+                                        @error('update')
+                                        <small class="form-text text-danger">{{ $message }}</small>
+                                        @enderror
+                                        </p>
                                     </div>
                                 </div>
                             </form>
