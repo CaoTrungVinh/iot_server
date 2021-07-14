@@ -7,10 +7,9 @@
                 <div class="mt-1 mb-3 p-3 button-container bg-white border shadow-sm">
                     <h5 class="mb-0"><strong>Chỉnh sửa ao nuôi</strong></h5>
                     <form action="{{route('pond_update')}}" method="post" class="form-horizontal mt-4 mb-5">
-                        {{--<input type="hidden" id="_token" name="_token" value="{!! csrf_token() !!}" />--}}
                         @csrf
                         <input type="hidden" id="id" name="id" value="{{$getDataId->id}}" />
-                        
+
                         <div class="form-group row">
                             <div class="col-sm-6">
                                 <p class="form">
