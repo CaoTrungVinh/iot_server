@@ -48,18 +48,21 @@ class User extends Authenticatable
      *
      * @var array
      */
-    public function role() {
-        return $this->belongsTo( Role::class);
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 
-    public function ponds() {
-        return $this->hasMany('App\Models\Pond');
+    public function ponds()
+    {
+        return $this->hasMany(Pond::class, 'id_user');
     }
 
     public function routeNotificationForFcm()
     {
         return ['c63zyjhoQLSmarRcfwLP4E:APA91bEe7Nju2xX9ZXSKMa1z_EznyDBiKvSk450kTqpDSxe9J0QG7ZpT121y8V9YbadYNn91x1oJCmsNkLmOKTU8c5K8QbwLEYNkcByejLkfWzbg6yXvGkPPH4C9AlGBoidgSSTLBgJc'];
     }
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];

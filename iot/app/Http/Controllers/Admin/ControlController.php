@@ -19,7 +19,7 @@ class ControlController extends Controller
           WHERE control.id_pond = ponds.id and control.id_pump_in = pump_in.id and control.id_pump_out = pump_out.id and control.id_lamp = lamp.id and control.id_oxygen_fan = oxygen_fan.id');
         return view('controls.index', compact('controls'));
     }
-    public function store()
+    public function create()
     {
         return view('controls.store');
     }

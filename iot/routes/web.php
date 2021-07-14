@@ -43,19 +43,22 @@ Route::group(['middleware' => 'checkAdminLogin'], function () {
     Route::get('/pond', [\App\Http\Controllers\Admin\PondController::class, 'index'])->name('pond');
     Route::get('/pond_create', [\App\Http\Controllers\Admin\PondController::class, 'create'])->name('pond_create');
     Route::post('/pond_create', [\App\Http\Controllers\Admin\PondController::class, 'store'])->name('pond_store');
-//    Route::get('/pond_edit', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond_edit');
     Route::get('/pond/{id}/edit', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond/{id}/edit');
+    Route::post('/pond_update', [\App\Http\Controllers\Admin\PondController::class, 'update'])->name('pond_update');
     Route::get('/pond/{id}/delete', [\App\Http\Controllers\Admin\PondController::class, 'delete'])->name('pond/{id}/delete');
 
 
 
     ////toolkit
     Route::get('/toolkit', [\App\Http\Controllers\Admin\ToolkitController::class, 'index'])->name('toolkit');
-    Route::get('/toolkit_store', [\App\Http\Controllers\Admin\ToolkitController::class, 'store'])->name('toolkit_store');
-    Route::get('/toolkit_edit', [\App\Http\Controllers\Admin\ToolkitController::class, 'edit'])->name('toolkit_edit');
+    Route::get('/toolkit_create', [\App\Http\Controllers\Admin\ToolkitController::class, 'create'])->name('toolkit_create');
+    Route::post('/toolkit_create', [\App\Http\Controllers\Admin\ToolkitController::class, 'store'])->name('toolkit_store');
+    Route::get('/toolkit/{id}/edit', [\App\Http\Controllers\Admin\ToolkitController::class, 'edit'])->name('toolkit/{id}/edit');
+    Route::post('/toolkit_update', [\App\Http\Controllers\Admin\ToolkitController::class, 'update'])->name('toolkit_update');
+    Route::get('/toolkit/{id}/delete', [\App\Http\Controllers\Admin\ToolkitController::class, 'delete'])->name('toolkit/{id}/delete');
     ////control
     Route::get('/control', [\App\Http\Controllers\Admin\ControlController::class, 'index'])->name('control');
-    Route::get('/control_store', [\App\Http\Controllers\Admin\ControlController::class, 'store'])->name('control_store');
+    Route::get('/control_create', [\App\Http\Controllers\Admin\ControlController::class, 'create'])->name('control_create');
     Route::get('/control_edit', [\App\Http\Controllers\Admin\ControlController::class, 'edit'])->name('control_edit');
 
 });

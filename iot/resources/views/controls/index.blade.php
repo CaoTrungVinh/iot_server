@@ -8,7 +8,7 @@
                     <div class="col-sm-8 pt-2"><h5 class="mb-0"><strong>Quản lý bộ điều khiển</strong></h5></div>
                     <div class="col-sm-4 text-right pb-3">
                         <button type="button" class="btn btn-danger shadow pull-right">
-                            <a style="color: white; font-weight: normal" href="{{route('control_store')}}">Thêm bộ điều
+                            <a style="color: white; font-weight: normal" href="{{route('control_create')}}">Thêm bộ điều
                                 khiển</a>
                         </button>
                     </div>

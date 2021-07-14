@@ -52,7 +52,7 @@
                         @foreach($ponds as $ponds)
                         <tr>
                             <td>{{$ponds->name}}</td>
-                            <td>{{$ponds->name_user}}</td>
+                            <td>{{$ponds->users->name}}</td>
                             <td>{{$ponds->address}}</td>
 
                             <td class="align-middle text-center">

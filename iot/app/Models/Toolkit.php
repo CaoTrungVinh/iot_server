@@ -15,7 +15,7 @@ class Toolkit extends Model
 
     protected $table = "toolkits";
 
-    protected $fillable = ['name','address'];
+    protected $fillable = ['id','id_pond','id_temperature','id_ph','id_light', 'name','address'];
 
     public $timestamps = false;
 }

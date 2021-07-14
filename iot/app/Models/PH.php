@@ -13,4 +13,5 @@ class PH extends Model
     protected $fillable = ['value','ph_min','ph_max','warning','created_at'];
 
     public $timestamps = false;
+
 }
