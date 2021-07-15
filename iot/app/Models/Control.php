@@ -15,7 +15,7 @@ class Control extends Model
 
     protected $table = "control";
 
-    protected $fillable = ['name','address'];
+    protected $fillable = ['name','address','id_pond','id_pump_in','id_pump_out','id_lamp','id_oxygen_fan'];
 
     public $timestamps = false;
 }
