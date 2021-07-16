@@ -68,7 +68,7 @@ class UserAuthController extends Controller
         if (Auth::attempt(['email' => $request->get("email"), 'password' => $request->get("password")])) {
             // laays user tu database
             $user = Auth::user();
-            if($user->active==1 && $user->role_id==1){
+            if($user->active==1){
             // get accesstoken
             $accessToken = $user->createToken('AccessToken');
             // tra vee json chứa accesstoken

@@ -77,8 +77,8 @@
 
 </div>
 
+</body>
 <!--Page Wrapper-->
-
 <!-- Page JavaScript Files-->
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery-1.12.4.min.js') }}"></script>
@@ -134,6 +134,6 @@
     //Nice select
     $('.bulk-actions').niceSelect();
 </script>
+@stack('additionalJS')
 
-</body>
 </html>

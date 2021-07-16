@@ -14,10 +14,12 @@ use App\Notifications\ActiveAccount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+//    Table user
     public function index(){
     $data = User::all();
     return view('users.index', compact('data'));
@@ -28,7 +30,7 @@ class UserController extends Controller
     }
 
 //    Chức năng tạo tài khoản user (methot: post)
-    public function store(Request $request)
+    public function storeUser(Request $request)
     {
         $request->validate([
             'r_email'     => 'required|email',
@@ -56,11 +58,12 @@ class UserController extends Controller
             ] );
 
             $user->notify( new ActiveAccount() );
-
-            return redirect()->back()->withInput($request->only('ok'))->withErrors(['ok' => 'Tạo tài khoản thành công - kiểm tra email để kích hoạt tài khoản và lấy mật khẩu đăng nhập.']);
+            Session::flash('success', 'Tạo tài khoản Người dùng thành công!');
+            return redirect()->back();
         } else {
             // đã tồn tại active 1 thông báo lỗi
             if ($user->active == 1) {
+                Session::flash('error', 'Bạn vừa tạo tài khoản Người dùng thất bại!!!');
                 return redirect()->back()->withErrors(['r_email' => 'Email này đã được đăng ký tài khoản khác!']);
             } else {
                 // email tồn tại active =0 gửi lại email
@@ -77,37 +80,107 @@ class UserController extends Controller
                 $user->key_time = Carbon::now()->addHour(12)->format('Y-m-d H:i:s');
                 $user->update();
                 $user->notify(new ActiveAccount());
-
-                return redirect()->back()->withInput($request->only('ok'))->withErrors(['ok' => 'Tạo tài khoản thành công - kiểm tra email để kích hoạt tài khoản và lấy mật khẩu đăng nhập.']);
+                Session::flash('success', 'Tạo tài khoản Người dùng thành công!');
+                return redirect()->back();
             }
         }
     }
 
-    public function viewUser($id){
-        $user = User::find( $id );
-        return response()->json($user);
+//    Chức năng tạo tài khoản Admin (methot: post)
+    public function storeAdmin(Request $request)
+    {
+        $request->validate([
+            'ad_email'     => 'required|email',
+            'ad_userName' => 'required|min:3|max:50',
+            'ad_pass'     => 'required|min:8',
+            'read_pass'     => 'required|same:ad_pass',
+        ], $this->messages());
+        $user = User::where( 'email', '=', $request->ad_email )->first();
+        // email không tồn tại gửi email mơi
+        if ( $user == null ) {
+            $token = Str::random( 40 );
+            $user  = User::create( [
+                'email'      => $request->ad_email,
+                'password'   => Hash::make($request->ad_pass),
+                'name' => $request->ad_userName,
+                'random_key' => $token,
+                'role_id' => 2,
+                'active' => 1,
+                'key_time'   => Carbon::now()->addHour( 12 )->format( 'Y-m-d H:i:s' )
+            ] );
+            Session::flash('success', 'Bạn vừa tạo tài khoản Admin thành công!');
+            return redirect()->back();
+        } else {
+            // đã tồn tại active 1 thông báo lỗi
+            if ($user->active == 1) {
+                Session::flash('error', 'Bạn vừa tạo tài khoản Admin thất bại!!!');
+                return redirect()->back()->withErrors(['ad_email' => 'Email này đã được đăng ký tài khoản khác!']);
+            } else {
+                // email tồn tại active =0 gửi lại email
+                $token = Str::random(40);
+                $user->email = $request->ad_email;
+                $user->password = Hash::make($request->ad_pass);
+                $user->name = $request->ad_userName;
+                $user->role_id = 2;
+                $user->active = 1;
+                $user->random_key = $token;
+                $user->key_time = Carbon::now()->addHour(12)->format('Y-m-d H:i:s');
+                $user->update();
+                Session::flash('success', 'Bạn vừa tạo tài khoản Admin thành công!');
+                return redirect()->back();
+            }
+        }
     }
 
+
+
+
+//    Hiển thị trang edit User
     public function edit($id){
         $user = User::find( $id );
 //        dd($u);
         return view('users.edit', compact('user'));
     }
 
-//    public function showEditUser(){
-////        $user = User::find( $id );
-////        dd($u);
-//        return view('users.edit');
-//    }
+//    Cập nhật thông tin user
+    public function update(Request $request, $id){
+        $request->validate([
+            'edit_email'     => 'required|email',
+            'edit_name' => 'required|min:3|max:50',
+            'edit_birthday'     => 'required|min:4|max:10',
+            'edit_phone'     => 'required|min:10|max:11',
+            'edit_address'     => 'required',
+        ], $this->messages());
+        $u = User::find( $id );
+        $u->name = $request->edit_name;
+        $u->email = $request->edit_email;
+        $u->birthday = $request->edit_birthday;
+        $u->phone = $request->edit_phone;
+        $u->gender = $request->edit_gender;
+        $u->address = $request->edit_address;
+        $u->role_id = $request->edit_role;
+        $u->active = $request->edit_active;
+        if ($u->update()){
+//            update thành công
+            Session::flash('success', 'Đã cập nhật thông tin tài khoản thành công!');
+//            Kiểm tra user vừa cập nhật trùng vs tài khoản đăng nhập thì đăng xuất tài khoản đó
+            if(($u->active==0 && $u->id == Session::get('Auth')->id) || ($u->role_id==1 && $u->id == Session::get('Auth')->id)){
+                return redirect()->route('getAdLogout');
+            }
+        }else {
+            Session::flash('error', 'Cập nhật thông tin thất bại!!!');
+        }
+        return redirect()->back();
+    }
 
 
-//    public function edit(Request $request, $id){
-//        $data = User::all();
-//        return view('users.edit');
-//    }
+    public function delete($u_id)
+    {
+
+    }
 
 
-//      Hàm active email khi tạo tài khoản
+//      Hàm active email khi tạo tài khoản user
     public function confirmEmail( $email, $key ) {
         //		Session::forget( 'signup' );
 
@@ -140,9 +213,15 @@ class UserController extends Controller
             'r_userName.required' => 'Bạn cần nhập họ tên',
             'r_userName.min'      => 'Họ tên cần lớn hơn 3 kí tự',
             'r_userName.max'      => 'Họ tên cần bé hơn 50 kí tự',
+            'ad_userName.required' => 'Bạn cần nhập họ tên',
+            'ad_userName.min'      => 'Họ tên cần lớn hơn 3 kí tự',
+            'ad_userName.max'      => 'Họ tên cần bé hơn 50 kí tự',
             'r_email.required'     => 'Bạn cần nhập Email.',
             'r_email.email'        => 'Định dạng Email bị sai.',
             'r_email.unique'       => 'Email đã tồn tại',
+            'ad_email.required'     => 'Bạn cần nhập Email.',
+            'ad_email.email'        => 'Định dạng Email bị sai.',
+            'ad_email.unique'       => 'Email đã tồn tại',
             'r_birthday.required'      => 'Bạn cần nhập ngày tháng năm sinh.',
             'r_birthday.min'           => 'Tối thiểu bạn phải nhập năm sinh gồm 4 số',
             'r_birthday.max'        => 'Bạn đã nhập quá kí tự cho phép. VD: 01/01/2021',
@@ -152,6 +231,65 @@ class UserController extends Controller
             'r_phone.min'           => 'Số điện thoại phải tối thiểu đủ 10 số',
             'r_phone.max'        => 'Số điện thoại không được quá 11 số',
             'r_address.required'      => 'Bạn cần nhập địa chỉ.',
+            'ad_pass.required'      => 'Cần phải nhập mật khẩu đăng nhập.',
+            'ad_pass.min'      => 'Mật khẩu phải đủ 8 ký tự trở lên.',
+            'read_pass.required'      => 'Cần nhập xác nhận mật khẩu.',
+            'read_pass.same'        => 'Xác nhận mật khẩu không trùng với mật khẩu.',
+            'edit_name.required' => 'Bạn cần nhập họ tên',
+            'edit_name.min'      => 'Họ tên cần lớn hơn 3 kí tự',
+            'edit_name.max'      => 'Họ tên cần bé hơn 50 kí tự',
+            'edit_email.required'     => 'Bạn cần nhập Email.',
+            'edit_email.email'        => 'Định dạng Email bị sai.',
+            'edit_email.unique'       => 'Email đã tồn tại',
+            'edit_birthday.required'      => 'Bạn cần nhập ngày tháng năm sinh.',
+            'edit_birthday.min'           => 'Tối thiểu bạn phải nhập năm sinh gồm 4 số',
+            'edit_birthday.max'        => 'Bạn đã nhập quá kí tự cho phép. VD: 01/01/2021',
+            'edit_phone.required'      => 'Bạn cần nhập số điện thoại liên lạc.',
+            'edit_phone.min'           => 'Số điện thoại phải tối thiểu đủ 10 số',
+            'edit_phone.max'        => 'Số điện thoại không được quá 11 số',
+            'edit_address.required'      => 'Bạn cần nhập địa chỉ.',
         ];
+    }
+
+
+
+
+
+
+
+
+    //    Hiển thị thông tin một user
+    public function viewUser($id)
+    {
+        $user = [User::find($id)];
+//        if (request()->ajax()) {
+//            return datatables()->of($user)
+//                ->addColumn('name', function ($user) {
+//                    return $user->name;
+//                })
+//                ->addColumn('email', function ($user) {
+//                    return $user->email;
+//                })
+//                ->addColumn('birthday', function ($user) {
+//                    return $user->birthday;
+//                })
+//                ->addColumn('phone', function ($user) {
+//                    return $user->phone;
+//                })
+//                ->addColumn('gender', function ($user) {
+//                    return $user->gender;
+//                })
+//                ->addColumn('address', function ($user) {
+//                    return $user->address;
+//                })
+//                ->rawColumns(['name',
+//                    'email',
+//                    'birthday',
+//                    'phone',
+//                    'gender',
+//                    'address'])
+//                ->make(true);
+            return response()->json($user);
+//        }
     }
 }

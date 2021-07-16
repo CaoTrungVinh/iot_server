@@ -31,12 +31,19 @@ Route::group(['middleware' => 'checkAdminLogin'], function () {
     Route::post('/UpdateAdminProfile', [\App\Http\Controllers\Admin\ProfileAdminController::class, 'updateProfile'])->name('updateAdProfile');
 //    Quản lý tài khoản, thêm, sửa, xóa User
     Route::get('/user', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
+
+
+//    -----------------------------------
     Route::get('/view_user/{id}', [\App\Http\Controllers\Admin\UserController::class, 'viewUser'])->name('view_user');
+
+
+
     Route::get('/createUser', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('create_user');
-    Route::post('/storeUser', [\App\Http\Controllers\Admin\UserController::class, 'store'])->name('store_user');
+    Route::post('/storeUser', [\App\Http\Controllers\Admin\UserController::class, 'storeUser'])->name('store_user');
+    Route::post('/storeAdmin', [\App\Http\Controllers\Admin\UserController::class, 'storeAdmin'])->name('store_admin');
     Route::get('confirmemail/{email}/{key}', [\App\Http\Controllers\Admin\UserController::class, 'confirmEmail'])->name('confirmemail');
     Route::get('/user_edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user_edit');
-//    Route::get('/user_edit', [\App\Http\Controllers\Admin\UserController::class, 'showEditUser'])->name('user_edit');
+    Route::post('/user_update/{id}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('user_update');
 
 
     ///pond

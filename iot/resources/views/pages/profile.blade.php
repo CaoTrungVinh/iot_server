@@ -40,7 +40,7 @@
                             </a>
                             <a class="nav-item nav-link" id="nav-contact" data-toggle="tab" href="#custom-contact"
                                role="tab" aria-controls="nav-contact" aria-selected="false">
-                                <i class="fas fa-edit"></i></i> Chỉnh sửa thông tin tài khoản
+                                <i class="fas fa-edit"></i> Chỉnh sửa thông tin tài khoản
                             </a>
                         </div>
                     </nav>
@@ -143,6 +143,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6">
+                                        <p class="form">
                                         <label class="control-label" for="exampleFormControlSelect1">Giới tính</label>
                                         <select class="form-control" id="exampleFormControlSelect1" name="p_gender">
                                             <option value="{{Session::get('Auth')->gender}}">{{Session::get('Auth')->gender}}</option>
@@ -150,6 +151,10 @@
                                             <option value="Nữ">Nữ</option>
                                             <option value="Khác">Khác</option>
                                         </select>
+                                            @error('p_gender')
+                                            <small class="form-text text-danger">{{ $message }}</small>
+                                            @enderror
+                                        </p>
                                     </div>
                                     <div class="col-sm-6">
                                         <p class="form">
@@ -162,12 +167,11 @@
                                         </p>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-sm-6">
+                                <div class="form-group row" style="margin: auto; width: 100%; display: contents">
+                                    <div class="col-sm-6" style="display: contents">
                                         <p class="form">
                                         <label class="control-label" for="input-5">Địa chỉ</label>
-                                        <input type="text" class="form-control" id="input-5" name="p_address" value="{{Session::get('Auth')->address}}"
-                                               style="width: 915px"/>
+                                        <input type="text" class="form-control" id="input-5" name="p_address" value="{{Session::get('Auth')->address}}"/>
                                         @error('mes')
                                         <small class="form-text text-danger">{{ $message }}</small>
                                         @enderror
