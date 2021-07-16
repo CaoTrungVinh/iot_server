@@ -1,6 +1,28 @@
 @extends('layout.index')
 @section('content')
     <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
+        <?php //Hiển thị thông báo thành công?>
+
+        @if ( Session::has('success') )
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <strong>{{ Session::get('success') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+        @endif
+
+        <?php //Hiển thị thông báo lỗi?>
+        @if ( Session::has('error') )
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <strong>{{ Session::get('error') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+        @endif
         <div class="mt-4 mb-4 p-3 bg-white border shadow-sm lh-sm">
             <!--Order Listing-->
             <div class="product-list">
@@ -74,10 +96,8 @@
                                 <td class="align-middle text-center">
                                     <button class="btn btn-theme" data-toggle="modal" data-target="#orderInfo"><a><i
                                                     class="fa fa-eye"></i></a></button>
-                                    <button class="btn btn-success" data-toggle="modal"><a style="color: white"
-                                                                                           href="{{route('control_edit')}}"><i
-                                                    class="fa fa-pencil"></i></a></button>
-                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                    <button class="btn btn-success" data-toggle="modal"><a style="color: white" href="/control/{{$controls->id}}/edit"><i class="fa fa-pencil"></i></a></button>
+                                    <button class="btn btn-danger"><a style="color: white" href="/control/{{ $controls->id }}/delete"><i class="fas fa-trash"></i></a></button>
                                 </td>
 
                             </tr>

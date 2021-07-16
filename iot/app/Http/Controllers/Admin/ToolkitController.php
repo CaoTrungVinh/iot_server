@@ -140,7 +140,7 @@ class ToolkitController extends Controller
             "light" => $request->get("light"),
             "warning" => $request->get("warning_light"),
         ]);
-        if ($toolkit || $temp || $ph &&$light) {
+        if ($toolkit || $temp || $ph || $light) {
             Session::flash('success', 'Chỉnh sửa bộ đo thành công!');
         } else {
             Session::flash('error', 'Chỉnh sửa bộ đo thất bại!');

@@ -66,7 +66,10 @@ Route::group(['middleware' => 'checkAdminLogin'], function () {
     ////control
     Route::get('/control', [\App\Http\Controllers\Admin\ControlController::class, 'index'])->name('control');
     Route::get('/control_create', [\App\Http\Controllers\Admin\ControlController::class, 'create'])->name('control_create');
-    Route::get('/control_edit', [\App\Http\Controllers\Admin\ControlController::class, 'edit'])->name('control_edit');
+    Route::post('/control_create', [\App\Http\Controllers\Admin\ControlController::class, 'store'])->name('control_store');
+    Route::get('/control/{id}/edit', [\App\Http\Controllers\Admin\ControlController::class, 'edit'])->name('control/{id}/edit');
+    Route::post('/control_update', [\App\Http\Controllers\Admin\ControlController::class, 'update'])->name('control_update');
+    Route::get('/control/{id}/delete', [\App\Http\Controllers\Admin\ControlController::class, 'delete'])->name('control/{id}/delete');
 
 });
 
