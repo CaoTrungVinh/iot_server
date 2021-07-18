@@ -20,18 +20,19 @@ class ProfileUser extends Controller
         $infos = User::where("id", "=", $user->getAuthIdentifier())->first();
         if (!$infos)
             return \response()->json([
-                'message'=>'Unauthorized'
+                'message' => 'Unauthorized'
             ]);
         return response()->json($infos);
     }
 
 //    Cập mhật thông tin
-    public function updateProfile(Request $request){
+    public function updateProfile(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:30',
             'phone' => 'nullable|regex:/^[\d\s]*$/|max:10|min:10',
             'birthday' => 'required',
-            'gender'=>'required|string|max:4',
+            'gender' => 'required|string|max:4',
             'address' => 'required|string|max:255'
         ]);
         if ($validator->fails()) {
@@ -52,7 +53,7 @@ class ProfileUser extends Controller
         if ($acc->save())
             return response()
                 ->json(['successMessage' => 'Thay đổi thông tin thành công!']);
-        return  response()
+        return response()
             ->json(['errMessage' => 'Thay đổi thông tin thất bại!'], 401);
 
     }
@@ -78,13 +79,13 @@ class ProfileUser extends Controller
         $newPassword = $request->newPassword;
         $newPasswordConfirm = $request->newPasswordConfirm;
 
-        if (!Hash::check($currentPassword,$account->password))
+        if (!Hash::check($currentPassword, $account->password))
             return back()
                 ->with(['errorMessage' => 'Mật khẩu hiện tại không đúng!']);
-        if(Hash::check($newPassword,$account->password))
+        if (Hash::check($newPassword, $account->password))
             return back()
                 ->with(['errorMessage' => 'Mật khẩu mới không được trùng với mật khẩu cũ!']);
-        $account->password =  Hash::make($newPassword);
+        $account->password = Hash::make($newPassword);
         if ($account->save())
             return response()
                 ->json(['successMessage' => 'Thay đổi mật khẩu thành công!'], 200);

@@ -16,5 +16,10 @@ class Pump_In extends Model
 
     protected $fillable = ['status','timer_on','timer_off'];
 
+    public function controls()
+    {
+        return $this->belongsTo(Control::class, 'id_pump_in', 'id');
+    }
+
     public $timestamps = false;
 }

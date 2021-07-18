@@ -5,7 +5,7 @@
         <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
             <h3 class="logo"><a href="{{route('home')}}" class="text-secondary logo">
 {{--                    <i class="fa fa-rocket"></i>--}}
-                    App IoT<span class="small"> Admin</span></a></h3>
+                    Hệ Thống Chương-Vĩnh<span class="small"></span></a></h3>
         </div>
     </div>
     <!--Logo-->
@@ -38,7 +38,7 @@
                         <a class="dropdown-item" href="{{route('getAdLogout')}}"><i class="fa fa-power-off pr-2"></i> Logout</a>
                     </div>
                         <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="assets/img/icon_nam.png" alt="Adam" class="rounded-circle" style="width:40px; height:40px; margin-bottom: -2px">
+                            <img src="{{ asset('assets/img/icon_nam.png') }}" alt="Adam" class="rounded-circle" style="width:40px; height:40px; margin-bottom: -2px">
                             <p style="font-size: 13px; color: #6c757d; margin-bottom: 0px"> {{Session::get('Auth')->name}}</p>
                         </a>
                 </div>

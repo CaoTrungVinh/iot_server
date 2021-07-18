@@ -41,24 +41,26 @@
                 <div class="table-responsive product-list">
                     <table class="table table-bordered mt-3" id="productList">
                         <thead>
-                        <tr style="color: #f6f6f7;background: #007bff;">
+                        <tr style="color: #f6f6f7; background-color: #007bff; text-align: center">
                             <th>Tên ao</th>
                             <th>Người sở hữu</th>
+                            <th>SĐT người sở hữu</th>
                             <th>Địa chỉ ao</th>
                             <th>Quản lý</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($ponds as $ponds)
-                        <tr>
+                        <tr style="text-align: center">
                             <td>{{$ponds->name}}</td>
                             <td>{{$ponds->users->name}}</td>
+                            <td>{{$ponds->users->phone}}</td>
                             <td>{{$ponds->address}}</td>
 
                             <td class="align-middle text-center">
-                                <button class="btn btn-theme" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>
-                                <button class="btn btn-success" data-toggle="modal"><a style="color: white" href="/pond/{{$ponds->id}}/edit"><i class="fa fa-pencil"></i></a></button>
-                                <button class="btn btn-danger"><a style="color: white" href="/pond/{{ $ponds->id }}/delete"><i class="fas fa-trash"></i></a></button>
+                                <button onclick="showInfo({{$ponds->id}}, '{{$ponds->users->name}}', {{$ponds->users->phone}})" class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>
+                                <a href="{{route('pond_edit', $ponds->id)}}" class="btn btn-link text-themestyle p-1"><i class="fa fa-pencil"></i></a>
+                                <button onclick="viewModalDelete({{$ponds->id}}, '{{$ponds->name}}')" class="btn btn-link text-danger p-1" id="btn_delete"><i class="fas fa-trash"></i></button>
                             </td>
 
                         </tr>
@@ -69,12 +71,27 @@
             </div>
             <!--/Order Listing-->
 
+            {{--            modal delete User--}}
+            <div id="id01" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0;  width: 50%;  height: 35%;  background-color: rgba(77, 85, 101, 0.44); margin: auto;">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+                <form class="modal-content">
+                    <div class="container">
+                        <h3 id="title_delete"></h3>
+                        <p id="conten"></p>
+                        <div class="clearfix">
+                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                            <button type="button" id="btn-de" class="deletebtn">Delete</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <!--Order Info Modal-->
             <div class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content" style="width: auto">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Tên</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle" style="color: black!important;"></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -82,17 +99,23 @@
                         <div class="modal-body">
                             <table class="table table-striped table-bordered">
                                 <thead>
-                                <tr>
+                                <tr style="color: #f6f6f7; background-color: #007bff; text-align: center">
+                                    <th>ID</th>
                                     <th>Tên ao</th>
                                     <th>Người sở hữu</th>
                                     <th>Địa chỉ ao</th>
+                                    <th>Bộ đo</th>
+                                    <th>Bộ điều khiển</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td scope="row">Red Shoes</td>
-                                    <td>2</td>
-                                    <td>$400</td>
+                                <tr style="text-align: center; color: black!important;">
+                                    <td id="p_id" ></td>
+                                    <td id="p_name" ></td>
+                                    <td id="p_people" ></td>
+                                    <td id="p_address" ></td>
+                                    <td id="p_toolkit" ></td>
+                                    <td id="p_control" ></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -105,86 +128,47 @@
                 </div>
             </div>
             <!--Order Info Modal-->
-
-            <!--Order Update Modal-->
-            <div class="modal fade" id="orderUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Ord#13 details update</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th scope="row">Item</th>
-                                    <th class="order-qty-head">Quantity</th>
-                                    <th>Unit price</th>
-                                    <th>Total</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="align-middle">01</td>
-                                    <td scope="row" class="align-middle">Red Shoes</td>
-                                    <td class="text-center align-middle"><input type="text" value="2" class="order-qty"></td>
-                                    <td class="align-middle">$400</td>
-                                    <td class="align-middle">$800</td>
-                                    <td style="width: 120px;" class="align-middle">
-                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">02</td>
-                                    <td class="align-middle" scope="row">Blue shirt</td>
-                                    <td class="text-center align-middle"><input type="text" value="1" class="order-qty"></td>
-                                    <td class="align-middle">$400</td>
-                                    <td class="align-middle">$400</td>
-                                    <td class="align-middle">
-                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">03</td>
-                                    <td class="align-middle" scope="row">Knickers</td>
-                                    <td class="text-center align-middle"><input type="text" value="3" class="order-qty"></td>
-                                    <td class="align-middle">$300</td>
-                                    <td class="align-middle">$900</td>
-                                    <td class="align-middle">
-                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Order Update Modal-->
         </div>
-
-        <!--Footer-->
-        <div class="row mt-5 mb-4 footer">
-            <div class="col-sm-8">
-                <span>&copy; All rights reserved 2019 designed by <a class="text-info" href="#">A-Fusion</a></span>
-            </div>
-            <div class="col-sm-4 text-right">
-                <a href="#" class="ml-2">Contact Us</a>
-                <a href="#" class="ml-2">Support</a>
-            </div>
-        </div>
-        <!--Footer-->
-
     </div>
+
+    @push('additionalJS')
+        <script>
+            function showInfo(p_id, p_nguoi, p_phone){
+                $.ajax({
+                    url: '{!! url('/pond/infor') !!}'+ '/' + p_id,
+                    type: 'GET',
+                    success: function (data) {
+                        document.getElementById("exampleModalLongTitle").innerText = "Thông tin chi tiết của ao nuôi " + data[0].name;
+                        document.getElementById("p_id").innerText = data[0].id;
+                        document.getElementById("p_name").innerText = data[0].name;
+                        document.getElementById("p_people").innerText = p_nguoi;
+                        // document.getElementById("p_phone").innerText = p_phone;
+                        document.getElementById("p_address").innerText = data[0].address;
+                        document.getElementById("p_toolkit").innerText = data[0].tollkits_count;
+                        document.getElementById("p_control").innerText = data[0].controls_count;
+                    },
+                    error: function (data) {
+                        console.log('Error: ', data);
+                    }
+                });
+            }
+
+            function viewModalDelete(p_id, p_name){
+                document.getElementById('id01').style.display='block';
+                document.getElementById("title_delete").innerText = "Xóa ao nuôi ".concat(p_name);
+                document.getElementById("conten").innerText = "Có chắc muốn xóa ao nuôi có ID: " + p_id + " ?";
+
+                var de = document.getElementById('btn-de');
+                window.onclick = function(event) {
+                    if (event.target == de) {
+                        document.getElementById('id01').style.display='none';
+                        location.href = '{!! url('/pond/delete') !!}'+ '/' + p_id;
+                        // modal.style.display = "none";
+                    }
+                }
+            }
+
+        </script>
+    @endpush
+
 @endsection

@@ -17,5 +17,10 @@ class Oxygen_fan extends Model
 
     protected $fillable = ['status','timer_on','timer_off'];
 
+    public function controls()
+    {
+        return $this->belongsTo(Control::class, 'id_oxygen_fan', 'id');
+    }
+
     public $timestamps = false;
 }

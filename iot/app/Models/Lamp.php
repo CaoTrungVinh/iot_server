@@ -17,5 +17,10 @@ class Lamp extends Model
 
     protected $fillable = ['status','timer_on','timer_off'];
 
+    public function controls()
+    {
+        return $this->belongsTo(Control::class, 'id_lamp', 'id');
+    }
+
     public $timestamps = false;
 }

@@ -29,6 +29,13 @@ class PondController extends Controller
         return view('ponds.index', ['ponds' => $ponds]);
     }
 
+    public function viewPond($id_pind)
+    {
+        $pond = Pond::withCount('tollkits')->withCount('controls')
+            ->where('id', '=', $id_pind)->get();
+        return response()->json($pond);
+    }
+
     public function create()
     {
         $pond_create = DB::select('SELECT users.`name`, users.`id`

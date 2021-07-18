@@ -1,8 +1,30 @@
 @extends('layout.index')
 @section('content')
     <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
-        <h5 class="mb-0" ><strong>Tài khoản</strong></h5>
-        <span class="text-secondary">Trang chủ <i class="fa fa-angle-right"></i> Tài khoản</span>
+{{--        <h5 class="mb-0" ><strong>Tài khoản</strong></h5>--}}
+{{--        <span class="text-secondary">Trang chủ <i class="fa fa-angle-right"></i> Tài khoản</span>--}}
+
+        @if ( Session::has('success') )
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <strong>{{ Session::get('success') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+        @endif
+
+        <?php //Hiển thị thông báo lỗi?>
+        @if ( Session::has('error') )
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <strong>{{ Session::get('error') }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+        @endif
+
         <div class="mt-4 mb-4 p-3 bg-white border shadow-sm lh-sm">
             <!--Order Listing-->
             <div class="product-list">
@@ -58,7 +80,8 @@
                                 {{--<button class="btn btn-theme" data-toggle="modal" data-target="#orderInfo"><i class="fa fa-eye"></i></button>--}}
                                 <button onclick="showInfo({{$data->id}})" href="#" id="bt_view" class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><i class="fa fa-eye"></i></button>
                                 <a href="{{route('user_edit', $data->id)}}" class="btn btn-link text-themestyle p-1"><i class="fa fa-pencil"></i></a>
-                                <button class="btn btn-link text-danger p-1"><i class="fas fa-trash"></i></button>
+{{--                                <a onclick="deleteUser({{$data->id}})" class="btn btn-link text-danger p-1"><i class="fas fa-trash"></i></a>--}}
+                                <button onclick="viewModalDelete({{$data->id}}, '{{$data->email}}')" class="btn btn-link text-danger p-1" id="btn_delete"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
                         @endforeach
@@ -66,10 +89,25 @@
                     </table>
                 </div>
             </div>
-            <!--/Order Listing-->
+            <!--Index users-->
+
+{{--            modal delete User--}}
+            <div id="id01" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0;  width: 50%;  height: 35%;  background-color: rgba(77, 85, 101, 0.44); margin: auto;">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+                <form class="modal-content">
+                    <div class="container">
+                        <h3 id="title_delete"></h3>
+                        <p id="conten"></p>
+                        <div class="clearfix">
+                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                            <button type="button" id="btn-de" class="deletebtn">Delete</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
 
-            <!--Order Info Modal-->
+            <!--modal view User-->
             <div class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content" style="width: auto">
@@ -90,6 +128,8 @@
                                     <th>Số điện thoại</th>
                                     <th>Giới tính</th>
                                     <th>Địa chỉ</th>
+                                    <th>Tổng ao nuôi</th>
+                                    <th>Ngày tạo</th>
 {{--                                    <th>Quyền</th>--}}
 {{--                                    <th>Trạng thái</th>--}}
                                 </tr>
@@ -104,6 +144,8 @@
                                     <td id="v_phone" ></td>
                                     <td id="v_gender" ></td>
                                     <td id="v_address" ></td>
+                                    <td id="v_ponds" ></td>
+                                    <td id="v_dateCreate" ></td>
 {{--                                    <td id="v_roleID" ></td>--}}
 {{--                                    <td id="v_active" ></td>--}}
                                 </tr>
@@ -117,76 +159,8 @@
                     </div>
                 </div>
             </div>
-            <!--Order Info Modal-->
+            <!--modal view User-->
 
-
-
-            <!--Order Update Modal-->
-        {{--            <div class="modal fade" id="orderUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">--}}
-        {{--                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">--}}
-        {{--                    <div class="modal-content">--}}
-        {{--                        <div class="modal-header">--}}
-        {{--                            <h5 class="modal-title" id="exampleModalLongTitle">Ord#13 details update</h5>--}}
-        {{--                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-        {{--                                <span aria-hidden="true">&times;</span>--}}
-        {{--                            </button>--}}
-        {{--                        </div>--}}
-        {{--                        <div class="modal-body">--}}
-        {{--                            <table class="table table-striped table-bordered">--}}
-        {{--                                <thead>--}}
-        {{--                                <tr>--}}
-        {{--                                    <th>#</th>--}}
-        {{--                                    <th scope="row">Item</th>--}}
-        {{--                                    <th class="order-qty-head">Quantity</th>--}}
-        {{--                                    <th>Unit price</th>--}}
-        {{--                                    <th>Total</th>--}}
-        {{--                                    <th>Action</th>--}}
-        {{--                                </tr>--}}
-        {{--                                </thead>--}}
-        {{--                                <tbody>--}}
-        {{--                                <tr>--}}
-        {{--                                    <td class="align-middle">01</td>--}}
-        {{--                                    <td scope="row" class="align-middle">Red Shoes</td>--}}
-        {{--                                    <td class="text-center align-middle"><input type="text" value="2" class="order-qty"></td>--}}
-        {{--                                    <td class="align-middle">$400</td>--}}
-        {{--                                    <td class="align-middle">$800</td>--}}
-        {{--                                    <td style="width: 120px;" class="align-middle">--}}
-        {{--                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>--}}
-        {{--                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>--}}
-        {{--                                    </td>--}}
-        {{--                                </tr>--}}
-        {{--                                <tr>--}}
-        {{--                                    <td class="align-middle">02</td>--}}
-        {{--                                    <td class="align-middle" scope="row">Blue shirt</td>--}}
-        {{--                                    <td class="text-center align-middle"><input type="text" value="1" class="order-qty"></td>--}}
-        {{--                                    <td class="align-middle">$400</td>--}}
-        {{--                                    <td class="align-middle">$400</td>--}}
-        {{--                                    <td class="align-middle">--}}
-        {{--                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>--}}
-        {{--                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>--}}
-        {{--                                    </td>--}}
-        {{--                                </tr>--}}
-        {{--                                <tr>--}}
-        {{--                                    <td class="align-middle">03</td>--}}
-        {{--                                    <td class="align-middle" scope="row">Knickers</td>--}}
-        {{--                                    <td class="text-center align-middle"><input type="text" value="3" class="order-qty"></td>--}}
-        {{--                                    <td class="align-middle">$300</td>--}}
-        {{--                                    <td class="align-middle">$900</td>--}}
-        {{--                                    <td class="align-middle">--}}
-        {{--                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>--}}
-        {{--                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>--}}
-        {{--                                    </td>--}}
-        {{--                                </tr>--}}
-        {{--                                </tbody>--}}
-        {{--                            </table>--}}
-        {{--                        </div>--}}
-        {{--                        <div class="modal-footer">--}}
-        {{--                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>--}}
-        {{--                        </div>--}}
-        {{--                    </div>--}}
-        {{--                </div>--}}
-        {{--            </div>--}}
-        <!--Order Update Modal-->
         </div>
 
 
@@ -195,7 +169,7 @@
         <script>
             function showInfo(u_id){
                 $.ajax({
-                    url: '{!! url('view_user') !!}'+ '/' + u_id,
+                    url: '{!! url('/user/information') !!}'+ '/' + u_id,
                     type: 'GET',
                     success: function (data) {
                         document.getElementById("exampleModalLongTitle").innerText = "Thông tin chi tiết của tài khoản " + data[0].email;
@@ -206,6 +180,8 @@
                         document.getElementById("v_phone").innerText = data[0].phone;
                         document.getElementById("v_gender").innerText = data[0].gender;
                         document.getElementById("v_address").innerText = data[0].address;
+                        document.getElementById("v_ponds").innerText = data[0].ponds_count;
+                        document.getElementById("v_dateCreate").innerText = data[0].key_time;
                         // document.getElementById("v_roleID").innerText = data[0].role_id;
                         // document.getElementById("v_active").innerText = data[0].active;
                         // $("#orderInfo").modal('show')
@@ -215,6 +191,34 @@
                     }
                 });
             }
+
+
+            function viewModalDelete(u_id, U_email){
+                document.getElementById('id01').style.display='block';
+                document.getElementById("title_delete").innerText = "Xóa tài khoản ".concat(U_email);
+                document.getElementById("conten").innerText = "Có chắc muốn xóa tài khoản có ID: " + u_id + " ?";
+
+                var de = document.getElementById('btn-de');
+                window.onclick = function(event) {
+                    if (event.target == de) {
+                        document.getElementById('id01').style.display='none';
+                        location.href = '{!! url('/user/delete') !!}'+ '/' + u_id;
+                        // modal.style.display = "none";
+                    }
+                }
+            }
+
         </script>
+
+{{--        <script>--}}
+{{--            // Get the modal--}}
+{{--            var modal = document.getElementById('id01');--}}
+{{--            // When the user clicks anywhere outside of the modal, close it--}}
+{{--            window.onclick = function(event) {--}}
+{{--                if (event.target == modal) {--}}
+{{--                    modal.style.display = "none";--}}
+{{--                }--}}
+{{--            }--}}
+{{--        </script>--}}
     @endpush
 @endsection

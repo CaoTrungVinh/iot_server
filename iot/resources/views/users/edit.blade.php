@@ -85,7 +85,7 @@
                             <div class="col-sm-6">
                                 <p class="form">
                                 <label class="control-label" for="input-4">Số điện thoại</label>
-                                <input type="text" maxlength="5" class="form-control" name="edit_phone" id="input-4"
+                                <input type="text" class="form-control" name="edit_phone" id="input-4"
                                        value="{{$user->phone}}"/>
                                 @error('edit_phone')
                                 <small class="form-text text-danger">{{ $message }}</small>

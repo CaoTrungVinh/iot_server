@@ -17,5 +17,25 @@ class Toolkit extends Model
 
     protected $fillable = ['id','id_pond','id_temperature','id_ph','id_light', 'name','address'];
 
+    public function ponds()
+    {
+        return $this->belongsTo(Pond::class, 'id');
+    }
+
+    public function phs()
+    {
+        return $this->hasOne(PH::class, 'id', 'id_ph');
+    }
+
+    public function temperatures()
+    {
+        return $this->hasOne(Temperature::class, 'id', 'id_temperature');
+    }
+
+    public function lights()
+    {
+        return $this->hasOne(Light::class, 'id','id_light');
+    }
+
     public $timestamps = false;
 }

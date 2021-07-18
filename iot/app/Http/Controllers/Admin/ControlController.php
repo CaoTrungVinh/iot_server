@@ -27,6 +27,17 @@ class ControlController extends Controller
           WHERE control.id_pond = ponds.id and control.id_pump_in = pump_in.id and control.id_pump_out = pump_out.id and control.id_lamp = lamp.id and control.id_oxygen_fan = oxygen_fan.id');
         return view('controls.index', compact('controls'));
     }
+
+    public function viewControl($id)
+    {
+        $control = Control::find($id);
+        $control_pumpIn = Control::find($id)->pumpIns;
+        $control_pumpOut = Control::find($id)->pumpOut;
+        $control_lamp = Control::find($id)->lamps;
+        $control_oxygen = Control::find($id)->oxygen;
+        return response()->json([$control, $control_pumpIn, $control_pumpOut, $control_lamp, $control_oxygen]);
+    }
+
     public function create()
     {
         $controls_create = Pond::all();

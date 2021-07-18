@@ -15,6 +15,7 @@ use App\Models\Pond;
 use App\Models\Temperature;
 use App\Models\Toolkit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -26,6 +27,16 @@ class ToolkitController extends Controller
           FROM toolkits, ponds, temperatures, phs, lights
           WHERE toolkits.id_pond = ponds.id and toolkits.id_temperature = temperatures.id and toolkits.id_ph = phs.id and toolkits.id_light = lights.id');
         return view('toolkits.index', compact('toolkits'));
+    }
+
+    public function viewToolkit($id)
+    {
+//        $user = [User::find($id)];
+        $toolkit = Toolkit::find($id);
+        $toolkit_PH = Toolkit::find($id)->phs;
+        $toolkit_ND = Toolkit::find($id)->temperatures;
+        $toolkit_AS = Toolkit::find($id)->lights;
+        return response()->json([$toolkit, $toolkit_PH, $toolkit_ND, $toolkit_AS]);
     }
 
     public function create()
@@ -54,16 +65,19 @@ class ToolkitController extends Controller
             "temperature_min" => $request->get("temperature_min"),
             "temperature_max" => $request->get("temperature_max"),
             "warning" => $request->get("warning_temp"),
+            'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s')
         ]);
         $ph = PH::create([
             "value" => 0,
             "ph_min" => $request->get("ph_min"),
             "ph_max" => $request->get("ph_max"),
             "warning" => $request->get("warning_ph"),
+            'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s')
         ]);
         $light = Light::create([
             "light" => 0,
             "warning" => $request->get("warning_light"),
+            'created_at' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s')
         ]);
         $temp_id = $temperature->id;
         $ph_id = $ph->id;

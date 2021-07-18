@@ -31,45 +31,45 @@ Route::group(['middleware' => 'checkAdminLogin'], function () {
     Route::post('/UpdateAdminProfile', [\App\Http\Controllers\Admin\ProfileAdminController::class, 'updateProfile'])->name('updateAdProfile');
 //    Quản lý tài khoản, thêm, sửa, xóa User
     Route::get('/user', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
-
-
-//    -----------------------------------
-    Route::get('/view_user/{id}', [\App\Http\Controllers\Admin\UserController::class, 'viewUser'])->name('view_user');
-
-
-
+    Route::get('/user/information/{id}', [\App\Http\Controllers\Admin\UserController::class, 'viewUser'])->name('view_user');
     Route::get('/createUser', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('create_user');
     Route::post('/storeUser', [\App\Http\Controllers\Admin\UserController::class, 'storeUser'])->name('store_user');
     Route::post('/storeAdmin', [\App\Http\Controllers\Admin\UserController::class, 'storeAdmin'])->name('store_admin');
+//    -------- Active mail------
     Route::get('confirmemail/{email}/{key}', [\App\Http\Controllers\Admin\UserController::class, 'confirmEmail'])->name('confirmemail');
-    Route::get('/user_edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user_edit');
-    Route::post('/user_update/{id}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('user_update');
+//    -------------------------------------
+    Route::get('/user/edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user_edit');
+    Route::post('/user/update/{id}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('user_update');
+    Route::get('/user/delete/{id}', [\App\Http\Controllers\Admin\UserController::class, 'delete'])->name('user_delete');
 
 
     ///pond
     Route::get('/pond', [\App\Http\Controllers\Admin\PondController::class, 'index'])->name('pond');
+    Route::get('/pond/infor/{id}', [\App\Http\Controllers\Admin\PondController::class, 'viewPond'])->name('pond_infor');
     Route::get('/pond_create', [\App\Http\Controllers\Admin\PondController::class, 'create'])->name('pond_create');
     Route::post('/pond_create', [\App\Http\Controllers\Admin\PondController::class, 'store'])->name('pond_store');
-    Route::get('/pond/{id}/edit', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond/{id}/edit');
+    Route::get('/pond/edit/{id}', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond_edit');
     Route::post('/pond_update', [\App\Http\Controllers\Admin\PondController::class, 'update'])->name('pond_update');
-    Route::get('/pond/{id}/delete', [\App\Http\Controllers\Admin\PondController::class, 'delete'])->name('pond/{id}/delete');
+    Route::get('/pond/delete/{id}', [\App\Http\Controllers\Admin\PondController::class, 'delete'])->name('pond_delete');
 
 
 
     ////toolkit
     Route::get('/toolkit', [\App\Http\Controllers\Admin\ToolkitController::class, 'index'])->name('toolkit');
+    Route::get('/toolkit/infor/{id}', [\App\Http\Controllers\Admin\ToolkitController::class, 'viewToolkit'])->name('toolkit_infor');
     Route::get('/toolkit_create', [\App\Http\Controllers\Admin\ToolkitController::class, 'create'])->name('toolkit_create');
     Route::post('/toolkit_create', [\App\Http\Controllers\Admin\ToolkitController::class, 'store'])->name('toolkit_store');
-    Route::get('/toolkit/{id}/edit', [\App\Http\Controllers\Admin\ToolkitController::class, 'edit'])->name('toolkit/{id}/edit');
+    Route::get('/toolkit/edit/{id}', [\App\Http\Controllers\Admin\ToolkitController::class, 'edit'])->name('toolkit_edit');
     Route::post('/toolkit_update', [\App\Http\Controllers\Admin\ToolkitController::class, 'update'])->name('toolkit_update');
-    Route::get('/toolkit/{id}/delete', [\App\Http\Controllers\Admin\ToolkitController::class, 'delete'])->name('toolkit/{id}/delete');
+    Route::get('/toolkit/delete/{id}', [\App\Http\Controllers\Admin\ToolkitController::class, 'delete'])->name('toolkit_delete');
     ////control
     Route::get('/control', [\App\Http\Controllers\Admin\ControlController::class, 'index'])->name('control');
+    Route::get('/control/infor/{id}', [\App\Http\Controllers\Admin\ControlController::class, 'viewControl'])->name('control_infor');
     Route::get('/control_create', [\App\Http\Controllers\Admin\ControlController::class, 'create'])->name('control_create');
     Route::post('/control_create', [\App\Http\Controllers\Admin\ControlController::class, 'store'])->name('control_store');
-    Route::get('/control/{id}/edit', [\App\Http\Controllers\Admin\ControlController::class, 'edit'])->name('control/{id}/edit');
+    Route::get('/control/edit/{id}', [\App\Http\Controllers\Admin\ControlController::class, 'edit'])->name('control_edit');
     Route::post('/control_update', [\App\Http\Controllers\Admin\ControlController::class, 'update'])->name('control_update');
-    Route::get('/control/{id}/delete', [\App\Http\Controllers\Admin\ControlController::class, 'delete'])->name('control/{id}/delete');
+    Route::get('/control/delete/{id}', [\App\Http\Controllers\Admin\ControlController::class, 'delete'])->name('control_delete');
 
 });
 

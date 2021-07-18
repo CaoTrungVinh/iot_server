@@ -49,7 +49,7 @@
 
                         <div class="form-group row" style="margin-top: 40px">
                             <div class="col-sm-6">
-                                <button class="col-sm-12 btn btn-danger"><a style="color: white; font-weight: normal" href="{{route('pond')}}">Hủy</a></button>
+                                <a href="{{route('pond')}}" class="col-sm-12 btn btn-danger">Hủy</a>
                             </div>
                             <div class="col-sm-6">
                                 <input type="submit" class="col-sm-12 btn btn-theme" value="Đồng ý"/>

@@ -313,7 +313,7 @@ table tbody tr td {
 }
 
 .dropdown {
-    position: absolute; 
+    position: absolute;
     z-index: 1000;
     display: none;
 }
@@ -388,11 +388,11 @@ table tbody tr td {
 }
 
 .avatar img {
-    width: 75px;
-    height: 75px;
-    margin-top: 25px;
-    margin-bottom: 10px;
-    border: 3px solid #fff;
+    width: 100px;
+    height: 100px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    /*border: 3px solid #fff;*/
 }
 
 .avatar > p {
@@ -449,7 +449,7 @@ table tbody tr td {
     height: 40px;
 }
 
-.sidebar.shrink-sidebar .avatar p, 
+.sidebar.shrink-sidebar .avatar p,
 .sidebar.shrink-sidebar .avatar span.small {
     display: none;
 }
@@ -680,7 +680,7 @@ table tbody tr td {
 
 /* Dashboard 3 Content */
 .fb-widget-top-desc h5 {
-    font-size: 16px; 
+    font-size: 16px;
     font-weight: 500;
     margin-bottom: 0px !important;
 }
@@ -703,38 +703,38 @@ table tbody tr td {
     max-width: 80%;
     max-height: 250px;
 }
-  
+
 .circle-bg {
     fill: none;
     stroke: #eee;
     stroke-width: 3.8;
 }
-  
+
 .circle {
     fill: none;
     stroke-width: 2.8;
     stroke-linecap: round;
     animation: progress 1s ease-out forwards;
 }
-  
+
 @keyframes progress {
     0% {
       stroke-dasharray: 0 100;
     }
 }
-  
+
 .circular-chart.orange .circle {
     stroke: #ff9f00;
 }
-  
+
 .circular-chart.green .circle {
     stroke: #4CC790;
 }
-  
+
 .circular-chart.blue .circle {
     stroke: #3c9ee5;
 }
-  
+
 .circular-chart.red .circle {
     stroke: #EA5941;
 }
@@ -870,7 +870,7 @@ table tbody tr td {
 }
 
 .accordion-body p {
-    line-height: 23px !important; 
+    line-height: 23px !important;
 }
 
 .panel-title > button:before {
@@ -1111,13 +1111,13 @@ table tbody tr td {
 
 /*=========Notification CSS Rules === */
 
-.ajs-message.ajs-custom { 
-    color: #fff !important;  
-    background-color: #0D47A1 !important;  
+.ajs-message.ajs-custom {
+    color: #fff !important;
+    background-color: #0D47A1 !important;
     border-color: #0D47A1 !important;
 }
 
-.ajs-message.ajs-custom:before { 
+.ajs-message.ajs-custom:before {
     content: '\f1d7';
     font-family: FontAwesome;
     margin-right: 10px;
@@ -1125,14 +1125,14 @@ table tbody tr td {
     color: #fff;
 }
 
-.ajs-message.ajs-success { 
-    color: #fff !important;  
-    background-color: #29A744 !important;  
+.ajs-message.ajs-success {
+    color: #fff !important;
+    background-color: #29A744 !important;
     border-color: #29A744 !important;
     font-size: 14px;
 }
 
-.ajs-message.ajs-success:before { 
+.ajs-message.ajs-success:before {
     content: '\f00c';
     font-family: FontAwesome;
     margin-right: 10px;
@@ -1140,14 +1140,14 @@ table tbody tr td {
     color: #fff;
 }
 
-.ajs-message.ajs-error { 
-    color: #fff !important;  
-    background-color: rgb(175, 15, 15) !important;  
+.ajs-message.ajs-error {
+    color: #fff !important;
+    background-color: rgb(175, 15, 15) !important;
     border-color: rgb(175, 15, 15) !important;
     font-size: 14px;
 }
 
-.ajs-message.ajs-error:before { 
+.ajs-message.ajs-error:before {
     content: '\f00d';
     font-family: FontAwesome;
     margin-right: 10px;
@@ -1155,14 +1155,14 @@ table tbody tr td {
     color: #fff;
 }
 
-.ajs-message.ajs-warning { 
-    color: #fff !important;  
-    background-color: #FFC107 !important;  
+.ajs-message.ajs-warning {
+    color: #fff !important;
+    background-color: #FFC107 !important;
     border-color: #FFC107 !important;
     font-size: 14px;
 }
 
-.ajs-message.ajs-warning:before { 
+.ajs-message.ajs-warning:before {
     content: '\f071';
     font-family: FontAwesome;
     margin-right: 10px;
@@ -1311,7 +1311,7 @@ table tbody tr td {
     color: #29A744;
 }
 
-.fc-bg-primary, .fc-bg-primary:focus, 
+.fc-bg-primary, .fc-bg-primary:focus,
 .fc-bg-primary::-webkit-input-placeholder {
     background:#0073AA;
     border: 1px solid #0073AA;
@@ -1706,8 +1706,8 @@ span.tag.label.label-info {
 /*======Email Page CSS Rules==========*/
 
 .email-menu a,
-.email-form label, 
-.email-form input, 
+.email-form label,
+.email-form input,
 .email-form button,
 .email-msg button,
 .email-msg a {
@@ -1815,7 +1815,7 @@ span.tag.label.label-info {
 #productList_filter,
 #productList_info {
     font-size: 15px;
-    color: #333; 
+    color: #333;
 }
 
 #productList_length label,
@@ -1954,7 +1954,7 @@ span.tag.label.label-info {
         top: 0px;
         height: 100%;
     }
-    
+
     .sidebar .avatar img {
         width: 40px;
         height: 40px;
@@ -1964,22 +1964,22 @@ span.tag.label.label-info {
         width: 50px;
         height: 50px;
     }
-    
-    .sidebar .avatar p, 
+
+    .sidebar .avatar p,
     .sidebar .avatar span.small {
         display: none;
     }
 
-    .sidebar.shrink-sidebar .avatar p, 
+    .sidebar.shrink-sidebar .avatar p,
     .sidebar.shrink-sidebar .avatar span.small {
         display: block;
     }
-    
+
     .sidebar .sidebar-menu li {
         position: relative !important;
         border-bottom: 1px solid #313246;
     }
-    
+
     .sidebar .sidebar-menu li a {
         padding-top: 10px;
         pointer-events: none;
@@ -1989,7 +1989,7 @@ span.tag.label.label-info {
     .sidebar.shrink-sidebar .sidebar-menu li a {
         pointer-events: auto;
     }
-    
+
     .sidebar .sidebar-menu li a:hover {
         padding-left: 15px;
     }
@@ -1997,11 +1997,11 @@ span.tag.label.label-info {
     .sidebar .sidebar-menu li a span.none {
         display: none;
     }
-    
+
     .sidebar.shrink-sidebar .sidebar-menu li a span.none {
         display: initial;
     }
-    
+
     .sidebar .sidebar-menu li ul {
         position: absolute;
         z-index: 1000;
@@ -2016,7 +2016,7 @@ span.tag.label.label-info {
         z-index: 0 !important;
         width: auto !important;
     }
-    
+
     .sidebar .sidebar-menu li:hover ul {
         display: block;
     }
@@ -2024,7 +2024,7 @@ span.tag.label.label-info {
     .sidebar.shrink-sidebar .sidebar-menu li:hover ul {
         display: none;
     }
-    
+
     .sidebar .sidebar-menu li ul li {
         border-bottom: 1px solid #2E2E3A;
     }
@@ -2032,11 +2032,11 @@ span.tag.label.label-info {
     .sidebar.shrink-sidebar .sidebar-menu li ul li {
         border-bottom: none;
     }
-    
+
     .sidebar .sidebar-menu li ul li:last-child {
         border-bottom: none;
     }
-    
+
     .sidebar .sidebar-menu li:hover ul li a {
         padding-left: 2px;
     }
@@ -2048,7 +2048,7 @@ span.tag.label.label-info {
     .content.content.expand-content {
         min-width: 100%;
     }
-    
+
 
     .login-box {
         width: 75%;
@@ -2075,7 +2075,7 @@ span.tag.label.label-info {
         display: none;
     }
 
-    .sidebar .avatar p, 
+    .sidebar .avatar p,
     .sidebar .avatar span.small {
         display: none;
     }
@@ -2088,7 +2088,7 @@ span.tag.label.label-info {
         display: inline;
     }
 
-    .sidebar.shrink-sidebar .avatar p, 
+    .sidebar.shrink-sidebar .avatar p,
     .sidebar.shrink-sidebar .avatar span.small {
         display: block;
     }
@@ -2114,20 +2114,20 @@ span.tag.label.label-info {
 }
 
 @media only screen and (max-width: 868px) {
-    
+
     .cont-1, .cont-2, .cont-3, .cont-4 {
         display: initial;
     }
 
-    #card-chats, 
+    #card-chats,
     #card-all {
         margin-left: 0px !important;
     }
 
-    #card-chats, 
-    #card-all, 
-    .card-pro, 
-    .card-traffic, 
+    #card-chats,
+    #card-all,
+    .card-pro,
+    .card-traffic,
     .card-analytics,
     .card-calendar {
         display: block !important;
@@ -2165,7 +2165,7 @@ span.tag.label.label-info {
     .container-fluid {
         padding: 0px !important;
     }
-    
+
     .header.pt-3.pb-2 {
         display: initial;
         padding: 0px !important;

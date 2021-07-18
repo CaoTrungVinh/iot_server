@@ -214,8 +214,7 @@
 
                         <div class="form-group row" style="margin-top: 40px">
                             <div class="col-sm-6">
-                                <button class="col-sm-12 btn btn-danger"><a style="color: white; font-weight: normal"
-                                                                            href="{{route('toolkit')}}">Hủy</a></button>
+                                <a href="{{route('control')}}" class="col-sm-12 btn btn-danger">Hủy</a>
                             </div>
                             <div class="col-sm-6">
                                 <input type="submit" class="col-sm-12 btn btn-theme" value="Đồng ý"/>
@@ -225,18 +224,5 @@
                 </div>
             </div>
         </div>
-
-        <!--Footer-->
-        <div class="row mt-5 mb-4 footer">
-            <div class="col-sm-8">
-                <span>&copy; All rights reserved 2019 designed by <a class="text-info" href="#">A-Fusion</a></span>
-            </div>
-            <div class="col-sm-4 text-right">
-                <a href="#" class="ml-2">Contact Us</a>
-                <a href="#" class="ml-2">Support</a>
-            </div>
-        </div>
-        <!--Footer-->
-
     </div>
 @endsection

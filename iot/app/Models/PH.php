@@ -12,6 +12,11 @@ class PH extends Model
     protected $table = "phs";
     protected $fillable = ['value','ph_min','ph_max','warning','created_at'];
 
+    public function toolkits()
+    {
+        return $this->belongsTo(Toolkit::class, 'id_ph', 'id');
+    }
+
     public $timestamps = false;
 
 }

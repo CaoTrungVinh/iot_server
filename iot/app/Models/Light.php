@@ -12,5 +12,10 @@ class Light extends Model
     protected $table = "lights";
     protected $fillable = ['light','description','warning','created_at'];
 
+    public function toolkits()
+    {
+        return $this->belongsTo(Toolkit::class, 'id_light', 'id');
+    }
+
     public $timestamps = false;
 }

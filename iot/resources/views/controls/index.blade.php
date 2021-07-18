@@ -39,7 +39,7 @@
                 <div class="table-responsive product-list">
                     <table class="table table-bordered mt-3" id="productList">
                         <thead>
-                        <tr style="color: #f6f6f7;background: #007bff;">
+                        <tr style="color: #f6f6f7; background-color: #007bff; text-align: center">
                             <th>Tên ao</th>
                             <th>Bộ điều khiển</th>
                             <th>Vị trí</th>
@@ -52,7 +52,7 @@
                         </thead>
                         <tbody>
                         @foreach($controls as $controls)
-                            <tr>
+                            <tr style="text-align: center">
                                 <td>{{$controls->name_pond}}</td>
                                 <td>{{$controls->name_control}}</td>
                                 <td>{{$controls->address}}</td>
@@ -94,10 +94,10 @@
                                 </td>
 
                                 <td class="align-middle text-center">
-                                    <button class="btn btn-theme" data-toggle="modal" data-target="#orderInfo"><a><i
+                                    <button onclick="showInfo({{$controls->id}})" class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><a><i
                                                     class="fa fa-eye"></i></a></button>
-                                    <button class="btn btn-success" data-toggle="modal"><a style="color: white" href="/control/{{$controls->id}}/edit"><i class="fa fa-pencil"></i></a></button>
-                                    <button class="btn btn-danger"><a style="color: white" href="/control/{{ $controls->id }}/delete"><i class="fas fa-trash"></i></a></button>
+                                    <a href="{{route('control_edit', $controls->id)}}" class="btn btn-link text-themestyle p-1"><i class="fa fa-pencil"></i></a>
+                                    <button onclick="viewModalDelete({{$controls->id}}, '{{$controls->name_control}}')" class="btn btn-link text-danger p-1" id="btn_delete"><i class="fas fa-trash"></i></button>
                                 </td>
 
                             </tr>
@@ -108,13 +108,28 @@
             </div>
             <!--/Order Listing-->
 
+            {{--            modal delete User--}}
+            <div id="id01" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0;  width: 50%;  height: 35%;  background-color: rgba(77, 85, 101, 0.44); margin: auto;">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+                <form class="modal-content">
+                    <div class="container">
+                        <h3 id="title_delete"></h3>
+                        <p id="conten"></p>
+                        <div class="clearfix">
+                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                            <button type="button" id="btn-de" class="deletebtn">Delete</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <!--Order Info Modal-->
             <div class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                  aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content" style="width: auto">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Tên</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle" style="color: black!important;">Tên</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -122,17 +137,39 @@
                         <div class="modal-body">
                             <table class="table table-striped table-bordered">
                                 <thead>
-                                <tr>
-                                    <th>Tên ao</th>
-                                    <th>Người sở hữu</th>
-                                    <th>Địa chỉ ao</th>
+                                <tr style="color: #f6f6f7; background-color: #007bff; text-align: center">
+                                    <th>ID</th>
+                                    <th>Tên Bộ ĐK</th>
+                                    <th>Bơm vào</th>
+                                    <th>Giờ bật bơm vào</th>
+                                    <th>Giờ tắt bơm vào</th>
+                                    <th>Bơm ra</th>
+                                    <th>Giờ bật bơm ra</th>
+                                    <th>Giờ tắt bơm ra</th>
+                                    <th>Quạt</th>
+                                    <th>Giờ bật quạt</th>
+                                    <th>Giờ tắt quạt</th>
+                                    <th>Đèn</th>
+                                    <th>Giờ bật Đèn</th>
+                                    <th>Giờ tắt Đèn</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td scope="row">Red Shoes</td>
-                                    <td>2</td>
-                                    <td>$400</td>
+                                <tr style="text-align: center; color: black!important;">
+                                    <td id="c_id" ></td>
+                                    <td id="c_name" ></td>
+                                    <td id="pumpIn" ></td>
+                                    <td id="bat_pumpIn" ></td>
+                                    <td id="tat_pumpIn" ></td>
+                                    <td id="pumpOut" ></td>
+                                    <td id="bat_pumpOut" ></td>
+                                    <td id="tat_pumpOut" ></td>
+                                    <td id="quat" ></td>
+                                    <td id="bat_quat" ></td>
+                                    <td id="tat_quat" ></td>
+                                    <td id="den" ></td>
+                                    <td id="bat_den" ></td>
+                                    <td id="tat_den" ></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -144,94 +181,75 @@
                     </div>
                 </div>
             </div>
-            <!--Order Info Modal-->
-
-            <!--Order Update Modal-->
-            <div class="modal fade" id="orderUpdate" tabindex="-1" role="dialog"
-                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Ord#13 details update</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th scope="row">Item</th>
-                                    <th class="order-qty-head">Quantity</th>
-                                    <th>Unit price</th>
-                                    <th>Total</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="align-middle">01</td>
-                                    <td scope="row" class="align-middle">Red Shoes</td>
-                                    <td class="text-center align-middle"><input type="text" value="2" class="order-qty">
-                                    </td>
-                                    <td class="align-middle">$400</td>
-                                    <td class="align-middle">$800</td>
-                                    <td style="width: 120px;" class="align-middle">
-                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i>
-                                        </button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">02</td>
-                                    <td class="align-middle" scope="row">Blue shirt</td>
-                                    <td class="text-center align-middle"><input type="text" value="1" class="order-qty">
-                                    </td>
-                                    <td class="align-middle">$400</td>
-                                    <td class="align-middle">$400</td>
-                                    <td class="align-middle">
-                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i>
-                                        </button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">03</td>
-                                    <td class="align-middle" scope="row">Knickers</td>
-                                    <td class="text-center align-middle"><input type="text" value="3" class="order-qty">
-                                    </td>
-                                    <td class="align-middle">$300</td>
-                                    <td class="align-middle">$900</td>
-                                    <td class="align-middle">
-                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i>
-                                        </button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Order Update Modal-->
-        </div>
-
-        <!--Footer-->
-        <div class="row mt-5 mb-4 footer">
-            <div class="col-sm-8">
-                <span>&copy; All rights reserved 2019 designed by <a class="text-info" href="#">A-Fusion</a></span>
-            </div>
-            <div class="col-sm-4 text-right">
-                <a href="#" class="ml-2">Contact Us</a>
-                <a href="#" class="ml-2">Support</a>
-            </div>
-        </div>
-        <!--Footer-->
-
     </div>
+
+            @push('additionalJS')
+                <script>
+                    function showInfo(p_id){
+                        $.ajax({
+                            url: '{!! url('/control/infor') !!}'+ '/' + p_id,
+                            type: 'GET',
+                            success: function (data) {
+                                document.getElementById("exampleModalLongTitle").innerText = "Thông tin chi tiết của ao nuôi " + data[0].name;
+                                document.getElementById("c_id").innerText = data[0].id;
+                                document.getElementById("c_name").innerText = data[0].name;
+                                if(data[1].status==0){
+                                    document.getElementById("pumpIn").innerText = "Tắt";
+                                }else if(data[1].status==1){
+                                    document.getElementById("pumpIn").innerText = "Bật";
+                                }else if(data[1].status==2){
+                                    document.getElementById("pumpIn").innerText = "Hẹn giờ";
+                                }
+                                document.getElementById("bat_pumpIn").innerText = data[1].timer_on;
+                                document.getElementById("tat_pumpIn").innerText = data[1].timer_off;
+                                if(data[2].status==0){
+                                    document.getElementById("pumpOut").innerText = "Tắt";
+                                }else if(data[2].status==1){
+                                    document.getElementById("pumpOut").innerText = "Bật";
+                                }else if(data[2].status==2){
+                                    document.getElementById("pumpOut").innerText = "Hẹn giờ";
+                                }
+                                document.getElementById("bat_pumpOut").innerText = data[2].timer_on;
+                                document.getElementById("tat_pumpOut").innerText = data[2].timer_off;
+                                if(data[4].status==0){
+                                    document.getElementById("quat").innerText = "Tắt";
+                                }else if(data[4].status==1){
+                                    document.getElementById("quat").innerText = "Bật";
+                                }else if(data[4].status==2){
+                                    document.getElementById("quat").innerText = "Hẹn giờ";
+                                }
+                                document.getElementById("bat_quat").innerText = data[4].timer_on;
+                                document.getElementById("tat_quat").innerText = data[4].timer_off;
+                                if(data[3].status==0){
+                                    document.getElementById("den").innerText = "Tắt";
+                                }else if(data[3].status==1){
+                                    document.getElementById("den").innerText = "Bật";
+                                }else if(data[3].status==2){
+                                    document.getElementById("den").innerText = "Hẹn giờ";
+                                }
+                                document.getElementById("bat_den").innerText = data[3].timer_on;
+                                document.getElementById("tat_den").innerText = data[3].timer_off;
+                            },
+                            error: function (data) {
+                                console.log('Error: ', data);
+                            }
+                        });
+                    }
+
+                    function viewModalDelete(p_id, p_name){
+                        document.getElementById('id01').style.display='block';
+                        document.getElementById("title_delete").innerText = "Xóa bộ điều khiển ".concat(p_name);
+                        document.getElementById("conten").innerText = "Có chắc muốn xóa bộ điều khiển có ID: " + p_id + " ?";
+
+                        var de = document.getElementById('btn-de');
+                        window.onclick = function(event) {
+                            if (event.target == de) {
+                                document.getElementById('id01').style.display='none';
+                                location.href = '{!! url('/control/delete') !!}'+ '/' + p_id;
+                            }
+                        }
+                    }
+
+                </script>
+    @endpush
 @endsection

@@ -12,5 +12,10 @@ class Temperature extends Model
 
     protected $fillable = ['temperature','temperature_min','temperature_max','warning','created_at'];
 
+    public function toolkits()
+    {
+        return $this->belongsTo(Toolkit::class, 'id_temperature', 'id');
+    }
+
     public $timestamps = false;
 }

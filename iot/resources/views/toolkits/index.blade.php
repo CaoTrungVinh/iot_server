@@ -39,7 +39,7 @@
                 <div class="table-responsive product-list">
                     <table class="table table-bordered mt-3" id="productList">
                         <thead>
-                        <tr style="color: #f6f6f7;background: #007bff;">
+                        <tr style="color: #f6f6f7; background-color: #007bff; text-align: center">
                             <th>Tên ao</th>
                             <th>Tên bộ đo</th>
                             <th>Vị trí</th>
@@ -53,7 +53,7 @@
                         </thead>
                         <tbody>
                         @foreach($toolkits as $toolkits)
-                            <tr>
+                            <tr style="text-align: center">
                                 <td>{{$toolkits->name_pond}}</td>
                                 <td>{{$toolkits->name_toolkit}}</td>
                                 <td>{{$toolkits->address}}</td>
@@ -70,9 +70,9 @@
                                 </td>
 
                                 <td class="align-middle text-center">
-                                    <button class="btn btn-theme" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>
-                                    <button class="btn btn-success" data-toggle="modal"><a style="color: white" href="/toolkit/{{$toolkits->id}}/edit"><i class="fa fa-pencil"></i></a></button>
-                                    <button class="btn btn-danger"><a style="color: white" href="/toolkit/{{ $toolkits->id }}/delete"><i class="fas fa-trash"></i></a></button>
+                                    <button onclick="showInfo({{$toolkits->id}})" class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>
+                                    <a href="{{route('toolkit_edit', $toolkits->id)}}" class="btn btn-link text-themestyle p-1"><i class="fa fa-pencil"></i></a>
+                                    <button onclick="viewModalDelete({{$toolkits->id}}, '{{$toolkits->name_toolkit}}')" class="btn btn-link text-danger p-1" id="btn_delete"><i class="fas fa-trash"></i></button>
                                 </td>
 
                             </tr>
@@ -83,12 +83,28 @@
             </div>
             <!--/Order Listing-->
 
+
+            <div id="id01" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0;  width: 50%;  height: 35%;  background-color: rgba(77, 85, 101, 0.44); margin: auto;">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+                <form class="modal-content">
+                    <div class="container">
+                        <h3 id="title_delete"></h3>
+                        <p id="conten"></p>
+                        <div class="clearfix">
+                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+                            <button type="button" id="btn-de" class="deletebtn">Delete</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
             <!--Order Info Modal-->
             <div class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
+                    <div class="modal-content" style="width: auto">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Tên</h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle" style="color: black!important;"></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -96,17 +112,35 @@
                         <div class="modal-body">
                             <table class="table table-striped table-bordered">
                                 <thead>
-                                <tr>
-                                    <th>Tên ao</th>
-                                    <th>Người sở hữu</th>
-                                    <th>Địa chỉ ao</th>
+                                <tr style="color: #f6f6f7; background-color: #007bff; text-align: center">
+                                    <th>ID</th>
+                                    <th>Tên Bộ đo</th>
+                                    <th>Nhiệt độ nhỏ</th>
+                                    <th>Nhiệt độ lớn</th>
+                                    <th>Cảnh báo NĐ</th>
+                                    <th>Ngày thêm NĐ</th>
+                                    <th>pH nhỏ</th>
+                                    <th>pH lớn</th>
+                                    <th>Cảnh báo pH</th>
+                                    <th>Ngày thêm pH</th>
+                                    <th>Cảnh báo AS</th>
+                                    <th>Ngày thêm AS</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td scope="row">Red Shoes</td>
-                                    <td>2</td>
-                                    <td>$400</td>
+                                <tr style="text-align: center; color: black!important;">
+                                    <td id="tool_id" ></td>
+                                    <td id="tool_name" ></td>
+                                    <td id="ndmin" ></td>
+                                    <td id="ndmax" ></td>
+                                    <td id="cb_nd" ></td>
+                                    <td id="date_nd" ></td>
+                                    <td id="phmin" ></td>
+                                    <td id="phmax" ></td>
+                                    <td id="cb_ph" ></td>
+                                    <td id="date_ph" ></td>
+                                    <td id="cb_as" ></td>
+                                    <td id="date_as" ></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -119,86 +153,57 @@
                 </div>
             </div>
             <!--Order Info Modal-->
-
-            <!--Order Update Modal-->
-            <div class="modal fade" id="orderUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Ord#13 details update</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <table class="table table-striped table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th scope="row">Item</th>
-                                    <th class="order-qty-head">Quantity</th>
-                                    <th>Unit price</th>
-                                    <th>Total</th>
-                                    <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td class="align-middle">01</td>
-                                    <td scope="row" class="align-middle">Red Shoes</td>
-                                    <td class="text-center align-middle"><input type="text" value="2" class="order-qty"></td>
-                                    <td class="align-middle">$400</td>
-                                    <td class="align-middle">$800</td>
-                                    <td style="width: 120px;" class="align-middle">
-                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">02</td>
-                                    <td class="align-middle" scope="row">Blue shirt</td>
-                                    <td class="text-center align-middle"><input type="text" value="1" class="order-qty"></td>
-                                    <td class="align-middle">$400</td>
-                                    <td class="align-middle">$400</td>
-                                    <td class="align-middle">
-                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle">03</td>
-                                    <td class="align-middle" scope="row">Knickers</td>
-                                    <td class="text-center align-middle"><input type="text" value="3" class="order-qty"></td>
-                                    <td class="align-middle">$300</td>
-                                    <td class="align-middle">$900</td>
-                                    <td class="align-middle">
-                                        <button class="btn btn-theme mr-1"><i class="fa fa-pencil-square-o"></i></button>
-                                        <button class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Order Update Modal-->
         </div>
-
-        <!--Footer-->
-        <div class="row mt-5 mb-4 footer">
-            <div class="col-sm-8">
-                <span>&copy; All rights reserved 2019 designed by <a class="text-info" href="#">A-Fusion</a></span>
-            </div>
-            <div class="col-sm-4 text-right">
-                <a href="#" class="ml-2">Contact Us</a>
-                <a href="#" class="ml-2">Support</a>
-            </div>
-        </div>
-        <!--Footer-->
-
     </div>
+
+    @push('additionalJS')
+        <script>
+            function showInfo(tool_id){
+                $.ajax({
+                    url: '{!! url('/toolkit/infor') !!}'+ '/' + tool_id,
+                    type: 'GET',
+                    success: function (data) {
+                        document.getElementById("exampleModalLongTitle").innerText = "Thông tin chi tiết của bộ đo " + data[0].name;
+                        document.getElementById("tool_id").innerText = data[0].id;
+                        document.getElementById("tool_name").innerText = data[0].name;
+                        document.getElementById("ndmin").innerText = data[2].temperature_min;
+                        document.getElementById("ndmax").innerText = data[2].temperature_max;
+                        if (data[2].warning == 0){
+                            document.getElementById("cb_nd").innerText = "Tắt";
+                        }else document.getElementById("cb_nd").innerText = "Bật";
+                        document.getElementById("date_nd").innerText = data[2].created_at;
+                        document.getElementById("phmin").innerText = data[1].ph_min;
+                        document.getElementById("phmax").innerText = data[1].ph_max;
+                        if (data[1].warning == 0){
+                            document.getElementById("cb_ph").innerText = "Tắt";
+                        }else document.getElementById("cb_ph").innerText = "Bật";
+                        document.getElementById("date_ph").innerText = data[1].created_at;
+                        if (data[3].warning == 0){
+                            document.getElementById("cb_as").innerText = "Tắt";
+                        }else document.getElementById("cb_as").innerText = "Bật";
+                        document.getElementById("date_as").innerText = data[3].created_at;
+                    },
+                    error: function (data) {
+                        console.log('Error: ', data);
+                    }
+                });
+            }
+
+            function viewModalDelete(p_id, p_name){
+                document.getElementById('id01').style.display='block';
+                document.getElementById("title_delete").innerText = "Xóa bộ đo ".concat(p_name);
+                document.getElementById("conten").innerText = "Có chắc muốn xóa bộ đo có ID: " + p_id + " ?";
+
+                var de = document.getElementById('btn-de');
+                window.onclick = function(event) {
+                    if (event.target == de) {
+                        document.getElementById('id01').style.display='none';
+                        location.href = '{!! url('/toolkit/delete') !!}'+ '/' + p_id;
+                        // modal.style.display = "none";
+                    }
+                }
+            }
+
+        </script>
+    @endpush
 @endsection

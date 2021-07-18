@@ -2,9 +2,9 @@
     <div class="inner-sidebar mr-3">
         <!--Image Avatar-->
         <div class="avatar text-center">
-            <img href="{{route('home')}}" src="assets/img/logo.png"  alt="" class="rounded-circle" />
-            <p><strong>chuongvinhiot2021@gmail.com</strong></p>
-            <span class="text-primary small"><strong>0392387593</strong></span>
+            <img href="{{route('home')}}" src="{{ asset('assets/img/logo.png') }}"  alt="" class="rounded-circle" />
+            <p><strong>Hệ thống giám sát ao nuôi thủy sản</strong></p>
+            <span class="text-primary small"><strong>Sử dụng các bộ kit đo của IoT Arduino</strong></span>
         </div>
         <!--Image Avatar-->
 

@@ -25,5 +25,15 @@ class Pond extends Model
         return $this->belongsTo(User::class, 'id_user');
     }
 
+    public function tollkits()
+    {
+        return $this->hasMany(Toolkit::class, 'id_pond');
+    }
+
+    public function controls()
+    {
+        return $this->hasMany(Control::class, 'id_pond');
+    }
+
     public $timestamps = false;
 }
