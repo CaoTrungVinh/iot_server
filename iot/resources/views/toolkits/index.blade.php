@@ -17,7 +17,7 @@
         @if ( Session::has('error') )
             <div class="alert alert-danger alert-dismissible" role="alert">
                 <strong>{{ Session::get('error') }}</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <button style="margin-right: 20px" type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     <span class="sr-only">Close</span>
                 </button>
@@ -85,7 +85,7 @@
 
 
             <div id="id01" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0;  width: 50%;  height: 35%;  background-color: rgba(77, 85, 101, 0.44); margin: auto;">
-                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
+                <span onclick="document.getElementById('id01').style.display='none'" class="close_delete" title="Close Modal">×</span>
                 <form class="modal-content">
                     <div class="container">
                         <h3 id="title_delete"></h3>

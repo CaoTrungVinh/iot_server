@@ -59,7 +59,7 @@
                             <div class="col-sm-6">
                                 <p class="form">
                                 <label class="control-label" for="input-3">Ngày sinh</label>
-                                <input type="text" class="form-control" id="input-3" name="edit_birthday" value="{{$user->birthday}}"/>
+                                <input type="date" class="form-control" id="input-3" name="edit_birthday" value="{{$user->birthday}}"/>
                                 @error('edit_birthday')
                                 <small class="form-text text-danger">{{ $message }}</small>
                                 @enderror

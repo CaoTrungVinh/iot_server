@@ -58,7 +58,7 @@ hr {
 }
 
 /* The Modal Close Button (x) */
-.close {
+.close_delete {
     position: absolute;
     right: 35px;
     /*top: 15px;*/
@@ -67,8 +67,8 @@ hr {
     color: #f1f1f1;
 }
 
-.close:hover,
-.close:focus {
+.close_delete:hover,
+.close_delete:focus {
     color: #f44336;
     cursor: pointer;
 }
