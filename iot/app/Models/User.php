@@ -60,7 +60,7 @@ class User extends Authenticatable
 
     public function routeNotificationForFcm()
     {
-        return ['c63zyjhoQLSmarRcfwLP4E:APA91bEe7Nju2xX9ZXSKMa1z_EznyDBiKvSk450kTqpDSxe9J0QG7ZpT121y8V9YbadYNn91x1oJCmsNkLmOKTU8c5K8QbwLEYNkcByejLkfWzbg6yXvGkPPH4C9AlGBoidgSSTLBgJc'];
+        return Token_FCM::where("id_user",$this->id)->pluck("token_fcm")->toArray();
     }
 
     protected $casts = [

@@ -51,6 +51,7 @@ Route::put('/setWarningTemp', [\App\Http\Controllers\Api\PondController::class, 
 Route::put('/setWarningPh', [\App\Http\Controllers\Api\PondController::class, 'setWarningPh']);
 Route::put('/setWarningTemp_onoff', [\App\Http\Controllers\Api\PondController::class, 'setWarningTemp_onoff']);
 Route::put('/setWarningPh_onoff', [\App\Http\Controllers\Api\PondController::class, 'setWarningPh_onoff']);
+Route::put('/setWarningLight_onoff', [\App\Http\Controllers\Api\PondController::class, 'setWarningLight_onoff']);
 Route::get('/pump_in', [\App\Http\Controllers\Api\PondController::class, 'pump_in']);
 Route::put('/setPumpIn_onoff', [\App\Http\Controllers\Api\PondController::class, 'setPumpIn_onoff']);
 Route::get('/pump_out', [\App\Http\Controllers\Api\PondController::class, 'pump_out']);
@@ -63,6 +64,10 @@ Route::put('/set_timer_pump_in', [\App\Http\Controllers\Api\PondController::clas
 Route::put('/set_timer_pump_out', [\App\Http\Controllers\Api\PondController::class, 'set_timer_pump_out']);
 Route::put('/set_timer_lamp', [\App\Http\Controllers\Api\PondController::class, 'set_timer_lamp']);
 Route::put('/set_timer_oxygen_fan', [\App\Http\Controllers\Api\PondController::class, 'set_timer_oxygen_fan']);
+
+//fcm
+Route::post('/token_fcm', [\App\Http\Controllers\Api\PondController::class, 'token_fcm']);
+Route::delete('/delete_fcm', [\App\Http\Controllers\Api\PondController::class, 'delete_fcm']);
 
 
 Route::put('/server_temp', [\App\Http\Controllers\Api\PondController::class, 'server_temp']);
