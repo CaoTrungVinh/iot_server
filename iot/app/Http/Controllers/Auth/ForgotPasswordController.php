@@ -32,7 +32,7 @@ class ForgotPasswordController extends Controller
                 $token = Str::random(8);
                 $user->random_key = $token;
                 $user->password = Hash::make($token);
-                $user->key_time = Carbon::now()->addHour(12)->format('Y-m-d H:i:s');
+                $user->key_time = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
                 $user->update();
                 $user->notify(new ForgotPassController());
                 $user->random_key = null;

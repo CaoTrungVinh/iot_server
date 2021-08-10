@@ -23,7 +23,7 @@ class PondController extends Controller
 //        $ponds = DB::select('SELECT ponds.`id` ,ponds.`name`, ponds.address, users.`name` as name_user
 //          FROM ponds, users
 //          WHERE ponds.id_user=users.id');
-        $ponds = Pond::with('users')->get();
+        $ponds = Pond::with('users')->where('active', '=', 0)->get();
 //        dd($ponds[0]->users->email);
 //        return view('ponds.index', compact('ponds'));
         return view('ponds.index', ['ponds' => $ponds]);

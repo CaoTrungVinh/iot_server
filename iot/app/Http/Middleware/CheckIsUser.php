@@ -29,12 +29,9 @@ class CheckIsUser
 
     public function handle($request, Closure $next)
     {
-        if(!Auth::check())
-        {
-//            return Redirect::action('LoginController@showLogin');
-            return redirect()->back()->withErrors( [ 'mes' => 'Bạn không có quyền' ] );
-        }else {
-            return $next( $request );
-        }
+        if(session('UserID')) {
+            return $next($request);
+        } else
+            return redirect()->route('userLogin');
     }
 }

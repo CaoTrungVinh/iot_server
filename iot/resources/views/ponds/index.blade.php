@@ -46,6 +46,8 @@
                             <th>Người sở hữu</th>
                             <th>SĐT người sở hữu</th>
                             <th>Địa chỉ ao</th>
+                            <th>Bộ đo đăng ký</th>
+                            <th>Bộ điều khiển đăng ký</th>
                             <th>Quản lý</th>
                         </tr>
                         </thead>
@@ -56,6 +58,8 @@
                             <td>{{$ponds->users->name}}</td>
                             <td>{{$ponds->users->phone}}</td>
                             <td>{{$ponds->address}}</td>
+                            <td>{{$ponds->re_countToolkit}}</td>
+                            <td>{{$ponds->re_countControl}}</td>
 
                             <td class="align-middle text-center">
                                 <button onclick="showInfo({{$ponds->id}}, '{{$ponds->users->name}}', {{$ponds->users->phone}})" class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>

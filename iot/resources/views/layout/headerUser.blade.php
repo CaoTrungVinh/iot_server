@@ -3,9 +3,9 @@
     <!--Logo-->
     <div class="col-sm-3 pl-0 text-center header-logo">
         <div class="bg-theme mr-3 pt-3 pb-2 mb-0">
-            <h3 class="logo"><a href="{{route('home')}}" class="text-secondary logo">
-{{--                    <i class="fa fa-rocket"></i>--}}
-                    Website quản lý<span class="small"></span></a></h3>
+            <h3 class="logo"><a href="{{route('homeUs')}}" class="text-secondary logo">
+{{--                                        <i class="fa fa-rocket"></i>--}}
+                    Người dùng<span class="small"></span></a></h3>
         </div>
     </div>
     <!--Logo-->
@@ -31,16 +31,16 @@
                 </div>
                 <div class="mr-4" style="margin-top: -6px">
                     <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="{{route('adProfile')}}"><i class="fa fa-user pr-2"></i> Profile</a>
+                        <a class="dropdown-item" href="{{route('userProfile')}}"><i class="fa fa-user pr-2"></i> Profile</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{route('adChangePass')}}"><i class="fa fa-lock pr-2"></i> Change Password</a>
+                        <a class="dropdown-item" href="{{route('userChangePass')}}"><i class="fa fa-lock pr-2"></i> Change Password</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{route('getAdLogout')}}"><i class="fa fa-power-off pr-2"></i> Logout</a>
+                        <a class="dropdown-item" href="{{route('getUsLogout')}}"><i class="fa fa-power-off pr-2"></i> Logout</a>
                     </div>
-                        <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{{ asset('assets/img/icon_nam.png') }}" alt="Adam" class="rounded-circle" style="width:40px; height:40px; margin-bottom: -2px">
-                            <p style="font-size: 13px; color: #6c757d; margin-bottom: 0px"> {{Session::get('Auth')->name}}</p>
-                        </a>
+                    <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{ asset('assets/img/icon_nam.png') }}" alt="Adam" class="rounded-circle" style="width:40px; height:40px; margin-bottom: -2px">
+                        <p style="font-size: 13px; color: #6c757d; margin-bottom: 0px"> {{Session::get('User')->name}}</p>
+                    </a>
                 </div>
             </div>
             <!--Search box and avatar-->
@@ -48,4 +48,3 @@
     </div>
     <!--Header Menu-->
 </div>
-

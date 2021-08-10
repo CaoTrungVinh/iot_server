@@ -4,8 +4,8 @@
     <div class="login-box">
         <h1 class="text-center mb-5" style="margin-bottom: 10px !important;">
             <img src="assets/img/logo.png" class="" style="width: 60px; height: 60px;"/>
-{{--            <i class="fa fa-rocket text-primary"></i>--}}
-            Admin</h1>
+            {{--            <i class="fa fa-rocket text-primary"></i>--}}
+            Hệ thống giám sát ao nuôi thủy sản</h1>
         <div class="column">
             <div class="login-box-form" style="width: 400px; text-align: center; margin: auto">
                 <p class="form" style="color: red; font-size: 15px!important;">
@@ -14,7 +14,7 @@
                     @enderror
                 </p>
                 <h3 class="mb-2" style="margin-bottom: 20px!important;">Đăng nhập</h3>
-                <form method="post" action="{{route('postAdLogin')}}" class="mt-2">
+                <form method="post" action="{{route('postUsLogin')}}" class="mt-2">
                     @csrf
                     @error('mes')
                     <small class="form-text text-danger">{{ $message }}</small>
@@ -49,8 +49,11 @@
 
                     <div class="form-group">
                         <input type="submit" class="btn btn-theme btn-block p-2 mb-1" name="login" value="Đăng nhập" />
-                        <a href="{{route('AdForgotPass')}}">
-                            <small class="text-theme" style="font-style: italic; text-align: center"><strong>Quên mật khẩu?</strong></small>
+                        <a href="{{route('register')}}">
+                            <small class="text-theme" style="font-style: italic; float: left; margin-top: 10px; margin-left: 10px"><strong>Đăng ký tài khoản</strong></small>
+                        </a>
+                        <a href="{{route('forgotPass')}}">
+                            <small class="text-theme" style="font-style: italic; float: right; margin-top: 10px; margin-right: 10px"><strong>Quên mật khẩu?</strong></small>
                         </a>
                     </div>
                 </form>
@@ -58,3 +61,4 @@
         </div>
     </div>
 @endsection()
+

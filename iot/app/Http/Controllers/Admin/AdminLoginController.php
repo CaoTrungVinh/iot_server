@@ -46,7 +46,7 @@ class AdminLoginController extends Controller
     {
         Session::forget('AdminID');
         Session::forget('Auth');
-        return redirect('adminLogin');
+        return redirect()->route('adLogin');
     }
 
     private function messages()

@@ -3,7 +3,7 @@
 <div class="login-box">
     <h1 class="text-center mb-5" style="margin-bottom: 10px !important;">
         <img src="assets/img/logo.png" class="" style="width: 60px; height: 60px;"/>
-        App IoT Admin</h1>
+        Hệ thống giám sát ao nuôi thủy sản</h1>
     <div class="row">
         <div class="col-md-6 col-sm-6 col-12 login-box-form p-4" style="width: 400px; text-align: center; margin: auto">
             <h3 class="mb-4">Quên mật khẩu</h3>

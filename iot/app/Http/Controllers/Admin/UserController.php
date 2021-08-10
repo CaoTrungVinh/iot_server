@@ -215,7 +215,7 @@ class UserController extends Controller
                 $u->key_time = null;
                 $u->random_key = null;
                 $u->update();
-                return redirect('verifile')->with('ok', 'Xác nhận email thành công! Bạn có thể đăng nhập.');
+                return redirect('login')->with('ok', 'Xác nhận email thành công! Bạn có thể đăng nhập.');
             } else {
                 return redirect('404')->withErrors(['mes' => 'Liên kết đã hết hạn!']);
             }

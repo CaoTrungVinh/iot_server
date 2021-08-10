@@ -18,7 +18,7 @@ class Pond extends Model
 
     protected $table = "ponds";
 
-    protected $fillable = ['id', 'id_user', 'name', 'address'];
+    protected $fillable = ['id', 'id_user', 'name', 'address', 're_countToolkit', 're_countControl', 'active', 'singup_date', 'created_date', 'update_date', 'delete_date'];
 
     public function users()
     {
