@@ -13,7 +13,8 @@ final class ServerUnavailable extends RuntimeException implements MessagingExcep
 {
     use HasErrors;
 
-    private ?DateTimeImmutable $retryAfter = null;
+    /** @var DateTimeImmutable|null */
+    private $retryAfter;
 
     /**
      * @internal

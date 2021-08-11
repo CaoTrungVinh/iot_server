@@ -10,10 +10,11 @@ use Kreait\Firebase\Exception\DatabaseException;
 
 class Transaction
 {
-    private ApiClient $apiClient;
+    /** @var ApiClient */
+    private $apiClient;
 
     /** @var string[] */
-    private array $etags;
+    private $etags;
 
     /**
      * @internal

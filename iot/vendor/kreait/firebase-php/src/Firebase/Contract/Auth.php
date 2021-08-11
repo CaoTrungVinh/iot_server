@@ -405,10 +405,11 @@ interface Auth
 
     /**
      * @param string|Email $email
+     * @param string $oobCode
      *
      * @throws FailedToSignIn
      */
-    public function signInWithEmailAndOobCode($email, string $oobCode): SignInResult;
+    public function signInWithEmailAndOobCode($email, $oobCode): SignInResult;
 
     /**
      * @throws FailedToSignIn

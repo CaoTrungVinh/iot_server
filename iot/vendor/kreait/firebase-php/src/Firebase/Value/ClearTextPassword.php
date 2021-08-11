@@ -8,7 +8,8 @@ use Kreait\Firebase\Exception\InvalidArgumentException;
 
 class ClearTextPassword implements \JsonSerializable
 {
-    private string $value;
+    /** @var string */
+    private $value;
 
     /**
      * @internal

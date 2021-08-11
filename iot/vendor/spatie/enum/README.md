@@ -6,15 +6,16 @@
 
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/spatie/enum?style=flat-square)](https://packagist.org/packages/spatie/enum)
 [![Build Status](https://img.shields.io/github/workflow/status/spatie/enum/run-tests?label=tests&style=flat-square)](https://github.com/spatie/enum/actions?query=workflow%3Arun-tests)
+[![StyleCI](https://github.styleci.io/repos/169538841/shield?branch=master)](https://github.styleci.io/repos/169538841)
+[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/enum.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/enum)
+[![Code Coverage](https://img.shields.io/coveralls/github/spatie/enum.svg?style=flat-square)](https://coveralls.io/github/spatie/enum)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/enum.svg?style=flat-square)](https://packagist.org/packages/spatie/enum)
 
-This package offers strongly typed enums in PHP. In this package, enums are always objects, never constant values on their own. This allows for proper static analysis and refactoring in IDEs.
+This package offers strongly typed enums in PHP. We don't use a simple "value" representation, so you're always working with the enum object. This allows for proper autocompletion and refactoring in IDEs.
 
 Here's how enums are created with this package:
 
 ```php
-use \Spatie\Enum\Enum;
-
 /**
  * @method static self draft()
  * @method static self published()
@@ -40,7 +41,9 @@ $class->setStatus(StatusEnum::draft());
 
 ## Support us
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/enum.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/enum)
+Learn how to create a package like this one, by watching our premium video course:
+
+[![Laravel Package training](https://spatie.be/github/package-training.jpg)](https://laravelpackage.training)
 
 We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
@@ -82,160 +85,109 @@ public function setStatus(StatusEnum $status)
 $class->setStatus(StatusEnum::draft());
 ```
 
-| Autocompletion  | Refactoring |
-| ------------- | ------------- |
-| ![](./docs/autocomplete.gif)  | ![](./docs/refactor.gif)  |
+![](./docs/autocomplete.gif)
+
+![](./docs/refactor.gif)
 
 ### Creating an enum from a value
 
 ```php
-$status = new StatusEnum('draft');
+$status = StatusEnum::make('draft');
 ```
 
-When an enum value doesn't exist, you'll get an error. The only time you want to construct an enum from a value is when unserializing them from eg. a database.
+### Override enum values
 
-If you want to get the value of an enum to store it, you can do this:
+By default, the string value of an enum is simply the name of that method. In the previous example it would be `draft`.
 
-```php
-$status->value;
-```
-
-Note that `value` is a read-only property, it cannot be changed.
-
-### Enum values
-
-By default, the enum value is its method name. You can however override it, for example if you want to store enums as integers in a database, instead of using their method name.
+You can override the value or the index by overriding the `getValue()` or `getIndex()` method:
 
 ```php
-/**
- * @method static self draft()
- * @method static self published()
- * @method static self archived()
- */
 class StatusEnum extends Enum
 {
-    protected static function values(): array
+    public static function draft(): StatusEnum
     {
-        return [
-            'draft' => 1,
-            'published' => 2,
-            'archived' => 3,
-        ];
+        return new class() extends StatusEnum {
+            public function getValue(): string
+            {
+                return 'status.draft';
+            }
+            public function getIndex(): int
+            {
+                return 10;
+            }
+        };
     }
-}
-```
-
-An enum value doesn't have to be a `string`, as you can see in the example it can also be an `int`.
-
-Note that you don't need to override all values. Rather, you only need to override the ones that you want to be different from the default.
-
-If you have a logic that should be applied to all method names to get the value, like lowercase them, you can return a `Closure`.
-
-```php
-/**
- * @method static self DRAFT()
- * @method static self PUBLISHED()
- * @method static self ARCHIVED()
- */
-class StatusEnum extends Enum
-{
-    protected static function values(): Closure
+    
+    public static function published(): StatusEnum
     {
-        return function(string $name): string|int {
-            return mb_strtolower($name);
+        return new class() extends StatusEnum {
+            public function getValue(): string
+            {
+                return 'status.published';
+            }
+            public function getIndex(): int
+            {
+                return 20;
+            }
+        };
+    }
+    
+    public static function archived(): StatusEnum
+    {
+        return new class() extends StatusEnum {
+            public function getValue(): string
+            {
+                return 'status.archived';
+            }
+            public function getIndex(): int
+            {
+                return -10;
+            }
         };
     }
 }
 ```
 
-### Enum labels
-
-Enums can be given a label, you can do this by overriding the `labels` method.
-
-```php
-/**
- * @method static self draft()
- * @method static self published()
- * @method static self archived()
- */
-class StatusEnum extends Enum
-{
-    protected static function labels(): array
-    {
-        return [
-            'draft' => 'my draft label',
-        ];
-    }
-}
-```
-
-Note that you don't need to override all labels, the default label will be the enum's value.
-
-If you have a logic that should be applied to all method names to get the label, like lowercase them, you can return a `Closure` as in the value example.
-
-You can access an enum's label like so:
-
-```php
-$status->label;
-```
-
-Note that `label` is a read-only property, it cannot be changed.
+Overriding these methods is always optional but if you want to rely on the index we recommend to define them yourself. Otherwise they could easily change - we only use array index.
 
 ### Comparing enums
 
-Enums can be compared using the `equals` method:
+Enums can be compared using the `isEqual` method:
 
 ```php
-$status->equals(StatusEnum::draft());
+$status->isEqual($otherStatus);
 ```
 
-You can pass several enums to the `equals` method, it will return `true` if the current enum equals one of the given values.
+You can also use dynamic `is` methods:
 
 ```php
-$status->equals(StatusEnum::draft(), StatusEnum::archived());
+$status->isDraft(); // return a boolean
+StatusEnum::isDraft($status); // return a boolean
 ```
 
-### Phpunit Assertions
+Note that if you want auto completion on these `is` methods, you must add extra doc blocks on your enum classes. 
 
-This package provides a trait `Spatie\Enum\Phpunit\EnumAssertions` with some basic/common assertions if you have to test enums.
+### Enum specific methods
 
-```php
-use Spatie\Enum\Phpunit\EnumAssertions;
+There might be a case where you want to have functionality depending on the concrete enum value.
 
-EnumAssertions::assertIsEnum($post->status); // checks if actual extends Enum::class
-EnumAssertions::assertIsEnumValue(StatusEnum::class, 'draft'); // checks if actual is a value of given enum
-EnumAssertions::assertIsEnumLabel(StatusEnum::class, 'draft'); // checks if actual is a label of given enum
-EnumAssertions::assertEqualsEnum(StatusEnum::draft(), 'draft'); // checks if actual (transformed to enum) equals expected
-EnumAssertions::assertSameEnum(StatusEnum::draft(), $post->status); // checks if actual is same as expected
-EnumAssertions::assertSameEnumValue(StatusEnum::draft(), 1); // checks if actual is same value as expected
-EnumAssertions::assertSameEnumLabel(StatusEnum::draft(), 'draft'); // checks if actual is same label as expected
-```
+There are several ways to do this:
 
-### Faker Provider
+- Add a function in the enum class and using a switch statement or array mapping.
+- Use a separate class which contains this switch logic, something like enum extensions in C#.
+- Use enum specific methods, similar to Java. 
 
-Possibly you are using [faker](https://github.com/FakerPHP/Faker) and want to generate random enums.
-Because doing so with default faker is a lot of copy'n'paste we've got you covered with a faker provider `Spatie\Enum\Faker\FakerEnumProvider`.
+This package also supports these enum specific methods. 
 
-```php
-use Spatie\Enum\Faker\FakerEnumProvider;
-use Faker\Generator as Faker;
+By declaring the enum class itself as abstract, and using static constructors instead of doc comments, you're able to return an anonymous class per enum, each of them implementing the required methods.
 
-/** @var Faker|FakerEnumProvider $faker */
-$faker = new Faker();
-$faker->addProvider(new FakerEnumProvider($faker));
-
-$enum = $faker->randomEnum(StatusEnum::class);
-$value = $faker->randomEnumValue(StatusEnum::class);
-$label = $faker->randomEnumLabel(StatusEnum::class);
-```
-
-## Testing
+### Testing
 
 ``` bash
 composer test
 ```
 
-## Changelog
+### Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
 

@@ -19,13 +19,17 @@ use Throwable;
 
 final class IdTokenVerifier implements Verifier
 {
-    private Verifier $verifier;
+    /** @var Verifier */
+    private $verifier;
 
-    private Clock $clock;
+    /** @var Clock */
+    private $clock;
 
-    private int $leewayInSeconds = 0;
+    /** @var int */
+    private $leewayInSeconds = 0;
 
-    private Configuration $config;
+    /** @var Configuration */
+    private $config;
 
     public function __construct(Verifier $verifier, Clock $clock)
     {

@@ -9,14 +9,14 @@ use Kreait\Firebase\Exception\InvalidArgumentException;
 final class MessageData implements \JsonSerializable
 {
     /** @var array<string, string> */
-    private array $data = [];
+    private $data = [];
 
     private function __construct()
     {
     }
 
     /**
-     * @param array<string, string> $data
+     * @param array<mixed, mixed> $data
      */
     public static function fromArray(array $data): self
     {
@@ -78,7 +78,7 @@ final class MessageData implements \JsonSerializable
         }
 
         foreach ($reservedPrefixes as $prefix) {
-            if (\str_starts_with($value, $prefix)) {
+            if (\mb_strpos($value, $prefix) === 0) {
                 throw new InvalidArgumentException("'{$prefix}' is a reserved prefix and can not be used as a key in FCM data payloads");
             }
         }

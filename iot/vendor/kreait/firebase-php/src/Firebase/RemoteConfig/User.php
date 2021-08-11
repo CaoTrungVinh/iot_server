@@ -10,9 +10,14 @@ use Psr\Http\Message\UriInterface;
 
 final class User
 {
-    private ?string $name = null;
-    private ?Email $email = null;
-    private ?UriInterface $imageUri = null;
+    /** @var string|null */
+    private $name;
+
+    /** @var Email|null */
+    private $email;
+
+    /** @var UriInterface|null */
+    private $imageUri;
 
     private function __construct()
     {

@@ -11,7 +11,8 @@ use Kreait\Firebase\DynamicLink\ShortenLongDynamicLink;
 
 final class GuzzleApiClientHandler implements Handler
 {
-    private ClientInterface $apiClient;
+    /** @var ClientInterface */
+    private $apiClient;
 
     public function __construct(ClientInterface $client)
     {

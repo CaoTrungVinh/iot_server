@@ -8,16 +8,20 @@ use Kreait\Firebase\Exception\InvalidArgumentException;
 
 class Parameter implements \JsonSerializable
 {
-    private string $name;
-    private string $description = '';
-    private DefaultValue $defaultValue;
-    /** @var ConditionalValue[] */
-    private array $conditionalValues = [];
+    /** @var string */
+    private $name;
 
-    private function __construct(string $name, DefaultValue $defaultValue)
+    /** @var string */
+    private $description = '';
+
+    /** @var DefaultValue */
+    private $defaultValue;
+
+    /** @var ConditionalValue[] */
+    private $conditionalValues = [];
+
+    private function __construct()
     {
-        $this->name = $name;
-        $this->defaultValue = $defaultValue;
     }
 
     /**
@@ -33,7 +37,11 @@ class Parameter implements \JsonSerializable
             throw new InvalidArgumentException('The default value for a remote config parameter must be a string or NULL to use the in-app default.');
         }
 
-        return new self($name, $defaultValue);
+        $parameter = new self();
+        $parameter->name = $name;
+        $parameter->defaultValue = $defaultValue;
+
+        return $parameter;
     }
 
     public function name(): string
@@ -99,7 +107,9 @@ class Parameter implements \JsonSerializable
         \reset($data);
         $parameterData = \current($data);
 
-        $parameter = new self((string) \key($data), DefaultValue::fromArray($parameterData['defaultValue'] ?? []));
+        $parameter = new self();
+        $parameter->name = (string) \key($data);
+        $parameter->defaultValue = DefaultValue::fromArray($parameterData['defaultValue'] ?? []);
 
         foreach ((array) ($parameterData['conditionalValues'] ?? []) as $key => $conditionalValueData) {
             $parameter = $parameter->withConditionalValue(new ConditionalValue($key, $conditionalValueData['value']));

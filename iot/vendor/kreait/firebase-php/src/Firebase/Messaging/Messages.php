@@ -14,7 +14,7 @@ use Traversable;
 final class Messages implements Countable, IteratorAggregate
 {
     /** @var Message[] */
-    private array $messages;
+    private $messages;
 
     public function __construct(Message ...$messages)
     {
@@ -26,7 +26,7 @@ final class Messages implements Countable, IteratorAggregate
      *
      * @return Traversable<Message>|Message[]
      */
-    public function getIterator(): iterable
+    public function getIterator()
     {
         yield from $this->messages;
     }

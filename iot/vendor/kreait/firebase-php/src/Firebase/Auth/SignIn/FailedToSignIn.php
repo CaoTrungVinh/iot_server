@@ -14,8 +14,11 @@ use Throwable;
 
 final class FailedToSignIn extends RuntimeException implements FirebaseException
 {
-    private ?SignIn $action = null;
-    private ?ResponseInterface $response = null;
+    /** @var SignIn|null */
+    private $action;
+
+    /** @var ResponseInterface|null */
+    private $response;
 
     public static function withActionAndResponse(SignIn $action, ResponseInterface $response): self
     {

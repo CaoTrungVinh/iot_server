@@ -13,7 +13,7 @@ use Psr\Http\Message\UriInterface;
 final class DynamicLink implements JsonSerializable
 {
     /** @var array<string, mixed> */
-    private array $data = [];
+    private $data = [];
 
     private function __construct()
     {

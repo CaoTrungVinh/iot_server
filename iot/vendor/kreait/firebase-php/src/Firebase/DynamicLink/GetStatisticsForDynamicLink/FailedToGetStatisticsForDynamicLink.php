@@ -11,8 +11,11 @@ use RuntimeException;
 
 final class FailedToGetStatisticsForDynamicLink extends RuntimeException implements FirebaseException
 {
-    private ?GetStatisticsForDynamicLink $action = null;
-    private ?ResponseInterface $response = null;
+    /** @var GetStatisticsForDynamicLink|null */
+    private $action;
+
+    /** @var ResponseInterface|null */
+    private $response;
 
     public static function withActionAndResponse(GetStatisticsForDynamicLink $action, ResponseInterface $response): self
     {

@@ -73,7 +73,7 @@ interface Messaging
 
     /**
      * @param string|Topic $topic
-     * @param RegistrationTokens|RegistrationToken|RegistrationToken[]|string[]|string $registrationTokenOrTokens
+     * @param mixed $registrationTokenOrTokens
      *
      * @return array<string, array<string, string>>
      */
@@ -89,7 +89,7 @@ interface Messaging
 
     /**
      * @param string|Topic $topic
-     * @param RegistrationTokens|RegistrationToken|RegistrationToken[]|string[]|string $registrationTokenOrTokens
+     * @param mixed $registrationTokenOrTokens
      *
      * @return array<string, array<string, string>>
      */

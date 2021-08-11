@@ -15,7 +15,8 @@ final class ResponseWithSubResponses implements HasSubResponses, ResponseInterfa
 {
     use WrappedPsr7Response;
 
-    private Responses $subResponses;
+    /** @var Responses */
+    private $subResponses;
 
     public function __construct(ResponseInterface $response)
     {

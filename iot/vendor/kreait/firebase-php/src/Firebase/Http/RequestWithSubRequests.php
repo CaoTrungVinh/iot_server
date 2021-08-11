@@ -25,19 +25,23 @@ final class RequestWithSubRequests implements HasSubRequests, RequestInterface
 {
     use WrappedPsr7Request;
 
-    private string $method = 'POST';
+    /** @var string */
+    private $method = 'POST';
 
-    private string $boundary;
+    /** @var string */
+    private $boundary;
 
-    private AppendStream $body;
+    /** @var AppendStream */
+    private $body;
 
-    private Requests $subRequests;
+    /** @var Requests */
+    private $subRequests;
 
     /**
      * @param string|UriInterface $uri
      * @param string $version Protocol version
      */
-    public function __construct($uri, Requests $subRequests, string $version = '1.1')
+    public function __construct($uri, Requests $subRequests, $version = '1.1')
     {
         $this->boundary = \sha1(\uniqid('', true));
 

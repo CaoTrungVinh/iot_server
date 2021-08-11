@@ -11,7 +11,8 @@ use Throwable;
 
 final class RevokedIdToken extends RuntimeException implements AuthException
 {
-    private Token $token;
+    /** @var Token */
+    private $token;
 
     public function __construct(Token $token, string $message = '', int $code = 0, ?Throwable $previous = null)
     {

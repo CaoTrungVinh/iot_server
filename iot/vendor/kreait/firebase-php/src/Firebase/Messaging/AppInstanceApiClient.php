@@ -16,9 +16,11 @@ use Throwable;
  */
 class AppInstanceApiClient
 {
-    private ClientInterface $client;
+    /** @var ClientInterface */
+    private $client;
 
-    private MessagingApiExceptionConverter $errorHandler;
+    /** @var MessagingApiExceptionConverter */
+    private $errorHandler;
 
     /**
      * @internal
@@ -42,17 +44,17 @@ class AppInstanceApiClient
         $tokenStrings = $tokens->asStrings();
 
         foreach ($topics as $topic) {
+            /** @var Topic $topic */
             $topicName = $topic->value();
 
-            $promises[$topicName] = $this->client
-                ->requestAsync('POST', '/iid/v1:batchAdd', [
-                    'json' => [
-                        'to' => '/topics/'.$topicName,
-                        'registration_tokens' => $tokenStrings,
-                    ],
-                ])
-                ->then(static fn (ResponseInterface $response) => JSON::decode((string) $response->getBody(), true))
-            ;
+            $promises[$topicName] = $this->client->requestAsync('POST', '/iid/v1:batchAdd', [
+                'json' => [
+                    'to' => '/topics/'.$topicName,
+                    'registration_tokens' => $tokenStrings,
+                ],
+            ])->then(static function (ResponseInterface $response) {
+                return JSON::decode((string) $response->getBody(), true);
+            });
         }
 
         $responses = Promise\Utils::settle($promises)->wait();
@@ -71,13 +73,11 @@ class AppInstanceApiClient
 
                         if (empty($tokenResult)) {
                             $topicResults[$token] = 'OK';
-
                             continue;
                         }
 
                         if (isset($tokenResult['error'])) {
                             $topicResults[$token] = $tokenResult['error'];
-
                             continue;
                         }
 
@@ -85,12 +85,9 @@ class AppInstanceApiClient
                     }
 
                     $result[$topicName] = $topicResults;
-
                     break;
-
                 case 'rejected':
                     $result[$topicName] = $response['reason']->getMessage();
-
                     break;
             }
         }
@@ -109,17 +106,17 @@ class AppInstanceApiClient
         $tokenStrings = $tokens->asStrings();
 
         foreach ($topics as $topic) {
+            /** @var Topic $topic */
             $topicName = $topic->value();
 
-            $promises[$topicName] = $this->client
-                ->requestAsync('POST', '/iid/v1:batchRemove', [
-                    'json' => [
-                        'to' => '/topics/'.$topicName,
-                        'registration_tokens' => $tokenStrings,
-                    ],
-                ])
-                ->then(static fn (ResponseInterface $response) => JSON::decode((string) $response->getBody(), true))
-            ;
+            $promises[$topicName] = $this->client->requestAsync('POST', '/iid/v1:batchRemove', [
+                'json' => [
+                    'to' => '/topics/'.$topicName,
+                    'registration_tokens' => $tokenStrings,
+                ],
+            ])->then(static function (ResponseInterface $response) {
+                return JSON::decode((string) $response->getBody(), true);
+            });
         }
 
         $responses = Promise\Utils::settle($promises)->wait();
@@ -138,13 +135,11 @@ class AppInstanceApiClient
 
                         if (empty($tokenResult)) {
                             $topicResults[$token] = 'OK';
-
                             continue;
                         }
 
                         if (isset($tokenResult['error'])) {
                             $topicResults[$token] = (string) $tokenResult['error'];
-
                             continue;
                         }
 
@@ -152,12 +147,9 @@ class AppInstanceApiClient
                     }
 
                     $result[$topicName] = $topicResults;
-
                     break;
-
                 case 'rejected':
                     $result[$topicName] = $response['reason']->getMessage();
-
                     break;
             }
         }
@@ -167,14 +159,14 @@ class AppInstanceApiClient
 
     public function getAppInstanceAsync(RegistrationToken $registrationToken): Promise\PromiseInterface
     {
-        return $this->client
-            ->requestAsync('GET', '/iid/'.$registrationToken->value().'?details=true')
+        return $this->client->requestAsync('GET', '/iid/'.$registrationToken->value().'?details=true')
             ->then(static function (ResponseInterface $response) use ($registrationToken) {
                 $data = JSON::decode((string) $response->getBody(), true);
 
                 return AppInstance::fromRawData($registrationToken, $data);
             })
-            ->otherwise(fn (Throwable $e) => Promise\Create::rejectionFor($this->errorHandler->convertException($e)))
-        ;
+            ->otherwise(function (Throwable $e) {
+                return Promise\Create::rejectionFor($this->errorHandler->convertException($e));
+            });
     }
 }

@@ -14,7 +14,7 @@ use Throwable;
 class ServiceAccount
 {
     /** @var array<string, string> */
-    private array $data = [];
+    private $data = [];
 
     public function getProjectId(): string
     {
@@ -43,7 +43,7 @@ class ServiceAccount
     }
 
     /**
-     * @param self|string|array|mixed $value
+     * @param self|string|array<mixed>|mixed $value
      *
      * @throws InvalidArgumentException
      *
@@ -57,7 +57,7 @@ class ServiceAccount
 
         if (\is_string($value)) {
             try {
-                if (\str_starts_with($value, '{')) {
+                if (\mb_strpos($value, '{') === 0) {
                     return self::fromJson($value);
                 }
 

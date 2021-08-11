@@ -9,11 +9,20 @@ use Kreait\Firebase\Util\DT;
 
 class FindVersions
 {
-    private ?\DateTimeImmutable $since = null;
-    private ?\DateTimeImmutable $until = null;
-    private ?VersionNumber $upToVersion = null;
-    private ?int $limit = null;
-    private ?int $pageSize = null;
+    /** @var \DateTimeImmutable|null */
+    private $since;
+
+    /** @var \DateTimeImmutable|null */
+    private $until;
+
+    /** @var VersionNumber|null */
+    private $upToVersion;
+
+    /** @var int|null */
+    private $limit;
+
+    /** @var int|null */
+    private $pageSize;
 
     private function __construct()
     {

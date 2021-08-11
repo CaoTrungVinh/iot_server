@@ -14,7 +14,7 @@ use JsonSerializable;
 final class ITunesConnectAnalytics implements JsonSerializable
 {
     /** @var array<string, string> */
-    private array $data = [];
+    private $data = [];
 
     private function __construct()
     {

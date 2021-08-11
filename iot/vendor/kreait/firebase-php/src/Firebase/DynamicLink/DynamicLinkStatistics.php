@@ -10,12 +10,13 @@ use Psr\Http\Message\ResponseInterface;
 final class DynamicLinkStatistics
 {
     /** @var array<string, array<int, array<string, string>>> */
-    private array $rawData = [];
-    private EventStatistics $events;
+    private $rawData;
+
+    /** @var EventStatistics */
+    private $events;
 
     private function __construct()
     {
-        $this->events = EventStatistics::fromArray([]);
     }
 
     /**

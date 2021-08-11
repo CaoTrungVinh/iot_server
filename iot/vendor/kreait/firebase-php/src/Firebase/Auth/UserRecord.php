@@ -14,28 +14,47 @@ use Kreait\Firebase\Util\JSON;
  */
 class UserRecord implements \JsonSerializable
 {
-    public string $uid;
-    public bool $emailVerified = false;
-    public bool $disabled = false;
-    public UserMetaData $metadata;
-    public ?string $email = null;
-    public ?string $displayName = null;
-    public ?string $photoUrl = null;
-    public ?string $phoneNumber = null;
-    /** @var UserInfo[] */
-    public array $providerData = [];
-    public ?string $passwordHash = null;
-    public ?string $passwordSalt = null;
-    /** @var array<string, mixed> */
-    public array $customClaims = [];
-    public ?DateTimeImmutable $tokensValidAfterTime = null;
-    public ?string $tenantId = null;
+    /** @var string */
+    public $uid;
 
-    public function __construct()
-    {
-        $this->metadata = new UserMetaData();
-        $this->uid = '';
-    }
+    /** @var string|null */
+    public $email;
+
+    /** @var bool */
+    public $emailVerified = false;
+
+    /** @var string|null */
+    public $displayName;
+
+    /** @var string|null */
+    public $photoUrl;
+
+    /** @var string|null */
+    public $phoneNumber;
+
+    /** @var bool */
+    public $disabled;
+
+    /** @var UserMetaData */
+    public $metadata;
+
+    /** @var UserInfo[] */
+    public $providerData;
+
+    /** @var string|null */
+    public $passwordHash;
+
+    /** @var string|null */
+    public $passwordSalt;
+
+    /** @var array<string, mixed> */
+    public $customClaims;
+
+    /** @var DateTimeImmutable|null */
+    public $tokensValidAfterTime;
+
+    /** @var string|null */
+    public $tenantId;
 
     /**
      * @param array<string, mixed> $data
@@ -43,13 +62,13 @@ class UserRecord implements \JsonSerializable
     public static function fromResponseData(array $data): self
     {
         $record = new self();
-        $record->uid = $data['localId'] ?? '';
+        $record->uid = $data['localId'];
         $record->email = $data['email'] ?? null;
-        $record->emailVerified = $data['emailVerified'] ?? $record->emailVerified;
+        $record->emailVerified = $data['emailVerified'] ?? false;
         $record->displayName = $data['displayName'] ?? null;
         $record->photoUrl = $data['photoUrl'] ?? null;
         $record->phoneNumber = $data['phoneNumber'] ?? null;
-        $record->disabled = $data['disabled'] ?? $record->disabled;
+        $record->disabled = $data['disabled'] ?? false;
         $record->metadata = self::userMetaDataFromResponseData($data);
         $record->providerData = self::userInfoFromResponseData($data);
         $record->passwordHash = $data['passwordHash'] ?? null;
@@ -82,10 +101,9 @@ class UserRecord implements \JsonSerializable
      */
     private static function userInfoFromResponseData(array $data): array
     {
-        return \array_map(
-            static fn (array $userInfoData) => UserInfo::fromResponseData($userInfoData),
-            $data['providerUserInfo'] ?? []
-        );
+        return \array_map(static function (array $userInfoData) {
+            return UserInfo::fromResponseData($userInfoData);
+        }, $data['providerUserInfo'] ?? []);
     }
 
     /**
@@ -103,9 +121,11 @@ class UserRecord implements \JsonSerializable
     }
 
     /**
+     * @param string $name
+     *
      * @return mixed
      */
-    public function __get(string $name)
+    public function __get($name)
     {
         if (\mb_strtolower($name) === 'customattributes') {
             Deprecation::trigger(__CLASS__.'::customAttributes', __CLASS__.'::customClaims');

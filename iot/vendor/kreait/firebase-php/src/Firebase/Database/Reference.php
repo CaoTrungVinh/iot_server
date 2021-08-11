@@ -18,11 +18,14 @@ use Psr\Http\Message\UriInterface;
  */
 class Reference
 {
-    private UriInterface $uri;
+    /** @var UriInterface */
+    private $uri;
 
-    private ApiClient $apiClient;
+    /** @var ApiClient */
+    private $apiClient;
 
-    private Validator $validator;
+    /** @var Validator */
+    private $validator;
 
     /**
      * @internal
@@ -103,6 +106,8 @@ class Reference
      * @see https://firebase.google.com/docs/reference/js/firebase.database.Reference#child
      *
      * @throws InvalidArgumentException if the path is invalid
+     *
+     * @return Reference
      */
     public function getChild(string $path): self
     {
@@ -318,7 +323,7 @@ class Reference
      *
      * @see https://firebase.google.com/docs/reference/js/firebase.database.Reference#push
      *
-     * @param mixed|null $value
+     * @param mixed $value
      *
      * @throws DatabaseException if the API reported an error
      *
@@ -401,8 +406,10 @@ class Reference
      * Returns the absolute URL for this location.
      *
      * @see getUri()
+     *
+     * @return string
      */
-    public function __toString(): string
+    public function __toString()
     {
         return (string) $this->getUri();
     }

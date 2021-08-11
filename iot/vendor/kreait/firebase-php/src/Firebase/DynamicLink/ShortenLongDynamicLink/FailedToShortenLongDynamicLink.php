@@ -13,8 +13,11 @@ use RuntimeException;
 
 final class FailedToShortenLongDynamicLink extends RuntimeException implements FirebaseException
 {
-    private ?ShortenLongDynamicLink $action = null;
-    private ?ResponseInterface $response = null;
+    /** @var ShortenLongDynamicLink|null */
+    private $action;
+
+    /** @var ResponseInterface|null */
+    private $response;
 
     public static function withActionAndResponse(ShortenLongDynamicLink $action, ResponseInterface $response): self
     {

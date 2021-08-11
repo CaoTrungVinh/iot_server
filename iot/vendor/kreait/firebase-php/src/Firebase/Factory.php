@@ -29,7 +29,6 @@ use Google\Cloud\Storage\StorageClient;
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\MessageFormatter;
-use GuzzleHttp\Psr7\Utils as GuzzleUtils;
 use GuzzleHttp\RequestOptions;
 use Kreait\Clock;
 use Kreait\Clock\SystemClock;
@@ -53,6 +52,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Psr\SimpleCache\CacheInterface;
 use Throwable;
+use function GuzzleHttp\Psr7\uri_for;
 
 class Factory
 {
@@ -67,37 +67,51 @@ class Factory
         'https://www.googleapis.com/auth/securetoken',
     ];
 
-    protected ?UriInterface $databaseUri = null;
+    /** @var UriInterface|null */
+    protected $databaseUri;
 
-    protected ?string $defaultStorageBucket = null;
+    /** @var string|null */
+    protected $defaultStorageBucket;
 
-    protected ?ServiceAccount $serviceAccount = null;
+    /** @var ServiceAccount|null */
+    protected $serviceAccount;
 
     /** @var ServiceAccountCredentials|UserRefreshCredentials|AppIdentityCredentials|GCECredentials|CredentialsLoader|null */
     protected $googleAuthTokenCredentials;
 
-    protected ?ProjectId $projectId = null;
+    /** @var ProjectId|null */
+    protected $projectId;
 
-    protected ?Email $clientEmail = null;
+    /** @var Email|null */
+    protected $clientEmail;
 
-    protected CacheInterface $verifierCache;
+    /** @var CacheInterface */
+    protected $verifierCache;
 
-    protected CacheItemPoolInterface $authTokenCache;
+    /** @var CacheItemPoolInterface */
+    protected $authTokenCache;
 
-    protected bool $discoveryIsDisabled = false;
+    /** @var bool */
+    protected $discoveryIsDisabled = false;
 
-    protected bool $guzzleDebugModeIsEnabled = false;
+    /** @var bool */
+    protected $guzzleDebugModeIsEnabled = false;
 
     /**
+     * @var string|null
+     *
      * @deprecated 5.7.0 Use {@see withClientOptions} instead.
      */
-    protected ?string $httpProxy = null;
+    protected $httpProxy;
 
-    protected static string $databaseUriPattern = 'https://%s.firebaseio.com';
+    /** @var string */
+    protected static $databaseUriPattern = 'https://%s.firebaseio.com';
 
-    protected static string $storageBucketNamePattern = '%s.appspot.com';
+    /** @var string */
+    protected static $storageBucketNamePattern = '%s.appspot.com';
 
-    protected Clock $clock;
+    /** @var Clock */
+    protected $clock;
 
     /** @var callable|null */
     protected $httpLogMiddleware;
@@ -105,9 +119,11 @@ class Factory
     /** @var callable|null */
     protected $httpDebugLogMiddleware;
 
-    protected ?TenantId $tenantId = null;
+    /** @var TenantId|null */
+    protected $tenantId;
 
-    protected HttpClientOptions $httpClientOptions;
+    /** @var HttpClientOptions */
+    protected $httpClientOptions;
 
     public function __construct()
     {
@@ -129,8 +145,7 @@ class Factory
 
         return $factory
             ->withProjectId($serviceAccount->getProjectId())
-            ->withClientEmail($serviceAccount->getClientEmail())
-        ;
+            ->withClientEmail($serviceAccount->getClientEmail());
     }
 
     public function withProjectId(string $projectId): self
@@ -171,7 +186,7 @@ class Factory
     public function withDatabaseUri($uri): self
     {
         $factory = clone $this;
-        $factory->databaseUri = GuzzleUtils::uriFor($uri);
+        $factory->databaseUri = uri_for($uri);
 
         return $factory;
     }
@@ -351,16 +366,12 @@ class Factory
             return null;
         }
 
-        try {
-            if (
-                ($credentials = $this->getGoogleAuthTokenCredentials())
-                && ($credentials instanceof SignBlobInterface)
-                && ($clientEmail = $credentials->getClientName())
-            ) {
-                return $this->clientEmail = new Email($clientEmail);
-            }
-        } catch (Throwable $e) {
-            return null;
+        if (
+            ($credentials = $this->getGoogleAuthTokenCredentials())
+            && ($credentials instanceof SignBlobInterface)
+            && ($clientEmail = $credentials->getClientName())
+        ) {
+            return $this->clientEmail = new Email($clientEmail);
         }
 
         return null;
@@ -373,7 +384,7 @@ class Factory
         }
 
         if ($projectId = $this->getProjectId()) {
-            return $this->databaseUri = GuzzleUtils::uriFor(\sprintf(self::$databaseUriPattern, $projectId->sanitizedValue()));
+            return $this->databaseUri = uri_for(\sprintf(self::$databaseUriPattern, $projectId->sanitizedValue()));
         }
 
         throw new RuntimeException('Unable to build a database URI without a project ID');
@@ -394,19 +405,19 @@ class Factory
 
     public function createAuth(): Contract\Auth
     {
-        $httpClient = $this->createApiClient([
+        $http = $this->createApiClient([
             'base_uri' => 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/',
         ]);
 
-        $authApiClient = new Auth\ApiClient($httpClient, $this->tenantId);
+        $apiClient = new Auth\ApiClient($http, $this->tenantId);
 
         $customTokenGenerator = $this->createCustomTokenGenerator();
 
         $idTokenVerifier = $this->createIdTokenVerifier();
 
-        $signInHandler = new Firebase\Auth\SignIn\GuzzleHandler($httpClient);
+        $signInHandler = new Firebase\Auth\SignIn\GuzzleHandler($http);
 
-        return new Auth($authApiClient, $httpClient, $customTokenGenerator, $idTokenVerifier, $signInHandler, $this->tenantId);
+        return new Auth($apiClient, $customTokenGenerator, $idTokenVerifier, $signInHandler, $this->tenantId);
     }
 
     public function createCustomTokenGenerator(): Generator

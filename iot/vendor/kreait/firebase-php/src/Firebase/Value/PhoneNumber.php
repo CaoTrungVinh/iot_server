@@ -11,7 +11,8 @@ use libphonenumber\PhoneNumberUtil;
 
 class PhoneNumber implements \JsonSerializable
 {
-    private string $value;
+    /** @var string */
+    private $value;
 
     /**
      * @internal

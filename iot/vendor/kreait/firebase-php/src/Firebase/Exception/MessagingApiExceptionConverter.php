@@ -26,9 +26,11 @@ use Throwable;
  */
 class MessagingApiExceptionConverter
 {
-    private ErrorResponseParser $responseParser;
+    /** @var ErrorResponseParser */
+    private $responseParser;
 
-    private Clock $clock;
+    /** @var Clock */
+    private $clock;
 
     /**
      * @internal
@@ -44,8 +46,7 @@ class MessagingApiExceptionConverter
      */
     public function convertException(Throwable $exception): FirebaseException
     {
-        /* @phpstan-ignore-next-line */
-        if ($exception instanceof RequestException && !($exception instanceof ConnectException)) {
+        if ($exception instanceof RequestException) {
             return $this->convertGuzzleRequestException($exception);
         }
 
@@ -70,44 +71,31 @@ class MessagingApiExceptionConverter
         switch ($code) {
             case 400:
                 $convertedError = new InvalidMessage($message);
-
                 break;
-
             case 401:
             case 403:
                 $convertedError = new AuthenticationError($message);
-
                 break;
-
             case 404:
                 $convertedError = new NotFound($message);
-
                 break;
-
             case 429:
                 $convertedError = new QuotaExceeded($message);
                 if ($retryAfter = $this->getRetryAfter($response)) {
                     $convertedError = $convertedError->withRetryAfter($retryAfter);
                 }
-
                 break;
-
             case 500:
                 $convertedError = new ServerError($message);
-
                 break;
-
             case 503:
                 $convertedError = new ServerUnavailable($message);
                 if ($retryAfter = $this->getRetryAfter($response)) {
                     $convertedError = $convertedError->withRetryAfter($retryAfter);
                 }
-
                 break;
-
             default:
                 $convertedError = new MessagingError($message, $code, $previous);
-
                 break;
         }
 

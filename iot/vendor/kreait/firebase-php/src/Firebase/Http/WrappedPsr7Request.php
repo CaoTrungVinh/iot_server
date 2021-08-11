@@ -13,7 +13,8 @@ use Psr\Http\Message\UriInterface;
  */
 trait WrappedPsr7Request
 {
-    protected RequestInterface $wrappedRequest;
+    /** @var RequestInterface */
+    protected $wrappedRequest;
 
     public function getProtocolVersion(): string
     {

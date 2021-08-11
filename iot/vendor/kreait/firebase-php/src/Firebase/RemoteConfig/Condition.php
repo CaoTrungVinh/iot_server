@@ -6,11 +6,14 @@ namespace Kreait\Firebase\RemoteConfig;
 
 class Condition implements \JsonSerializable
 {
-    private string $name;
+    /** @var string */
+    private $name;
 
-    private string $expression;
+    /** @var string */
+    private $expression;
 
-    private ?TagColor $tagColor;
+    /** @var TagColor|null */
+    private $tagColor;
 
     private function __construct(string $name, string $expression, ?TagColor $tagColor = null)
     {
@@ -20,11 +23,7 @@ class Condition implements \JsonSerializable
     }
 
     /**
-     * @param array{
-     *     name: string,
-     *     expression: string,
-     *     tagColor?: ?string
-     * } $data
+     * @param array<string, string> $data
      */
     public static function fromArray(array $data): self
     {
@@ -80,6 +79,8 @@ class Condition implements \JsonSerializable
             'name' => $this->name,
             'expression' => $this->expression,
             'tagColor' => $this->tagColor ? $this->tagColor->value() : null,
-        ], static fn ($value) => $value !== null);
+        ], static function ($value) {
+            return $value !== null;
+        });
     }
 }

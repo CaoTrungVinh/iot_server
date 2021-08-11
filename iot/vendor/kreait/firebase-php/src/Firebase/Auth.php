@@ -7,7 +7,6 @@ namespace Kreait\Firebase;
 use Firebase\Auth\Token\Domain\Generator as TokenGenerator;
 use Firebase\Auth\Token\Domain\Verifier;
 use Firebase\Auth\Token\Exception\InvalidToken;
-use GuzzleHttp\ClientInterface;
 use Kreait\Firebase\Auth\ActionCodeSettings;
 use Kreait\Firebase\Auth\ActionCodeSettings\ValidatedActionCodeSettings;
 use Kreait\Firebase\Auth\ApiClient;
@@ -46,20 +45,23 @@ use Traversable;
 
 class Auth implements Contract\Auth
 {
-    private ApiClient $client;
+    /** @var ApiClient */
+    private $client;
 
-    private ClientInterface $httpClient;
+    /** @var TokenGenerator */
+    private $tokenGenerator;
 
-    private TokenGenerator $tokenGenerator;
+    /** @var Verifier */
+    private $idTokenVerifier;
 
-    private Verifier $idTokenVerifier;
+    /** @var SignInHandler */
+    private $signInHandler;
 
-    private SignInHandler $signInHandler;
-
-    private ?TenantId $tenantId = null;
+    /** @var TenantId|null */
+    private $tenantId;
 
     /**
-     * @param iterable<ApiClient|ClientInterface|TokenGenerator|Verifier|SignInHandler|TenantId|null>|ApiClient|ClientInterface|TokenGenerator|Verifier|SignInHandler|TenantId|null ...$x
+     * @param iterable<ApiClient|TokenGenerator|Verifier|SignInHandler>|ApiClient|TokenGenerator|Verifier|SignInHandler|TenantId|null ...$x
      *
      * @internal
      */
@@ -76,8 +78,6 @@ class Auth implements Contract\Auth
                 $this->signInHandler = $arg;
             } elseif ($arg instanceof TenantId) {
                 $this->tenantId = $arg;
-            } elseif ($arg instanceof ClientInterface) {
-                $this->httpClient = $arg;
             }
         }
     }
@@ -249,9 +249,8 @@ class Auth implements Contract\Auth
 
         $tenantId = $this->tenantId ? $this->tenantId->toString() : null;
 
-        return (new CreateActionLink\GuzzleApiClientHandler($this->httpClient))
-            ->handle(CreateActionLink::new($type, $email, $actionCodeSettings, $tenantId))
-        ;
+        return (new CreateActionLink\GuzzleApiClientHandler($this->client))
+            ->handle(CreateActionLink::new($type, $email, $actionCodeSettings, $tenantId));
     }
 
     public function sendEmailActionLink(string $type, $email, $actionCodeSettings = null, ?string $locale = null): void
@@ -297,7 +296,7 @@ class Auth implements Contract\Auth
             $sendAction = $sendAction->withIdTokenString($idToken);
         }
 
-        (new SendActionLink\GuzzleApiClientHandler($this->httpClient))->handle($sendAction);
+        (new SendActionLink\GuzzleApiClientHandler($this->client))->handle($sendAction);
     }
 
     public function getEmailVerificationLink($email, $actionCodeSettings = null): string
@@ -470,10 +469,9 @@ class Auth implements Contract\Auth
     public function unlinkProvider($uid, $provider): UserRecord
     {
         $uid = $uid instanceof Uid ? $uid : new Uid($uid);
-        $provider = \array_map(
-            static fn ($provider) => $provider instanceof Provider ? $provider : new Provider($provider),
-            (array) $provider
-        );
+        $provider = \array_map(static function ($provider) {
+            return $provider instanceof Provider ? $provider : new Provider($provider);
+        }, (array) $provider);
 
         $response = $this->client->unlinkProvider((string) $uid, $provider);
 
@@ -534,7 +532,7 @@ class Auth implements Contract\Auth
         return $this->signInHandler->handle($action);
     }
 
-    public function signInWithEmailAndOobCode($email, string $oobCode): SignInResult
+    public function signInWithEmailAndOobCode($email, $oobCode): SignInResult
     {
         $email = $email instanceof Email ? (string) $email : $email;
 

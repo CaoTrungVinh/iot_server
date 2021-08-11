@@ -11,7 +11,8 @@ use Throwable;
 
 class Url implements \JsonSerializable
 {
-    private UriInterface $value;
+    /** @var UriInterface */
+    private $value;
 
     /**
      * @internal

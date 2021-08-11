@@ -6,7 +6,8 @@ namespace Kreait\Firebase\Messaging;
 
 final class RegistrationToken implements \JsonSerializable
 {
-    private string $value;
+    /** @var string */
+    private $value;
 
     private function __construct(string $value)
     {

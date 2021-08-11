@@ -58,8 +58,6 @@ interface Database
     public function updateRules(RuleSet $ruleSet): void;
 
     /**
-     * @param callable(\Kreait\Firebase\Database\Transaction $transaction):mixed $callable
-     *
      * @return mixed
      */
     public function runTransaction(callable $callable);

@@ -15,7 +15,7 @@ use Traversable;
 final class RegistrationTokens implements Countable, IteratorAggregate
 {
     /** @var RegistrationToken[] */
-    private array $tokens;
+    private $tokens;
 
     public function __construct(RegistrationToken ...$tokens)
     {
@@ -57,7 +57,7 @@ final class RegistrationTokens implements Countable, IteratorAggregate
      *
      * @return Traversable<RegistrationToken>|RegistrationToken[]
      */
-    public function getIterator(): iterable
+    public function getIterator()
     {
         yield from $this->tokens;
     }

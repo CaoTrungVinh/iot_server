@@ -15,8 +15,11 @@ use Psr\Http\Message\UriInterface;
 
 final class DynamicLinks implements Contract\DynamicLinks
 {
-    private ClientInterface $apiClient;
-    private ?Url $defaultDynamicLinksDomain = null;
+    /** @var ClientInterface */
+    private $apiClient;
+
+    /** @var Url|null */
+    private $defaultDynamicLinksDomain;
 
     private function __construct(ClientInterface $apiClient)
     {
@@ -29,7 +32,7 @@ final class DynamicLinks implements Contract\DynamicLinks
     }
 
     /**
-     * @param string|Url|UriInterface|mixed $dynamicLinksDomain
+     * @param mixed $dynamicLinksDomain
      */
     public static function withApiClientAndDefaultDomain(ClientInterface $apiClient, $dynamicLinksDomain): self
     {
@@ -55,7 +58,8 @@ final class DynamicLinks implements Contract\DynamicLinks
     {
         $action = $this->ensureCreateAction($actionOrParametersOrUrl);
 
-        if ($this->defaultDynamicLinksDomain && !$action->hasDynamicLinkDomain()) {
+        /* @noinspection NotOptimalIfConditionsInspection */
+        if (!$action->hasDynamicLinkDomain() && $this->defaultDynamicLinksDomain) {
             $action = $action->withDynamicLinkDomain($this->defaultDynamicLinksDomain);
         }
 

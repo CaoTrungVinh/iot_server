@@ -13,7 +13,8 @@ final class QuotaExceeded extends RuntimeException implements MessagingException
 {
     use HasErrors;
 
-    private ?DateTimeImmutable $retryAfter = null;
+    /** @var DateTimeImmutable|null */
+    private $retryAfter;
 
     /**
      * @internal

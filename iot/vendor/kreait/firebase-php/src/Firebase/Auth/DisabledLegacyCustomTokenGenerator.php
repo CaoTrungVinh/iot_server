@@ -11,7 +11,8 @@ use Lcobucci\JWT\Token;
 
 final class DisabledLegacyCustomTokenGenerator implements Generator
 {
-    private string $reason;
+    /** @var string */
+    private $reason;
 
     public function __construct(string $reason)
     {

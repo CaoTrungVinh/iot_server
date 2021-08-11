@@ -7,7 +7,7 @@ namespace Kreait\Firebase\Auth;
 interface ActionCodeSettings
 {
     /**
-     * @return array<string, bool|string>
+     * @return array<mixed>
      */
     public function toArray(): array;
 }

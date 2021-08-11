@@ -21,7 +21,7 @@ final class Middleware
                 $uri = $request->getUri();
                 $path = $uri->getPath();
 
-                if (!\str_ends_with($path, '.json')) {
+                if (\mb_substr($path, -5) !== '.json') {
                     $uri = $uri->withPath($path.'.json');
                     $request = $request->withUri($uri);
                 }
@@ -48,8 +48,7 @@ final class Middleware
                         }
 
                         return $response;
-                    })
-                ;
+                    });
             };
         };
     }

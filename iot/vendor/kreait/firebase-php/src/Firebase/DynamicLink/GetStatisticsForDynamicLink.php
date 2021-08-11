@@ -12,12 +12,14 @@ final class GetStatisticsForDynamicLink
 {
     public const DEFAULT_DURATION_IN_DAYS = 7;
 
-    private string $dynamicLink;
-    private int $durationInDays = self::DEFAULT_DURATION_IN_DAYS;
+    /** @var string */
+    private $dynamicLink;
 
-    private function __construct(string $dynamicLink)
+    /** @var int */
+    private $durationInDays;
+
+    private function __construct()
     {
-        $this->dynamicLink = $dynamicLink;
     }
 
     /**
@@ -25,7 +27,11 @@ final class GetStatisticsForDynamicLink
      */
     public static function forLink($link): self
     {
-        return new self((string) Url::fromValue((string) $link));
+        $action = new self();
+        $action->dynamicLink = (string) Url::fromValue((string) $link);
+        $action->durationInDays = self::DEFAULT_DURATION_IN_DAYS;
+
+        return $action;
     }
 
     public function withDurationInDays(int $durationInDays): self

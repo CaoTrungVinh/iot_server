@@ -20,13 +20,17 @@ use Throwable;
 
 class CustomTokenViaGoogleIam implements Generator
 {
-    private string $clientEmail;
+    /** @var string */
+    private $clientEmail;
 
-    private ClientInterface $client;
+    /** @var ClientInterface */
+    private $client;
 
-    private Configuration $config;
+    /** @var Configuration */
+    private $config;
 
-    private ?TenantId $tenantId;
+    /** @var TenantId|null */
+    private $tenantId;
 
     public function __construct(string $clientEmail, ClientInterface $client, ?TenantId $tenantId = null)
     {
@@ -57,8 +61,7 @@ class CustomTokenViaGoogleIam implements Generator
             ->permittedFor('https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit')
             ->relatedTo($this->clientEmail)
             ->issuedAt($now)
-            ->expiresAt($expiresAt)
-        ;
+            ->expiresAt($expiresAt);
 
         if ($this->tenantId) {
             $builder->withClaim('tenantId', $this->tenantId->toString());

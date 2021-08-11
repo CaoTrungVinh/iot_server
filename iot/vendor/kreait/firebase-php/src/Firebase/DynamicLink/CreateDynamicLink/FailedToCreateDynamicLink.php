@@ -13,8 +13,11 @@ use RuntimeException;
 
 final class FailedToCreateDynamicLink extends RuntimeException implements FirebaseException
 {
-    private ?CreateDynamicLink $action = null;
-    private ?ResponseInterface $response = null;
+    /** @var CreateDynamicLink|null */
+    private $action;
+
+    /** @var ResponseInterface|null */
+    private $response;
 
     public static function withActionAndResponse(CreateDynamicLink $action, ResponseInterface $response): self
     {

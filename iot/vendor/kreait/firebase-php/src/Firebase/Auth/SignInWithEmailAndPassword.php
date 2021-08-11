@@ -6,19 +6,26 @@ namespace Kreait\Firebase\Auth;
 
 final class SignInWithEmailAndPassword implements IsTenantAware, SignIn
 {
-    private string $email;
-    private string $clearTextPassword;
-    private ?TenantId $tenantId = null;
+    /** @var string */
+    private $email;
 
-    private function __construct(string $email, string $clearTextPassword)
+    /** @var string */
+    private $clearTextPassword;
+
+    /** @var TenantId|null */
+    private $tenantId;
+
+    private function __construct()
     {
-        $this->email = $email;
-        $this->clearTextPassword = $clearTextPassword;
     }
 
     public static function fromValues(string $email, string $clearTextPassword): self
     {
-        return new self($email, $clearTextPassword);
+        $instance = new self();
+        $instance->email = $email;
+        $instance->clearTextPassword = $clearTextPassword;
+
+        return $instance;
     }
 
     public function email(): string

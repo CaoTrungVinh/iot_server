@@ -6,7 +6,8 @@ namespace Kreait\Firebase\Project;
 
 final class ProjectId
 {
-    private string $value = '';
+    /** @var string */
+    private $value = '';
 
     private function __construct()
     {

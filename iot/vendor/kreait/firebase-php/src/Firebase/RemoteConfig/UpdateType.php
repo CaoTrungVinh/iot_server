@@ -11,16 +11,19 @@ final class UpdateType implements \JsonSerializable
     public const FORCED_UPDATE = 'FORCED_UPDATE';
     public const ROLLBACK = 'ROLLBACK';
 
-    private string $value;
+    /** @var string */
+    private $value;
 
-    private function __construct(string $value)
+    private function __construct()
     {
-        $this->value = $value;
     }
 
     public static function fromValue(string $value): self
     {
-        return new self($value);
+        $new = new self();
+        $new->value = $value;
+
+        return $new;
     }
 
     public function __toString(): string

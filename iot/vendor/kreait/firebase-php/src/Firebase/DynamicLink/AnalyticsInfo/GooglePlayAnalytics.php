@@ -9,7 +9,7 @@ use JsonSerializable;
 final class GooglePlayAnalytics implements JsonSerializable
 {
     /** @var array<string, string> */
-    private array $data = [];
+    private $data = [];
 
     private function __construct()
     {
