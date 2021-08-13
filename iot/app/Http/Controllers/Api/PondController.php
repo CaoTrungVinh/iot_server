@@ -318,4 +318,51 @@ class PondController extends Controller
         }
         return \response()->json($update_light, 200);
     }
+
+    public function activetoolkit(Request $request){
+        $toolkit = Toolkit::find($request->id);
+        if ($toolkit!=null){
+            if($toolkit->active == 4){
+                if ($request->key == 1234){
+                    $toolkit->active=1;
+                    $toolkit->update();
+                }
+            }
+        }
+        return \response()->json($toolkit, 200);
+    }
+
+    public function setDataTemp(Request $request){
+        $toolkit = Toolkit::find($request->id);
+        $id_temp = $toolkit->id_temperature;
+
+        if ($toolkit->active ==1){
+            $update_temp = DB::table('temperatures')
+                ->where('id', $id_temp)
+                ->update([
+                    'temperature' => $request->get("temperature"),
+                    'created_at' => $request->get("created_at"),]);
+
+            $temp = $request->get("temperature");
+            Log::info("$temp");
+
+            $tempquery = Temperature::where('id', $id_temp)->first();
+            $warning = $tempquery->warning;
+            $temp_min = $tempquery->temperature_min;
+            $temp_max = $tempquery->temperature_max;
+
+            $pond = Pond::where('id', '=', $toolkit->id_pond)->first();
+            $id_user = $pond->id_user;
+
+            if ($warning == 1) {
+                if ($temp <= $temp_min || $temp >= $temp_max) {
+                    $user = User::find($id_user);
+                    $user->notify(new WarningTemp("Cảnh báo", "Nhiệt độ ao nuôi $temp*C vượt mức an toàn"));
+                }
+            }
+        }else{
+            return \response()->json("Error", 200);
+        }
+        return \response()->json($id_temp, 200);
+    }
 }

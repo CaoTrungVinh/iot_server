@@ -52,13 +52,13 @@
                                     <div class="col-sm-6">
                                         <label class="control-label" for="input-1"
                                                style="font-weight: 500; font-size: 18px; color: black;">Họ tên:
-                                            <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px;">{{Session::get('Auth')->name}}</p>
+                                            <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px;">{{Session::get('User')->name}}</p>
                                         </label>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="control-label" for="input-3"
                                                style="font-weight: 500; font-size: 18px; color: black;">Email:
-                                            <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px;">{{Session::get('Auth')->email}}</p>
+                                            <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px;">{{Session::get('User')->email}}</p>
                                         </label>
                                     </div>
                                 </div>
@@ -67,13 +67,13 @@
                                     <div class="col-sm-6">
                                         <label class="control-label" for="exampleFormControlSelect1"
                                                style="font-weight: 500; font-size: 18px; color: black;">Giới tính:
-                                            <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px;">{{Session::get('Auth')->gender}}</p>
+                                            <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px;">{{Session::get('User')->gender}}</p>
                                         </label>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="control-label" for="input-4"
                                                style="font-weight: 500; font-size: 18px; color: black;">Ngày sinh:
-                                            <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px;">{{Session::get('Auth')->birthday}}</p>
+                                            <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px;">{{Session::get('User')->birthday}}</p>
                                         </label>
                                     </div>
                                 </div>
@@ -82,17 +82,17 @@
                                     <div class="col-sm-6">
                                         <label class="control-label" for="exampleFormControlSelect1"
                                                style="font-weight: 500; font-size: 18px; color: black;">Số điện thoại:
-                                            <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px;">{{Session::get('Auth')->phone}}</p>
+                                            <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px;">{{Session::get('User')->phone}}</p>
                                         </label>
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="control-label" for="input-4"
                                                style="font-weight: 500; font-size: 18px; color: black;">Chức năng:
-                                            @if(Session::get('Auth')->role_id==2)
+                                            @if(Session::get('User')->role_id==2)
                                                 <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px;">
                                                     Quản trị hệ thống</p>
                                             @endif
-                                            @if(Session::get('Auth')->role_id==1)
+                                            @if(Session::get('User')->role_id==1)
                                                 <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px;">
                                                     Người dùng</p>
                                             @endif
@@ -105,7 +105,7 @@
                                         <label class="control-label" for="input-5"
                                                style="width: 915px; font-weight: 500; font-size: 18px; color: black">Địa
                                             chỉ:
-                                            <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px; display: contents;">{{Session::get('Auth')->address}}</p>
+                                            <p style="float: right; font-size: 17px!important; margin-left: 20px; margin-bottom: 0px!important; margin-top: -3px; display: contents;">{{Session::get('User')->address}}</p>
                                         </label>
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@
                                     <div class="col-sm-6">
                                         <p class="form">
                                             <label class="control-label" for="input-1">Tên người dùng</label>
-                                            <input type="text" class="form-control" id="input-1" name="p_name" value="{{Session::get('Auth')->name}}"/>
+                                            <input type="text" class="form-control" id="input-1" name="p_name" value="{{Session::get('User')->name}}"/>
                                             @error('mes')
                                             <small class="form-text text-danger">{{ $message }}</small>
                                             @enderror
@@ -132,7 +132,7 @@
                                     <div class="col-sm-6">
                                         <p class="form">
                                             <label class="control-label" for="input-3">Ngày sinh</label>
-                                            <input type="text" class="form-control" id="input-3" name="p_birthday" value="{{Session::get('Auth')->birthday}}"/>
+                                            <input type="text" class="form-control" id="input-3" name="p_birthday" value="{{Session::get('User')->birthday}}"/>
                                             @error('mes')
                                             <small class="form-text text-danger">{{ $message }}</small>
                                             @enderror
@@ -144,7 +144,7 @@
                                         <p class="form">
                                             <label class="control-label" for="exampleFormControlSelect1">Giới tính</label>
                                             <select class="form-control" id="exampleFormControlSelect1" name="p_gender">
-                                                <option value="{{Session::get('Auth')->gender}}">{{Session::get('Auth')->gender}}</option>
+                                                <option value="{{Session::get('User')->gender}}">{{Session::get('User')->gender}}</option>
                                                 <option value="Nam">Nam</option>
                                                 <option value="Nữ">Nữ</option>
                                                 <option value="Khác">Khác</option>
@@ -158,7 +158,7 @@
                                         <p class="form">
                                             <label class="control-label" for="input-4">Số điện thoại</label>
                                             <input type="number" maxlength="5" class="form-control" name="p_phone" id="input-4"
-                                                   value="{{Session::get('Auth')->phone}}"/>
+                                                   value="{{Session::get('User')->phone}}"/>
                                             @error('mes')
                                             <small class="form-text text-danger">{{ $message }}</small>
                                             @enderror
@@ -169,7 +169,7 @@
                                     <div class="col-sm-6" style="display: contents">
                                         <p class="form">
                                             <label class="control-label" for="input-5">Địa chỉ</label>
-                                            <input type="text" class="form-control" id="input-5" name="p_address" value="{{Session::get('Auth')->address}}"/>
+                                            <input type="text" class="form-control" id="input-5" name="p_address" value="{{Session::get('User')->address}}"/>
                                             @error('mes')
                                             <small class="form-text text-danger">{{ $message }}</small>
                                             @enderror

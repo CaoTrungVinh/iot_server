@@ -64,7 +64,7 @@ class UserAuthController extends Controller
             Session::flash('error', 'Cập nhật thông tin thất bại!!!');
             return redirect()->back();
         }
-        $acc = User::find(Session::get('Auth')->id);
+        $acc = User::find(Session::get('User')->id);
         $acc->name = $request->p_name;
         $acc->birthday = $request->p_birthday;
         $acc->phone = $request->p_phone;

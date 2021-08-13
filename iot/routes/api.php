@@ -74,3 +74,6 @@ Route::put('/server_temp', [\App\Http\Controllers\Api\PondController::class, 'se
 Route::put('/server_ph', [\App\Http\Controllers\Api\PondController::class, 'server_ph']);
 Route::put('/server_light', [\App\Http\Controllers\Api\PondController::class, 'server_light']);
 
+Route::put('/activetoolkit', [\App\Http\Controllers\Api\PondController::class, 'activetoolkit']);
+Route::put('/setDataTemp', [\App\Http\Controllers\Api\PondController::class, 'setDataTemp']);
+

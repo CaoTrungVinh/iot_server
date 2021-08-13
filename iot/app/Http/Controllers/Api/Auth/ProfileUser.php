@@ -16,7 +16,7 @@ class ProfileUser extends Controller
     {
         $user = Auth::user();
         if (!$user->getAuthIdentifier())
-            return response()->json(['message' => "Yêu cầu đăng nhập"], 401);
+            return response()->json(['message' => "Yêu cầu đăng nhập"], 500);
         $infos = User::where("id", "=", $user->getAuthIdentifier())->first();
         if (!$infos)
             return \response()->json([
@@ -40,7 +40,7 @@ class ProfileUser extends Controller
                 'status' => 'fails',
                 'message' => $validator->errors()->first(),
                 'errors' => $validator->errors()->toArray(),
-            ], 401);
+            ], 500);
         }
         $user = Auth::user();
         $accountID = $user->getAuthIdentifier();
@@ -52,9 +52,9 @@ class ProfileUser extends Controller
         $acc->address = $request->address;
         if ($acc->save())
             return response()
-                ->json(['successMessage' => 'Thay đổi thông tin thành công!']);
+                ->json(['successMessage' => 'Thay đổi thông tin thành công!'],200);
         return response()
-            ->json(['errMessage' => 'Thay đổi thông tin thất bại!'], 401);
+            ->json(['errMessage' => 'Thay đổi thông tin thất bại!'], 500);
 
     }
 
