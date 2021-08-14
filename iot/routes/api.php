@@ -76,4 +76,12 @@ Route::put('/server_light', [\App\Http\Controllers\Api\PondController::class, 's
 
 Route::put('/activetoolkit', [\App\Http\Controllers\Api\PondController::class, 'activetoolkit']);
 Route::put('/setDataTemp', [\App\Http\Controllers\Api\PondController::class, 'setDataTemp']);
+Route::put('/setDataPh', [\App\Http\Controllers\Api\PondController::class, 'setDataPh']);
+Route::put('/setDataLight', [\App\Http\Controllers\Api\PondController::class, 'setDataLight']);
+
+Route::put('/activeControl', [\App\Http\Controllers\Api\PondController::class, 'activeControl']);
+Route::get('/getDataPumpIn', [\App\Http\Controllers\Api\PondController::class, 'getDataPumpIn']);
+Route::get('/getDataPumpOut', [\App\Http\Controllers\Api\PondController::class, 'getDataPumpOut']);
+Route::get('/getDataLamp', [\App\Http\Controllers\Api\PondController::class, 'getDataLamp']);
+Route::get('/getDataOxygenFan', [\App\Http\Controllers\Api\PondController::class, 'getDataOxygenFan']);
 
