@@ -331,9 +331,9 @@ class PondController extends Controller
                     $toolkit->active=1;
                     $toolkit->update();
                 }
+                return \response()->json("Kich hoat thanh cong", 200);
             }
         }
-        return \response()->json($toolkit, 200);
     }
     // Bộ đo
     public function setDataTemp(Request $request){
@@ -447,40 +447,56 @@ class PondController extends Controller
                     $control->active=1;
                     $control->update();
                 }
+                return \response()->json("Kich hoat thanh cong", 200);
             }
         }
-        return \response()->json($control, 200);
     }
 
     public function getDataPumpIn(Request $request)
     {
         $control = Control::find($request->id);
         $id_pump = $control->id_pump_in;
-        $pond = Pump_In::where('id', '=', $id_pump)->get();
-        return \response()->json($pond, 200);
+        if ($control->active == 1){
+            $pond = Pump_In::where('id', '=', $id_pump)->get();
+            return \response()->json($pond, 200);
+        }else{
+            return \response()->json("Erro", 200);
+        }
     }
 
     public function getDataPumpOut(Request $request)
     {
         $control = Control::find($request->id);
         $id_pump = $control->id_pump_out;
-        $pond = Pump_out::where('id', '=', $id_pump)->get();
-        return \response()->json($pond, 200);
+        if ($control->active == 1){
+            $pond = Pump_out::where('id', '=', $id_pump)->get();
+            return \response()->json($pond, 200);
+        }else{
+            return \response()->json("Error", 200);
+        }
     }
 
     public function getDataLamp(Request $request)
     {
         $control = Control::find($request->id);
         $id_pump = $control->id_lamp;
-        $pond = Lamp::where('id', '=', $id_pump)->get();
-        return \response()->json($pond, 200);
+        if ($control->active == 1){
+            $pond = Lamp::where('id', '=', $id_pump)->get();
+            return \response()->json($pond, 200);
+        }else{
+            return \response()->json("Error", 200);
+        }
     }
 
     public function getDataOxygenFan(Request $request)
     {
         $control = Control::find($request->id);
         $id_pump = $control->id_oxygen_fan;
-        $pond = Oxygen_fan::where('id', '=', $id_pump)->get();
-        return \response()->json($pond, 200);
+        if ($control->active == 1){
+            $pond = Oxygen_fan::where('id', '=', $id_pump)->get();
+            return \response()->json($pond, 200);
+        }else{
+            return \response()->json("Error", 200);
+        }
     }
 }
