@@ -11,7 +11,7 @@ class IndexUserController extends Controller
 {
     public function indexUser()
     {
-        $pondUser = Pond::withCount('tollkits')->withCount('controls')
+        $pondUser = Pond::withCount('toolkits')->withCount('controls')
             ->where('id_user', '=', session('UserID'))->get();
 //        $pondUser = Pond::where('id_user', '=', session('UserID'))->get();
        return view('pages.homeUser', ['pondUser'=>$pondUser]);

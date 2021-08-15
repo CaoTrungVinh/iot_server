@@ -20,7 +20,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <p class="form">
-                                    <label class="control-label" for="address">Vị trí đặt bộ đo</label>
+                                    <label class="control-label" for="address">Vị trí lắp bộ đo</label>
                                     <input type="text" name="address" class="form-control" id="address" placeholder=""/>
                                     @error('address')
                                     <small class="form-text text-danger">{{ $message }}</small>
@@ -36,7 +36,12 @@
                                     <select class="form-control" name="id_pond" id="exampleFormControlSelect1">
                                         <option></option>
                                         @foreach($toolkit_create as $toolkit_create)
-                                            <option value="{{$toolkit_create->id}}">{{$toolkit_create->name}}</option>
+                                            @if($toolkit_create->active==1)
+                                                <option value="{{$toolkit_create->id}}">ID: {{$toolkit_create->id}}
+                                                    _{{$toolkit_create->name}} --- ({{$toolkit_create->users->id}}
+                                                    : {{$toolkit_create->users->name}})
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
                                     @error('id_pond')
@@ -44,117 +49,27 @@
                                     @enderror
                                 </p>
                             </div>
-                            <div class="col-sm-6">
-                                <p class="form">
-                                    <label class="control-label" for="temperature_min">Nhiệt độ an toàn nhỏ nhất</label>
-                                    <input type="number" class="form-control" name="temperature_min"
-                                           id="temperature_min" placeholder=""/>
-                                    @error('temperature_min')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                    @enderror
-                                </p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-6">
-                                <p class="form">
-                                    <label class="control-label" for="temperature_max">Nhiệt độ an toàn lớn nhất</label>
-                                    <input type="number" class="form-control" name="temperature_max"
-                                           id="temperature_max" placeholder=""/>
-                                    @error('temperature_max')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                    @enderror
-                                </p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="form">
-                                    <label class="control-label" for="exampleFormControlSelect1">Cảnh báo nhiệt
-                                        độ</label>
-                                    <select class="form-control" name="warning_temp" id="exampleFormControlSelect1">
-                                        <option></option>
-                                        <option value="1">Bật</option>
-                                        <option value="0">Tắt</option>
-                                    </select>
-                                    @error('warning_temp')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                    @enderror
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-sm-6">
-                                <p class="form">
-                                    <label class="control-label" for="ph_min">Ph an toàn nhỏ nhất</label>
-                                    <input type="number" class="form-control" name="ph_min" id="ph_min" placeholder=""/>
-                                    @error('ph_min')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                    @enderror
-                                </p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="form">
-                                    <label class="control-label" for="ph_max">Ph an toàn lớn nhất</label>
-                                    <input type="number" class="form-control" name="ph_max" id="ph_max" placeholder=""/>
-                                    @error('ph_max')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                    @enderror
-                                </p>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-6">
-                                <p class="form">
-                                    <label class="control-label" for="exampleFormControlSelect1">Cảnh báo Ph</label>
-                                    <select class="form-control" name="warning_ph" id="exampleFormControlSelect1">
-                                        <option></option>
-                                        <option value="1">Bật</option>
-                                        <option value="0">Tắt</option>
-                                    </select>
-                                    @error('warning_ph')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                    @enderror
-                                </p>
-                            </div>
-                            <div class="col-sm-6">
-                                <p class="form">
-                                    <label class="control-label" for="input-2">Cảnh báo ánh sáng</label>
-                                    <select class="form-control" name="warning_light" id="exampleFormControlSelect1">
-                                        <option></option>
-                                        <option value="1">Bật</option>
-                                        <option value="0">Tắt</option>
-                                    </select>
-                                    @error('warning_light')
-                                    <small class="form-text text-danger">{{ $message }}</small>
-                                    @enderror
-                                </p>
-                            </div>
                         </div>
 
                         <div class="form-group row" style="margin-top: 40px">
+                            <p class="form">
                             <div class="col-sm-6">
-                                <a href="{{route('toolkit')}}" class="col-sm-12 btn btn-danger">Hủy</a>
+                                <a href="{{route('toolkit')}}" class="col-sm-12 btn btn-danger">Hủy (Quay lại)</a>
                             </div>
                             <div class="col-sm-6">
-                                <input type="submit" class="col-sm-12 btn btn-theme" value="Đồng ý"/>
+                                <input type="submit" name="sub_store" class="col-sm-12 btn btn-theme"
+                                       value="Xác nhận thêm"/>
                             </div>
+                            @error('sub_store')
+                            <small class="form-text text-danger"
+                                   style="font-size: 15px; margin-top: 15px; margin-left: 50px">{{ $message }}</small>
+                            @enderror
+                            </p>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-        <!--Footer-->
-        <div class="row mt-5 mb-4 footer">
-            <div class="col-sm-8">
-                <span>&copy; All rights reserved 2019 designed by <a class="text-info" href="#">A-Fusion</a></span>
-            </div>
-            <div class="col-sm-4 text-right">
-                <a href="#" class="ml-2">Contact Us</a>
-                <a href="#" class="ml-2">Support</a>
-            </div>
-        </div>
-        <!--Footer-->
 
     </div>
 @endsection

@@ -169,7 +169,7 @@
         <script>
             function showInfo(u_id){
                 $.ajax({
-                    url: '{!! url('/user/information') !!}'+ '/' + u_id,
+                    url: '{!! url('/admin/user/info') !!}'+ '/' + u_id,
                     type: 'GET',
                     success: function (data) {
                         document.getElementById("exampleModalLongTitle").innerText = "Thông tin chi tiết của tài khoản " + data[0].email;

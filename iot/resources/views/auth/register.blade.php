@@ -109,7 +109,7 @@
                     <div class="form-group row" style="margin-top: 40px">
                         <p class="form">
                         <div class="col-sm-6">
-                            <a href="{{route('adLogin')}}" class="col-sm-12 btn btn-danger">Đăng nhập</a>
+                            <a href="{{route('homeUs')}}" class="col-sm-12 btn btn-danger">Đăng nhập</a>
                         </div>
                         <div class="col-sm-6">
                             <input type="submit" class="col-sm-12 btn btn-theme" name="register" value="Đăng ký"/>

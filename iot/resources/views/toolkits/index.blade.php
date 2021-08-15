@@ -40,42 +40,63 @@
                     <table class="table table-bordered mt-3" id="productList">
                         <thead>
                         <tr style="color: #f6f6f7; background-color: #007bff; text-align: center">
-                            <th>Tên ao</th>
-                            <th>Tên bộ đo</th>
-                            <th>Vị trí</th>
-                            <th>Nhiệt độ</th>
-                            {{--<th>Nhiệt độ an toàn</th>--}}
-                            {{--<th>Ph an toàn</th>--}}
-                            <th>Độ Ph</th>
-                            <th>Ánh sáng</th>
+                            <th>Mã bộ đo</th>
+                            <th>Ao nuôi</th>
+                            <th>Trạng thái ao</th>
+                            <th>Bộ đo</th>
+                            <th>Mã kích hoạt</th>
+                            <th>ID nhiệt độ</th>
+                            <th>ID Ph</th>
+                            <th>ID Ánh sáng</th>
+                            <th>Trạng thái</th>
                             <th>Quản lý</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($toolkits as $toolkits)
+                            @if($toolkits->active!=0)
                             <tr style="text-align: center">
+                                <td>{{$toolkits->id}}</td>
                                 <td>{{$toolkits->name_pond}}</td>
-                                <td>{{$toolkits->name_toolkit}}</td>
-                                <td>{{$toolkits->address}}</td>
-                                <td>{{$toolkits->temperature}}</td>
-                                {{--<td>{{$toolkits->temperature}}</td>--}}
-                                {{--<td>{{$toolkits->temperature}}</td>--}}
-                                <td>{{$toolkits->value}}</td>
-                                <td>
-                                    @if ($toolkits->light == 0)
-                                        Ban ngày
-                                    @else
-                                        Ban đêm
+                                <td class="align-middle">
+                                    @if(($toolkits->activePond)==1)
+                                        <span class="badge badge-success">Hoạt động</span>
+                                    @elseif(($toolkits->activePond)==3)
+                                        <span class="badge badge-danger">Tạm xóa</span>
+                                    @elseif(($toolkits->activePond)==2)
+                                        <span class="badge badge-danger">khóa</span>
                                     @endif
                                 </td>
-
-                                <td class="align-middle text-center">
-                                    <button onclick="showInfo({{$toolkits->id}})" class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>
-                                    <a href="{{route('toolkit_edit', $toolkits->id)}}" class="btn btn-link text-themestyle p-1"><i class="fa fa-pencil"></i></a>
-                                    <button onclick="viewModalDelete({{$toolkits->id}}, '{{$toolkits->name_toolkit}}')" class="btn btn-link text-danger p-1" id="btn_delete"><i class="fas fa-trash"></i></button>
+                                <td>{{$toolkits->name}}</td>
+                                <td>{{$toolkits->key_active}}</td>
+                                <td>{{$toolkits->id_temperature}}</td>
+                                <td>{{$toolkits->id_ph}}</td>
+                                <td>{{$toolkits->id_light}}</td>
+                                <td class="align-middle">
+                                    @if(($toolkits->active)==1)
+                                        <span class="badge badge-success">Hoạt động</span>
+                                    @elseif(($toolkits->active)==3)
+                                        <span class="badge badge-danger">Tạm xóa</span>
+                                    @elseif(($toolkits->active)==2)
+                                        <span class="badge badge-danger">khóa</span>
+                                    @elseif(($toolkits->active)==4)
+                                        <span class="badge badge-danger">Chờ kích hoạt</span>
+                                    @endif
                                 </td>
-
+                                @if(($toolkits->active)==3)
+                                <td class="align-middle text-center" style="display: inline-flex">
+                                    <button onclick="showInfo({{$toolkits->id}})" class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>
+                                        {{--                                    <a href="{{route('toolkit_edit', $toolkits->id)}}" class="btn btn-link text-themestyle p-1"><i class="fa fa-pencil"></i></a>--}}
+                                        <a href="{{route('toolkitUndo', $toolkits->id)}}" class="btn btn-link text-themestyle p-1" id="btn_Undo"><i class="fas fa-undo"></i></a>
+                                    <button onclick="viewModalDelete({{$toolkits->id}}, '{{$toolkits->name}}')" class="btn btn-link text-danger p-1" id="btn_delete"><i class="fas fa-trash"></i></button>
+                                </td>
+                                @else
+                                    <td class="align-middle text-center">
+                                        <button onclick="showInfo({{$toolkits->id}})" class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>
+                                    </td>
+                                @endif
                             </tr>
+                            @endif
                         @endforeach
                         </tbody>
                     </table>
@@ -98,7 +119,6 @@
                 </form>
             </div>
 
-
             <!--Order Info Modal-->
             <div class="modal fade" id="orderInfo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -113,34 +133,28 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr style="color: #f6f6f7; background-color: #007bff; text-align: center">
-                                    <th>ID</th>
-                                    <th>Tên Bộ đo</th>
-                                    <th>Nhiệt độ nhỏ</th>
-                                    <th>Nhiệt độ lớn</th>
-                                    <th>Cảnh báo NĐ</th>
-                                    <th>Ngày thêm NĐ</th>
-                                    <th>pH nhỏ</th>
-                                    <th>pH lớn</th>
-                                    <th>Cảnh báo pH</th>
-                                    <th>Ngày thêm pH</th>
-                                    <th>Cảnh báo AS</th>
-                                    <th>Ngày thêm AS</th>
+                                    <th>Chủ sở hữu</th>
+                                    <th>SĐT chủ</th>
+                                    <th>Mã ao</th>
+                                    <th>Địa chỉ ao</th>
+                                    <th>Vị trí lắp</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Ngày kích hoạt</th>
+                                    <th>Ngày cập nhật</th>
+                                    <th>Ngày xóa</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr style="text-align: center; color: black!important;">
-                                    <td id="tool_id" ></td>
-                                    <td id="tool_name" ></td>
-                                    <td id="ndmin" ></td>
-                                    <td id="ndmax" ></td>
-                                    <td id="cb_nd" ></td>
-                                    <td id="date_nd" ></td>
-                                    <td id="phmin" ></td>
-                                    <td id="phmax" ></td>
-                                    <td id="cb_ph" ></td>
-                                    <td id="date_ph" ></td>
-                                    <td id="cb_as" ></td>
-                                    <td id="date_as" ></td>
+                                    <td id="tool_user" ></td>
+                                    <td id="tool_sdt" ></td>
+                                    <td id="pond_id" ></td>
+                                    <td id="pond_address" ></td>
+                                    <td id="tool_address" ></td>
+                                    <td id="tool_created" ></td>
+                                    <td id="tool_lap" ></td>
+                                    <td id="tool_update" ></td>
+                                    <td id="tool_delete" ></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -160,28 +174,19 @@
         <script>
             function showInfo(tool_id){
                 $.ajax({
-                    url: '{!! url('/toolkit/infor') !!}'+ '/' + tool_id,
+                    url: '{!! url('/admin/toolkit/info') !!}'+ '/' + tool_id,
                     type: 'GET',
                     success: function (data) {
                         document.getElementById("exampleModalLongTitle").innerText = "Thông tin chi tiết của bộ đo " + data[0].name;
-                        document.getElementById("tool_id").innerText = data[0].id;
-                        document.getElementById("tool_name").innerText = data[0].name;
-                        document.getElementById("ndmin").innerText = data[2].temperature_min;
-                        document.getElementById("ndmax").innerText = data[2].temperature_max;
-                        if (data[2].warning == 0){
-                            document.getElementById("cb_nd").innerText = "Tắt";
-                        }else document.getElementById("cb_nd").innerText = "Bật";
-                        document.getElementById("date_nd").innerText = data[2].created_at;
-                        document.getElementById("phmin").innerText = data[1].ph_min;
-                        document.getElementById("phmax").innerText = data[1].ph_max;
-                        if (data[1].warning == 0){
-                            document.getElementById("cb_ph").innerText = "Tắt";
-                        }else document.getElementById("cb_ph").innerText = "Bật";
-                        document.getElementById("date_ph").innerText = data[1].created_at;
-                        if (data[3].warning == 0){
-                            document.getElementById("cb_as").innerText = "Tắt";
-                        }else document.getElementById("cb_as").innerText = "Bật";
-                        document.getElementById("date_as").innerText = data[3].created_at;
+                        document.getElementById("tool_user").innerText = data[2].name;
+                        document.getElementById("tool_sdt").innerText = data[2].phone;
+                        document.getElementById("pond_id").innerText = data[1].id;
+                        document.getElementById("pond_address").innerText = data[1].address;
+                        document.getElementById("tool_address").innerText = data[0].address;
+                        document.getElementById("tool_created").innerText = data[0].create_date;
+                        document.getElementById("tool_lap").innerText = data[0].dateLap;
+                        document.getElementById("tool_update").innerText = data[0].update_date;
+                        document.getElementById("tool_delete").innerText = data[0].delete_date;
                     },
                     error: function (data) {
                         console.log('Error: ', data);
@@ -192,13 +197,13 @@
             function viewModalDelete(p_id, p_name){
                 document.getElementById('id01').style.display='block';
                 document.getElementById("title_delete").innerText = "Xóa bộ đo ".concat(p_name);
-                document.getElementById("conten").innerText = "Có chắc muốn xóa bộ đo có ID: " + p_id + " ?";
+                document.getElementById("conten").innerText = "Có chắc muốn xóa vĩnh viễn bộ đo có ID: " + p_id + " ?";
 
                 var de = document.getElementById('btn-de');
                 window.onclick = function(event) {
                     if (event.target == de) {
                         document.getElementById('id01').style.display='none';
-                        location.href = '{!! url('/toolkit/delete') !!}'+ '/' + p_id;
+                        location.href = '{!! url('/admin/toolkit/delete') !!}'+ '/' + p_id;
                         // modal.style.display = "none";
                     }
                 }

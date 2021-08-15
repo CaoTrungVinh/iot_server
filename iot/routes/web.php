@@ -28,6 +28,7 @@ Route::get('getUserLogout', [\App\Http\Controllers\Auth\LoginController::class, 
 Route::get('forgotPass', [\App\Http\Controllers\User\UserAuthController::class, 'showForgotPass'])->name('forgotPass');
 Route::post('postForgotPass', [\App\Http\Controllers\User\UserAuthController::class, 'doForgotPass'])->name('postForgotPass');
 
+// ------------------------ // --------------------------------------------------
 Route::group(['middleware' => 'checkUserLogin'], function () {
     Route::get('/', [\App\Http\Controllers\User\IndexUserController::class, 'indexUser']);
     Route::get('/home', [\App\Http\Controllers\User\IndexUserController::class, 'indexUser'])->name('homeUs');
@@ -74,48 +75,56 @@ Route::group(['middleware' => 'checkAdminLogin'], function () {
 //      Profile, update profile
     Route::get('/adminProfile', [\App\Http\Controllers\Admin\ProfileAdminController::class, 'showProfile'])->name('adProfile');
     Route::post('/UpdateAdminProfile', [\App\Http\Controllers\Admin\ProfileAdminController::class, 'updateProfile'])->name('updateAdProfile');
-//    Quản lý tài khoản, thêm, sửa, xóa User
-    Route::get('/user', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
-    Route::get('/user/information/{id}', [\App\Http\Controllers\Admin\UserController::class, 'viewUser'])->name('view_user');
-    Route::get('/createUser', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('create_user');
-    Route::post('/storeUser', [\App\Http\Controllers\Admin\UserController::class, 'storeUser'])->name('store_user');
-    Route::post('/storeAdmin', [\App\Http\Controllers\Admin\UserController::class, 'storeAdmin'])->name('store_admin');
+
+    //    Quản lý tài khoản, thêm, sửa, xóa User
+    Route::get('/admin/userAll', [\App\Http\Controllers\Admin\UserController::class, 'index'])->name('user');
+    Route::get('/admin/user/info/{id}', [\App\Http\Controllers\Admin\UserController::class, 'viewUser'])->name('view_user');
+    Route::get('/admin/createUser', [\App\Http\Controllers\Admin\UserController::class, 'create'])->name('create_user');
+    Route::post('/admin/storeUser', [\App\Http\Controllers\Admin\UserController::class, 'storeUser'])->name('store_user');
+    Route::post('/admin/storeAdmin', [\App\Http\Controllers\Admin\UserController::class, 'storeAdmin'])->name('store_admin');
 //    -------- Active mail------
     Route::get('confirmemail/{email}/{key}', [\App\Http\Controllers\Admin\UserController::class, 'confirmEmail'])->name('confirmemail');
-//    -------------------------------------
-    Route::get('/user/edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user_edit');
-    Route::post('/user/update/{id}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('user_update');
-    Route::get('/user/delete/{id}', [\App\Http\Controllers\Admin\UserController::class, 'delete'])->name('user_delete');
+
+    //    -------------------------------------
+    Route::get('/admin/user/edit/{id}', [\App\Http\Controllers\Admin\UserController::class, 'edit'])->name('user_edit');
+    Route::post('/admin/user/update/{id}', [\App\Http\Controllers\Admin\UserController::class, 'update'])->name('user_update');
+    Route::get('/admin/user/delete/{id}', [\App\Http\Controllers\Admin\UserController::class, 'delete'])->name('user_delete');
 
 
     ///pond
-    Route::get('/pond', [\App\Http\Controllers\Admin\PondController::class, 'index'])->name('pond');
-    Route::get('/pond/info/{id}', [\App\Http\Controllers\Admin\PondController::class, 'viewPond'])->name('pond_infor');
-    Route::get('/pond_create', [\App\Http\Controllers\Admin\PondController::class, 'create'])->name('pond_create');
-    Route::post('/pond_create', [\App\Http\Controllers\Admin\PondController::class, 'store'])->name('pond_store');
-    Route::get('/pond/edit/{id}', [\App\Http\Controllers\Admin\PondController::class, 'edit'])->name('pond_edit');
-    Route::post('/pond_update', [\App\Http\Controllers\Admin\PondController::class, 'update'])->name('pond_update');
-    Route::get('/pond/delete/{id}', [\App\Http\Controllers\Admin\PondController::class, 'delete'])->name('pond_delete');
-
+    Route::get('/admin/pond', [\App\Http\Controllers\Admin\PondController::class, 'index'])->name('pond');
+    Route::get('/admin/pond/info/{id_pond}', [\App\Http\Controllers\Admin\PondController::class, 'viewPond'])->name('pond_infor');
+    Route::get('/admin/pond/create', [\App\Http\Controllers\Admin\PondController::class, 'create'])->name('pond_create');
+    Route::post('/admin/pond/create', [\App\Http\Controllers\Admin\PondController::class, 'store'])->name('pond_store');
+    Route::get('/admin/pond/undo/{id}', [\App\Http\Controllers\Admin\PondController::class, 'undoPond'])->name('pondUndo');
+    Route::get('/admin/pond/delete/{id}', [\App\Http\Controllers\Admin\PondController::class, 'delete'])->name('pond_delete');
 
 
     ////toolkit
-    Route::get('/toolkit', [\App\Http\Controllers\Admin\ToolkitController::class, 'index'])->name('toolkit');
-    Route::get('/toolkit/info/{id}', [\App\Http\Controllers\Admin\ToolkitController::class, 'viewToolkit'])->name('toolkit_infor');
-    Route::get('/toolkit_create', [\App\Http\Controllers\Admin\ToolkitController::class, 'create'])->name('toolkit_create');
-    Route::post('/toolkit_create', [\App\Http\Controllers\Admin\ToolkitController::class, 'store'])->name('toolkit_store');
-    Route::get('/toolkit/edit/{id}', [\App\Http\Controllers\Admin\ToolkitController::class, 'edit'])->name('toolkit_edit');
-    Route::post('/toolkit_update', [\App\Http\Controllers\Admin\ToolkitController::class, 'update'])->name('toolkit_update');
-    Route::get('/toolkit/delete/{id}', [\App\Http\Controllers\Admin\ToolkitController::class, 'delete'])->name('toolkit_delete');
-    ////control
-    Route::get('/control', [\App\Http\Controllers\Admin\ControlController::class, 'index'])->name('control');
-    Route::get('/control/info/{id}', [\App\Http\Controllers\Admin\ControlController::class, 'viewControl'])->name('control_infor');
-    Route::get('/control_create', [\App\Http\Controllers\Admin\ControlController::class, 'create'])->name('control_create');
-    Route::post('/control_create', [\App\Http\Controllers\Admin\ControlController::class, 'store'])->name('control_store');
-    Route::get('/control/edit/{id}', [\App\Http\Controllers\Admin\ControlController::class, 'edit'])->name('control_edit');
-    Route::post('/control_update', [\App\Http\Controllers\Admin\ControlController::class, 'update'])->name('control_update');
-    Route::get('/control/delete/{id}', [\App\Http\Controllers\Admin\ControlController::class, 'delete'])->name('control_delete');
+    Route::get('/admin/toolkit', [\App\Http\Controllers\Admin\ToolkitController::class, 'index'])->name('toolkit');
+    Route::get('/admin/toolkit/info/{id}', [\App\Http\Controllers\Admin\ToolkitController::class, 'viewToolkit'])->name('toolkit_infor');
+    Route::get('/admin/toolkit/create', [\App\Http\Controllers\Admin\ToolkitController::class, 'create'])->name('toolkit_create');
+    Route::post('/admin/toolkit/create', [\App\Http\Controllers\Admin\ToolkitController::class, 'store'])->name('toolkit_store');
+    Route::get('/admin/toolkit/undo/{id}', [\App\Http\Controllers\Admin\ToolkitController::class, 'showViewUndo'])->name('toolkitUndo');
+    Route::post('/admin/toolkit/postUndo/{id}', [\App\Http\Controllers\Admin\ToolkitController::class, 'undoToolkit'])->name('toolkitPostUndo');
+//    Route::post('/admin/toolkit_update', [\App\Http\Controllers\Admin\ToolkitController::class, 'update'])->name('toolkit_update');
+    Route::get('/admin/toolkit/delete/{id}', [\App\Http\Controllers\Admin\ToolkitController::class, 'delete'])->name('toolkit_delete');
+    Route::get('/admin/toolkit/register', [\App\Http\Controllers\Admin\ToolkitController::class, 'showIndexRegisTool'])->name('re_toolkit');
+    Route::get('/admin/toolkit/register/ok/{id}', [\App\Http\Controllers\Admin\ToolkitController::class, 'okRegisterTool'])->name('okRegis_toolkit');
+    Route::get('/admin/toolkit/register/cancel/{id}', [\App\Http\Controllers\Admin\ToolkitController::class, 'cancelRegisterTool'])->name('cancelRegis_toolkit');
 
+
+    ////control
+    Route::get('/admin/control', [\App\Http\Controllers\Admin\ControlController::class, 'index'])->name('control');
+    Route::get('/admin/control/info/{id}', [\App\Http\Controllers\Admin\ControlController::class, 'viewControl'])->name('control_infor');
+    Route::get('/admin/control/create', [\App\Http\Controllers\Admin\ControlController::class, 'create'])->name('control_create');
+    Route::post('/admin/control/create', [\App\Http\Controllers\Admin\ControlController::class, 'store'])->name('control_store');
+    Route::get('/admin/control/undo/{id}', [\App\Http\Controllers\Admin\ControlController::class, 'showViewUndo'])->name('control_undo');
+    Route::post('/admin/control/postUndo/{id}', [\App\Http\Controllers\Admin\ControlController::class, 'undoControl'])->name('control_postUndo');
+    Route::get('/admin/control/delete/{id}', [\App\Http\Controllers\Admin\ControlController::class, 'delete'])->name('control_delete');
+    Route::get('/admin/control/register', [\App\Http\Controllers\Admin\ControlController::class, 'showIndexRegisControl'])->name('reControl');
+    Route::get('/admin/control/register/ok/{id}', [\App\Http\Controllers\Admin\ControlController::class, 'okRegisterControl'])->name('okRegis_control');
+    Route::get('/admin/control/register/cancel/{id}', [\App\Http\Controllers\Admin\ControlController::class, 'cancelRegisterControl'])->name('cancelRegis_control');
 });
 
 Route::get('verifile', function () {

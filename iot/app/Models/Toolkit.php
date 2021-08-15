@@ -15,7 +15,7 @@ class Toolkit extends Model
 
     protected $table = "toolkits";
 
-    protected $fillable = ['id','id_pond','id_temperature','id_ph','id_light', 'name','address', 'active', 'created_date', 'update_date', 'delete_date'];
+    protected $fillable = ['id','id_pond','id_temperature','id_ph','id_light', 'name','address', 'active', 'create_date', 'update_date', 'delete_date', 'key_active', 'dateLap'];
 
     public function ponds()
     {

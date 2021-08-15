@@ -40,67 +40,66 @@
                     <table class="table table-bordered mt-3" id="productList">
                         <thead>
                         <tr style="color: #f6f6f7; background-color: #007bff; text-align: center">
-                            <th>Tên ao</th>
+                            <th>Mã bộ ĐK</th>
+                            <th>Ao nuôi</th>
+                            <th>Trạng thái ao</th>
                             <th>Bộ điều khiển</th>
-                            <th>Vị trí</th>
-                            <th>Bơm vào</th>
-                            <th>Bơm ra</th>
-                            <th>Đèn</th>
-                            <th>Quạt oxy</th>
+                            <th>Mã kích hoạt</th>
+                            <th>ID bơm vào</th>
+                            <th>ID bơm ra</th>
+                            <th>ID đèn</th>
+                            <th>ID quạt</th>
+                            <th>Trạng thái</th>
                             <th>Quản lý</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($controls as $controls)
+                            @if($controls->active!=0)
                             <tr style="text-align: center">
+                                <td>{{$controls->id}}</td>
                                 <td>{{$controls->name_pond}}</td>
-                                <td>{{$controls->name_control}}</td>
-                                <td>{{$controls->address}}</td>
-                                <td>
-                                    @if ($controls->pump_in == 0)
-                                        Tắt
-                                    @elseif ($controls->pump_in == 1)
-                                        Bật
-                                    @elseif ($controls->pump_in == 2)
-                                        Hẹn giờ
+                                <td class="align-middle">
+                                    @if(($controls->activePond)==1)
+                                        <span class="badge badge-success">Hoạt động</span>
+                                    @elseif(($controls->activePond)==3)
+                                        <span class="badge badge-danger">Tạm xóa</span>
+                                    @elseif(($controls->activePond)==2)
+                                        <span class="badge badge-danger">khóa</span>
                                     @endif
                                 </td>
-                                <td>
-                                    @if ($controls->pump_out == 0)
-                                        Tắt
-                                    @elseif ($controls->pump_out == 1)
-                                        Bật
-                                    @elseif ($controls->pump_out == 2)
-                                        Hẹn giờ
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($controls->lamp == 0)
-                                        Tắt
-                                    @elseif ($controls->lamp == 1)
-                                        Bật
-                                    @elseif ($controls->lamp == 2)
-                                        Hẹn giờ
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($controls->oxygen_fan == 0)
-                                        Tắt
-                                    @elseif ($controls->oxygen_fan == 1)
-                                        Bật
-                                    @elseif ($controls->oxygen_fan == 2)
-                                        Hẹn giờ
+                                <td>{{$controls->name}}</td>
+                                <td>{{$controls->key_active}}</td>
+                                <td>{{$controls->id_pump_in}}</td>
+                                <td>{{$controls->id_pump_out}}</td>
+                                <td>{{$controls->id_lamp}}</td>
+                                <td>{{$controls->id_oxygen_fan}}</td>
+                                <td class="align-middle">
+                                    @if(($controls->active)==1)
+                                        <span class="badge badge-success">Hoạt động</span>
+                                    @elseif(($controls->active)==3)
+                                        <span class="badge badge-danger">Tạm xóa</span>
+                                    @elseif(($controls->active)==2)
+                                        <span class="badge badge-danger">khóa</span>
+                                    @elseif(($controls->active)==4)
+                                        <span class="badge badge-danger">Chờ kích hoạt</span>
                                     @endif
                                 </td>
 
-                                <td class="align-middle text-center">
-                                    <button onclick="showInfo({{$controls->id}})" class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><a><i
-                                                    class="fa fa-eye"></i></a></button>
-                                    <a href="{{route('control_edit', $controls->id)}}" class="btn btn-link text-themestyle p-1"><i class="fa fa-pencil"></i></a>
-                                    <button onclick="viewModalDelete({{$controls->id}}, '{{$controls->name_control}}')" class="btn btn-link text-danger p-1" id="btn_delete"><i class="fas fa-trash"></i></button>
-                                </td>
-
+                                @if(($controls->active)==3)
+                                    <td class="align-middle text-center" style="display: inline-flex">
+                                        <button onclick="showInfo({{$controls->id}})" class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>
+                                        {{--                                    <a href="{{route('toolkit_edit', $toolkits->id)}}" class="btn btn-link text-themestyle p-1"><i class="fa fa-pencil"></i></a>--}}
+                                        <a href="{{route('control_undo', $controls->id)}}" class="btn btn-link text-themestyle p-1" id="btn_Undo"><i class="fas fa-undo"></i></a>
+                                        <button onclick="viewModalDelete({{$controls->id}}, '{{$controls->name}}')" class="btn btn-link text-danger p-1" id="btn_delete"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                @else
+                                    <td class="align-middle text-center">
+                                        <button onclick="showInfo({{$controls->id}})" class="btn btn-link" data-toggle="modal" data-target="#orderInfo"><a><i class="fa fa-eye"></i></a></button>
+                                    </td>
+                                @endif
                             </tr>
+                            @endif
                         @endforeach
                         </tbody>
                     </table>
@@ -138,38 +137,28 @@
                             <table class="table table-striped table-bordered">
                                 <thead>
                                 <tr style="color: #f6f6f7; background-color: #007bff; text-align: center">
-                                    <th>ID</th>
-                                    <th>Tên Bộ ĐK</th>
-                                    <th>Bơm vào</th>
-                                    <th>Giờ bật bơm vào</th>
-                                    <th>Giờ tắt bơm vào</th>
-                                    <th>Bơm ra</th>
-                                    <th>Giờ bật bơm ra</th>
-                                    <th>Giờ tắt bơm ra</th>
-                                    <th>Quạt</th>
-                                    <th>Giờ bật quạt</th>
-                                    <th>Giờ tắt quạt</th>
-                                    <th>Đèn</th>
-                                    <th>Giờ bật Đèn</th>
-                                    <th>Giờ tắt Đèn</th>
+                                    <th>Chủ sở hữu</th>
+                                    <th>SĐT chủ</th>
+                                    <th>Mã ao</th>
+                                    <th>Địa chỉ ao</th>
+                                    <th>Vị trí lắp</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Ngày kích hoạt</th>
+                                    <th>Ngày cập nhật</th>
+                                    <th>Ngày xóa</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr style="text-align: center; color: black!important;">
-                                    <td id="c_id" ></td>
-                                    <td id="c_name" ></td>
-                                    <td id="pumpIn" ></td>
-                                    <td id="bat_pumpIn" ></td>
-                                    <td id="tat_pumpIn" ></td>
-                                    <td id="pumpOut" ></td>
-                                    <td id="bat_pumpOut" ></td>
-                                    <td id="tat_pumpOut" ></td>
-                                    <td id="quat" ></td>
-                                    <td id="bat_quat" ></td>
-                                    <td id="tat_quat" ></td>
-                                    <td id="den" ></td>
-                                    <td id="bat_den" ></td>
-                                    <td id="tat_den" ></td>
+                                    <td id="control_user" ></td>
+                                    <td id="control_sdt" ></td>
+                                    <td id="pond_id" ></td>
+                                    <td id="pond_address" ></td>
+                                    <td id="control_address" ></td>
+                                    <td id="control_create" ></td>
+                                    <td id="control_active" ></td>
+                                    <td id="control_update" ></td>
+                                    <td id="control_delete" ></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -185,50 +174,21 @@
 
             @push('additionalJS')
                 <script>
-                    function showInfo(p_id){
+                    function showInfo(control_id){
                         $.ajax({
-                            url: '{!! url('/control/infor') !!}'+ '/' + p_id,
+                            url: '{!! url('/admin/control/info') !!}'+ '/' + control_id,
                             type: 'GET',
                             success: function (data) {
                                 document.getElementById("exampleModalLongTitle").innerText = "Thông tin chi tiết của ao nuôi " + data[0].name;
-                                document.getElementById("c_id").innerText = data[0].id;
-                                document.getElementById("c_name").innerText = data[0].name;
-                                if(data[1].status==0){
-                                    document.getElementById("pumpIn").innerText = "Tắt";
-                                }else if(data[1].status==1){
-                                    document.getElementById("pumpIn").innerText = "Bật";
-                                }else if(data[1].status==2){
-                                    document.getElementById("pumpIn").innerText = "Hẹn giờ";
-                                }
-                                document.getElementById("bat_pumpIn").innerText = data[1].timer_on;
-                                document.getElementById("tat_pumpIn").innerText = data[1].timer_off;
-                                if(data[2].status==0){
-                                    document.getElementById("pumpOut").innerText = "Tắt";
-                                }else if(data[2].status==1){
-                                    document.getElementById("pumpOut").innerText = "Bật";
-                                }else if(data[2].status==2){
-                                    document.getElementById("pumpOut").innerText = "Hẹn giờ";
-                                }
-                                document.getElementById("bat_pumpOut").innerText = data[2].timer_on;
-                                document.getElementById("tat_pumpOut").innerText = data[2].timer_off;
-                                if(data[4].status==0){
-                                    document.getElementById("quat").innerText = "Tắt";
-                                }else if(data[4].status==1){
-                                    document.getElementById("quat").innerText = "Bật";
-                                }else if(data[4].status==2){
-                                    document.getElementById("quat").innerText = "Hẹn giờ";
-                                }
-                                document.getElementById("bat_quat").innerText = data[4].timer_on;
-                                document.getElementById("tat_quat").innerText = data[4].timer_off;
-                                if(data[3].status==0){
-                                    document.getElementById("den").innerText = "Tắt";
-                                }else if(data[3].status==1){
-                                    document.getElementById("den").innerText = "Bật";
-                                }else if(data[3].status==2){
-                                    document.getElementById("den").innerText = "Hẹn giờ";
-                                }
-                                document.getElementById("bat_den").innerText = data[3].timer_on;
-                                document.getElementById("tat_den").innerText = data[3].timer_off;
+                                document.getElementById("control_user").innerText = data[2].name;
+                                document.getElementById("control_sdt").innerText = data[2].phone;
+                                    document.getElementById("pond_id").innerText = data[1].id;
+                                    document.getElementById("pond_address").innerText = data[1].address;
+                                    document.getElementById("control_address").innerText = data[0].address;
+                                document.getElementById("control_create").innerText = data[0].create_date;
+                                document.getElementById("control_active").innerText = data[0].date_active;
+                                    document.getElementById("control_update").innerText = data[0].update_date;
+                                    document.getElementById("control_delete").innerText = data[0].delete_date;
                             },
                             error: function (data) {
                                 console.log('Error: ', data);
@@ -239,13 +199,13 @@
                     function viewModalDelete(p_id, p_name){
                         document.getElementById('id01').style.display='block';
                         document.getElementById("title_delete").innerText = "Xóa bộ điều khiển ".concat(p_name);
-                        document.getElementById("conten").innerText = "Có chắc muốn xóa bộ điều khiển có ID: " + p_id + " ?";
+                        document.getElementById("conten").innerText = "Có chắc muốn xóa vĩnh viễn bộ điều khiển có ID: " + p_id + " ?";
 
                         var de = document.getElementById('btn-de');
                         window.onclick = function(event) {
                             if (event.target == de) {
                                 document.getElementById('id01').style.display='none';
-                                location.href = '{!! url('/control/delete') !!}'+ '/' + p_id;
+                                location.href = '{!! url('/admin/control/delete') !!}'+ '/' + p_id;
                             }
                         }
                     }

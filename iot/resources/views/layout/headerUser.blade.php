@@ -31,6 +31,10 @@
                 </div>
                 <div class="mr-4" style="margin-top: -6px">
                     <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
+                        @if(Session::get('User')->role_id==2)
+                        <a class="dropdown-item" href="{{route('home')}}"><i class="fa fa-user pr-2"></i> Admin</a>
+                        <div class="dropdown-divider"></div>
+                        @endif
                         <a class="dropdown-item" href="{{route('userProfile')}}"><i class="fa fa-user pr-2"></i> Profile</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{route('userChangePass')}}"><i class="fa fa-lock pr-2"></i> Change Password</a>

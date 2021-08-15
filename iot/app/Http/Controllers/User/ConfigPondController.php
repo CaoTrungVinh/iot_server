@@ -38,12 +38,12 @@ class ConfigPondController extends Controller
                 'id_user' => Session::get('User')->id,
                 'name' => $request->namePond,
                 'address' => $request->addressPond,
-                're_countToolkit' => $request->singupToolkit,
-                're_countControl' => $request->singupControl,
-                'active' => 0,
-                'singup_date' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
+//                're_countToolkit' => $request->singupToolkit,
+//                're_countControl' => $request->singupControl,
+                'active' => 1,
+                'created_date' => Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s'),
             ]);
-            return redirect()->back()->withInput($request->only('singupPond'))->withErrors(['singupPond' => 'Đăng ký tạo ao nuôi thành công - Vui lòng chờ hệ thống xác nhận!']);
+            return redirect()->back()->withInput($request->only('singupPond'))->withErrors(['singupPond' => 'Tạo ao thông tin nuôi thành công!']);
         } else {
             return redirect()->back()->withErrors(['namePond' => 'Tên ao nuôi này đã tồn tại!']);
         }
@@ -152,8 +152,12 @@ class ConfigPondController extends Controller
 //            ]);
         }
 
-//        $control_IDPond = Control::where('id_pond', '=', $id)->get();
-//        foreach ($control_IDPond as $control) {
+        $control_IDPond = Control::where('id_pond', '=', $id)->get();
+        foreach ($control_IDPond as $control) {
+            $control->active = 3;
+            $control->delete_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
+            $control->update();
+        }
 //            ControlDelete::insert([
 //                'id' => $control->id,
 //                'name' => $control->name,

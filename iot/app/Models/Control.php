@@ -15,7 +15,7 @@ class Control extends Model
 
     protected $table = "control";
 
-    protected $fillable = ['name','address','id_pond','id_pump_in','id_pump_out','id_lamp','id_oxygen_fan', 'active', 'created_date', 'update_date', 'delete_date'];
+    protected $fillable = ['name','address','id_pond','id_pump_in','id_pump_out','id_lamp','id_oxygen_fan', 'active', 'create_date', 'update_date', 'delete_date', 'key_active', 'date_active'];
 
     public function ponds()
     {

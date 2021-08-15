@@ -37,7 +37,7 @@
                                 <select name="user" class="form-control" id="exampleFormControlSelect1">
                                     <option></option>
                                     @foreach($pond_create as $pond_create)
-                                        <option value="{{$pond_create->id}}">{{$pond_create->name}}</option>
+                                        <option value="{{$pond_create->id}}">{{$pond_create->id}} - {{$pond_create->name}}</option>
                                     @endforeach
                                 </select>
                                     @error('user')
