@@ -319,6 +319,10 @@ class PondController extends Controller
         return \response()->json($update_light, 200);
     }
 
+
+
+
+
     public function activetoolkit(Request $request){
         $toolkit = Toolkit::find($request->id);
         if ($toolkit!=null){
@@ -327,11 +331,11 @@ class PondController extends Controller
                     $toolkit->active=1;
                     $toolkit->update();
                 }
+                return \response()->json("Kich hoat thanh cong", 200);
             }
         }
-        return \response()->json($toolkit, 200);
     }
-
+    // Bộ đo
     public function setDataTemp(Request $request){
         $toolkit = Toolkit::find($request->id);
         $id_temp = $toolkit->id_temperature;
@@ -364,5 +368,135 @@ class PondController extends Controller
             return \response()->json("Error", 200);
         }
         return \response()->json($id_temp, 200);
+    }
+
+    public function setDataPh(Request $request){
+        $toolkit = Toolkit::find($request->id);
+        $id_ph = $toolkit->id_ph;
+
+        if ($toolkit->active ==1){
+            $update_ph = DB::table('phs')
+                ->where('id', $id_ph)
+                ->update([
+                    'value' => $request->get("value"),
+                    'created_at' => $request->get("created_at"),
+                ]);
+
+            $ph = $request->get("value");
+            Log::info("$ph");
+            $phquery = PH::where('id', $id_ph)->first();
+            $warning = $phquery->warning;
+            $ph_min = $phquery->ph_min;
+            $ph_max = $phquery->ph_max;
+
+            $pond = Pond::where('id', '=', $toolkit->id_pond)->first();
+            $id_user = $pond->id_user;
+
+            if ($warning == 1) {
+                if ($ph <= $ph_min || $ph >= $ph_max) {
+                    $user = User::find($id_user);
+                    $user->notify(new WarningTemp("Cảnh báo", "Độ Ph ao nuôi $ph vượt mức an toàn"));
+                }
+            }
+        }else{
+            return \response()->json("Error", 200);
+        }
+        return \response()->json($id_ph, 200);
+    }
+
+    public function setDataLight(Request $request){
+        $toolkit = Toolkit::find($request->id);
+        $id_light = $toolkit->id_light;
+
+        if ($toolkit->active ==1){
+            $update_light = DB::table('lights')
+                ->where('id', $id_light)
+                ->update([
+                    'light' => $request->get("light"),
+                    'description' => $request->get("description"),
+                    'created_at' => $request->get("created_at"),
+                ]);
+
+            $light = $request->get("light");
+            Log::info("$light");
+
+            $warning = DB::table('lights')->where('id', $id_light)->value('warning');
+
+            $pond = Pond::where('id', '=', $toolkit->id_pond)->first();
+            $id_user = $pond->id_user;
+
+            if ($warning == 1) {
+                if ($light == 1) {
+                    $user = User::find($id_user);
+                    $user->notify(new WarningTemp("Cảnh báo", "Ao nuôi trời tối nguy hiểm"));
+                }
+            }
+        }else{
+            return \response()->json("Error", 200);
+        }
+        return \response()->json($id_light, 200);
+    }
+
+
+    // điều khiển
+    public function activeControl(Request $request){
+        $control = Control::find($request->id);
+        if ($control!=null){
+            if($control->active == 4){
+                if ($request->key == 1234){
+                    $control->active=1;
+                    $control->update();
+                }
+                return \response()->json("Kich hoat thanh cong", 200);
+            }
+        }
+    }
+
+    public function getDataPumpIn(Request $request)
+    {
+        $control = Control::find($request->id);
+        $id_pump = $control->id_pump_in;
+        if ($control->active == 1){
+            $pond = Pump_In::where('id', '=', $id_pump)->get();
+            return \response()->json($pond, 200);
+        }else{
+            return \response()->json("Erro", 200);
+        }
+    }
+
+    public function getDataPumpOut(Request $request)
+    {
+        $control = Control::find($request->id);
+        $id_pump = $control->id_pump_out;
+        if ($control->active == 1){
+            $pond = Pump_out::where('id', '=', $id_pump)->get();
+            return \response()->json($pond, 200);
+        }else{
+            return \response()->json("Error", 200);
+        }
+    }
+
+    public function getDataLamp(Request $request)
+    {
+        $control = Control::find($request->id);
+        $id_pump = $control->id_lamp;
+        if ($control->active == 1){
+            $pond = Lamp::where('id', '=', $id_pump)->get();
+            return \response()->json($pond, 200);
+        }else{
+            return \response()->json("Error", 200);
+        }
+    }
+
+    public function getDataOxygenFan(Request $request)
+    {
+        $control = Control::find($request->id);
+        $id_pump = $control->id_oxygen_fan;
+        if ($control->active == 1){
+            $pond = Oxygen_fan::where('id', '=', $id_pump)->get();
+            return \response()->json($pond, 200);
+        }else{
+            return \response()->json("Error", 200);
+        }
     }
 }
