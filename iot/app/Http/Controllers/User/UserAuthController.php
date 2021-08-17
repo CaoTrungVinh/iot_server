@@ -71,7 +71,7 @@ class UserAuthController extends Controller
         $acc->gender = $request->p_gender;
         $acc->address = $request->p_address;
         if ($acc->update()){
-            Session::put('Auth', $acc);
+            Session::put('User', $acc);
             Session::flash('success', 'Cập nhật thông tin thành công!');
         }else {
             Session::flash('error', 'Cập nhật thông tin thất bại!!!');

@@ -26,16 +26,18 @@
 
             <!--Search box and avatar-->
             <div class="col-sm-8 col-4 text-right flex-header-menu justify-content-end">
-                <div class="search-rounded mr-3">
-                    <input type="text" class="form-control search-box" placeholder="Enter keywords.." />
-                </div>
+{{--                <div class="search-rounded mr-3">--}}
+{{--                    <input type="text" class="form-control search-box" placeholder="Enter keywords.." />--}}
+{{--                </div>--}}
                 <div class="mr-4" style="margin-top: -6px">
                     <div class="dropdown-menu dropdown-menu-right mt-13" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="{{route('adProfile')}}"><i class="fa fa-user pr-2"></i> Profile</a>
+                        <a class="dropdown-item" href="{{route('userLogin')}}"><i class="fa fa-user pr-2"></i> Web người dùng</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{route('adChangePass')}}"><i class="fa fa-lock pr-2"></i> Change Password</a>
+                        <a class="dropdown-item" href="{{route('adProfile')}}"><i class="fas fa-user-tie pr-2"></i> Thông tin cá nhân</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{route('getAdLogout')}}"><i class="fa fa-power-off pr-2"></i> Logout</a>
+                        <a class="dropdown-item" href="{{route('adChangePass')}}"><i class="fa fa-lock pr-2"></i> Đổi mật khẩu</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{route('getAdLogout')}}"><i class="fa fa-power-off pr-2"></i> Đăng xuất</a>
                     </div>
                         <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="{{ asset('assets/img/icon_nam.png') }}" alt="Adam" class="rounded-circle" style="width:40px; height:40px; margin-bottom: -2px">

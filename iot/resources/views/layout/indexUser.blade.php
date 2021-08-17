@@ -43,7 +43,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <title>Hệ thống giám sát ao nuôi thủy sản</title>
+    <title>Hệ thống giám sát ao nuôi</title>
 </head>
 <body>
 <!--Page loader-->

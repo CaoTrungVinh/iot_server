@@ -4,7 +4,7 @@
         <h1 class="text-center mb-5" style="margin-bottom: 10px !important;">
             <img src="assets/img/logo.png" class="" style="width: 60px; height: 60px;"/>
             {{--            <i class="fa fa-rocket text-primary"></i>--}}
-            Hệ thống giám sát ao nuôi thủy sản</h1>
+            Hệ thống giám sát ao nuôi</h1>
         <div class="column">
             <div class="login-box-form" style="padding: 15px 25px 0.5px 25px!important;">
                 <p class="form" style="color: red; font-size: 15px!important;">

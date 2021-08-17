@@ -56,7 +56,7 @@
                                 <td>{{$pondUser->name}}</td>
                                 <td>{{Session::get('User')->phone}}</td>
                                 <td>{{$pondUser->address}}</td>
-                                <td>{{$pondUser->tollkits_count}}</td>
+                                <td>{{$pondUser->toolkits_count}}</td>
                                 <td>{{$pondUser->controls_count}}</td>
                                 <td class="align-middle">
                                 @if(($pondUser->active)==1)

@@ -111,6 +111,8 @@
                                             <span class="badge badge-success">Đang đo</span>
                                         @elseif($toolkits->active == 2)
                                             <span class="badge badge-danger">Tạm khóa</span>
+                                        @elseif($toolkits->active == 4)
+                                            <span class="badge badge-danger">Chưa kích hoạt</span>
                                         @endif
                                     </td>
 

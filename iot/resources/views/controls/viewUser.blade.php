@@ -134,6 +134,8 @@
                                         <span class="badge badge-success">Hoạt động</span>
                                     @elseif($controls->activeControl == 2)
                                         <span class="badge badge-danger">Tạm khóa</span>
+                                    @elseif($controls->activeControl == 4)
+                                        <span class="badge badge-danger">Chưa kích hoạt</span>
                                     @endif
                                 </td>
                                 <td class="align-middle text-center" style="display: inline-flex">
