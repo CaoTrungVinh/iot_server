@@ -327,7 +327,7 @@ class PondController extends Controller
         $toolkit = Toolkit::find($request->id);
         if ($toolkit!=null){
             if($toolkit->active == 4){
-                if ($request->key == 1234){
+                if ($request->key == $toolkit->key_active){
                     $toolkit->active=1;
                     $toolkit->update();
                 }
@@ -443,7 +443,7 @@ class PondController extends Controller
         $control = Control::find($request->id);
         if ($control!=null){
             if($control->active == 4){
-                if ($request->key == 1234){
+                if ($request->key == $control->key_active){
                     $control->active=1;
                     $control->update();
                 }
