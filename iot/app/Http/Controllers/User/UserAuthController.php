@@ -85,7 +85,7 @@ class UserAuthController extends Controller
             'new_pass'    => 'required|min:8',
             'confirm_pass' => 'required|same:new_pass',
         ], $this->messages());
-        $user = User::find(Session::get('Auth')->id);
+        $user = User::find(Session::get('User')->id);
         $currentPassword = $request->cur_pass;
         $newPassword = $request->new_pass;
         if (!Hash::check($currentPassword,$user->password))
