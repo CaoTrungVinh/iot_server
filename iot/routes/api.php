@@ -85,3 +85,5 @@ Route::get('/getDataPumpOut', [\App\Http\Controllers\Api\PondController::class, 
 Route::get('/getDataLamp', [\App\Http\Controllers\Api\PondController::class, 'getDataLamp']);
 Route::get('/getDataOxygenFan', [\App\Http\Controllers\Api\PondController::class, 'getDataOxygenFan']);
 
+Route::put('/setAutoTemp', [\App\Http\Controllers\Api\PondController::class, 'setAutoTemp']);
+Route::put('/setAutoPh', [\App\Http\Controllers\Api\PondController::class, 'setAutoPh']);

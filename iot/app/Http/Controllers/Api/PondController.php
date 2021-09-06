@@ -320,27 +320,27 @@ class PondController extends Controller
     }
 
 
-
-
-
-    public function activetoolkit(Request $request){
+    public function activetoolkit(Request $request)
+    {
         $toolkit = Toolkit::find($request->id);
-        if ($toolkit!=null){
-            if($toolkit->active == 4){
-                if ($request->key == $toolkit->key_active){
-                    $toolkit->active=1;
+        if ($toolkit != null) {
+            if ($toolkit->active == 4) {
+                if ($request->key == $toolkit->key_active) {
+                    $toolkit->active = 1;
                     $toolkit->update();
                 }
                 return \response()->json("Kich hoat thanh cong", 200);
             }
         }
     }
+
     // Bộ đo
-    public function setDataTemp(Request $request){
+    public function setDataTemp(Request $request)
+    {
         $toolkit = Toolkit::find($request->id);
         $id_temp = $toolkit->id_temperature;
 
-        if ($toolkit->active ==1){
+        if ($toolkit->active == 1) {
             $update_temp = DB::table('temperatures')
                 ->where('id', $id_temp)
                 ->update([
@@ -348,6 +348,26 @@ class PondController extends Controller
                     'created_at' => $request->get("created_at"),]);
 
             $temp = $request->get("temperature");
+
+            $pond = Pond::where('id', '=', $toolkit->id_pond)->first();
+            $id_user = $pond->id_user;
+
+            $auto_tem = Temperature::find($id_temp);
+            if ($auto_tem->auto_control == 1) {
+                if ($temp > $auto_tem->temperature_max || $temp < $auto_tem->temperature_min) {
+                   $control_pond = Control::where('id_pond', '=', $toolkit->id_pond)->get();
+                   foreach ($control_pond as $controlList){
+                       if($controlList->active == 1){
+                           $pumIn = Pump_In::where('id', '=', $controlList->id_pump_in)->first();
+                           if($pumIn->status!=1)
+                               $pumIn->status=1;
+                           $pumIn -> update();
+                       }
+
+                   }
+                }
+            }
+
             Log::info("$temp");
 
             $tempquery = Temperature::where('id', $id_temp)->first();
@@ -355,26 +375,24 @@ class PondController extends Controller
             $temp_min = $tempquery->temperature_min;
             $temp_max = $tempquery->temperature_max;
 
-            $pond = Pond::where('id', '=', $toolkit->id_pond)->first();
-            $id_user = $pond->id_user;
-
             if ($warning == 1) {
                 if ($temp <= $temp_min || $temp >= $temp_max) {
                     $user = User::find($id_user);
                     $user->notify(new WarningTemp("Cảnh báo", "Nhiệt độ ao nuôi $temp*C vượt mức an toàn"));
                 }
             }
-        }else{
+        } else {
             return \response()->json("Error", 200);
         }
         return \response()->json($id_temp, 200);
     }
 
-    public function setDataPh(Request $request){
+    public function setDataPh(Request $request)
+    {
         $toolkit = Toolkit::find($request->id);
         $id_ph = $toolkit->id_ph;
 
-        if ($toolkit->active ==1){
+        if ($toolkit->active == 1) {
             $update_ph = DB::table('phs')
                 ->where('id', $id_ph)
                 ->update([
@@ -398,17 +416,18 @@ class PondController extends Controller
                     $user->notify(new WarningTemp("Cảnh báo", "Độ Ph ao nuôi $ph vượt mức an toàn"));
                 }
             }
-        }else{
+        } else {
             return \response()->json("Error", 200);
         }
         return \response()->json($id_ph, 200);
     }
 
-    public function setDataLight(Request $request){
+    public function setDataLight(Request $request)
+    {
         $toolkit = Toolkit::find($request->id);
         $id_light = $toolkit->id_light;
 
-        if ($toolkit->active ==1){
+        if ($toolkit->active == 1) {
             $update_light = DB::table('lights')
                 ->where('id', $id_light)
                 ->update([
@@ -431,7 +450,7 @@ class PondController extends Controller
                     $user->notify(new WarningTemp("Cảnh báo", "Ao nuôi trời tối nguy hiểm"));
                 }
             }
-        }else{
+        } else {
             return \response()->json("Error", 200);
         }
         return \response()->json($id_light, 200);
@@ -439,12 +458,13 @@ class PondController extends Controller
 
 
     // điều khiển
-    public function activeControl(Request $request){
+    public function activeControl(Request $request)
+    {
         $control = Control::find($request->id);
-        if ($control!=null){
-            if($control->active == 4){
-                if ($request->key == $control->key_active){
-                    $control->active=1;
+        if ($control != null) {
+            if ($control->active == 4) {
+                if ($request->key == $control->key_active) {
+                    $control->active = 1;
                     $control->update();
                 }
                 return \response()->json("Kich hoat thanh cong", 200);
@@ -456,10 +476,10 @@ class PondController extends Controller
     {
         $control = Control::find($request->id);
         $id_pump = $control->id_pump_in;
-        if ($control->active == 1){
+        if ($control->active == 1) {
             $pond = Pump_In::where('id', '=', $id_pump)->get();
             return \response()->json($pond, 200);
-        }else{
+        } else {
             return \response()->json("Erro", 200);
         }
     }
@@ -468,10 +488,10 @@ class PondController extends Controller
     {
         $control = Control::find($request->id);
         $id_pump = $control->id_pump_out;
-        if ($control->active == 1){
+        if ($control->active == 1) {
             $pond = Pump_out::where('id', '=', $id_pump)->get();
             return \response()->json($pond, 200);
-        }else{
+        } else {
             return \response()->json("Error", 200);
         }
     }
@@ -480,10 +500,10 @@ class PondController extends Controller
     {
         $control = Control::find($request->id);
         $id_pump = $control->id_lamp;
-        if ($control->active == 1){
+        if ($control->active == 1) {
             $pond = Lamp::where('id', '=', $id_pump)->get();
             return \response()->json($pond, 200);
-        }else{
+        } else {
             return \response()->json("Error", 200);
         }
     }
@@ -492,11 +512,26 @@ class PondController extends Controller
     {
         $control = Control::find($request->id);
         $id_pump = $control->id_oxygen_fan;
-        if ($control->active == 1){
+        if ($control->active == 1) {
             $pond = Oxygen_fan::where('id', '=', $id_pump)->get();
             return \response()->json($pond, 200);
-        }else{
+        } else {
             return \response()->json("Error", 200);
         }
+    }
+
+    public function setAutoTemp(Request $request)
+    {
+        $pond = DB::table('temperatures')
+            ->where('id', $request->get("id"))
+            ->update(['auto_control' => $request->get("auto_control")]);
+        return \response()->json($pond, 200);
+    }
+    public function setAutoPh(Request $request)
+    {
+        $pond = DB::table('phs')
+            ->where('id', $request->get("id"))
+            ->update(['auto_control' => $request->get("auto_control")]);
+        return \response()->json($pond, 200);
     }
 }

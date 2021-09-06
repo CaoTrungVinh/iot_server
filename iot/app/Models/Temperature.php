@@ -10,7 +10,7 @@ class Temperature extends Model
 
     protected $table = "temperatures";
 
-    protected $fillable = ['id','temperature','temperature_min','temperature_max','warning','created_at'];
+    protected $fillable = ['id','temperature','temperature_min','temperature_max','warning','auto_control','created_at'];
 
     public function toolkits()
     {
