@@ -534,4 +534,11 @@ class PondController extends Controller
             ->update(['auto_control' => $request->get("auto_control")]);
         return \response()->json($pond, 200);
     }
+    public function setAutoLight(Request $request)
+    {
+        $pond = DB::table('lights')
+            ->where('id', $request->get("id"))
+            ->update(['auto_control' => $request->get("auto_control")]);
+        return \response()->json($pond, 200);
+    }
 }

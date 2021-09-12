@@ -87,3 +87,4 @@ Route::get('/getDataOxygenFan', [\App\Http\Controllers\Api\PondController::class
 
 Route::put('/setAutoTemp', [\App\Http\Controllers\Api\PondController::class, 'setAutoTemp']);
 Route::put('/setAutoPh', [\App\Http\Controllers\Api\PondController::class, 'setAutoPh']);
+Route::put('/setAutoLight', [\App\Http\Controllers\Api\PondController::class, 'setAutoLight']);
