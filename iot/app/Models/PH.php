@@ -10,7 +10,7 @@ class PH extends Model
     use HasFactory;
 
     protected $table = "phs";
-    protected $fillable = ['id','value','ph_min','ph_max','warning','created_at'];
+    protected $fillable = ['id','value','ph_min','ph_max','warning', 'auto_control', 'created_at'];
 
     public function toolkits()
     {

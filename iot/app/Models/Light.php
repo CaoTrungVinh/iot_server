@@ -10,7 +10,7 @@ class Light extends Model
     use HasFactory;
 
     protected $table = "lights";
-    protected $fillable = ['light','description','warning','created_at'];
+    protected $fillable = ['light','description','warning', 'auto_control', 'created_at'];
 
     public function toolkits()
     {

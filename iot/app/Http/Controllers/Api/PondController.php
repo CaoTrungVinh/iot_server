@@ -355,16 +355,15 @@ class PondController extends Controller
             $auto_tem = Temperature::find($id_temp);
             if ($auto_tem->auto_control == 1) {
                 if ($temp > $auto_tem->temperature_max || $temp < $auto_tem->temperature_min) {
-                   $control_pond = Control::where('id_pond', '=', $toolkit->id_pond)->get();
-                   foreach ($control_pond as $controlList){
-                       if($controlList->active == 1){
-                           $pumIn = Pump_In::where('id', '=', $controlList->id_pump_in)->first();
-                           if($pumIn->status!=1)
-                               $pumIn->status=1;
-                           $pumIn -> update();
-                       }
-
-                   }
+                    $control_pond = Control::where('id_pond', '=', $toolkit->id_pond)->get();
+                    foreach ($control_pond as $controlList) {
+                        if ($controlList->active == 1) {
+                            $oxygenControl = Oxygen_fan::where('id', '=', $controlList->id_oxygen_fan)->first();
+                            if ($oxygenControl->status != 1)
+                                $oxygenControl->status = 1;
+                            $oxygenControl->update();
+                        }
+                    }
                 }
             }
 
@@ -410,6 +409,30 @@ class PondController extends Controller
             $pond = Pond::where('id', '=', $toolkit->id_pond)->first();
             $id_user = $pond->id_user;
 
+            $auto_pHs = PH::find($id_ph);
+            if ($auto_pHs->auto_control == 1) {
+                if ($ph > $auto_pHs->ph_max || $ph < $auto_pHs->ph_min) {
+                    $control_pond = Control::where('id_pond', '=', $toolkit->id_pond)->get();
+                    foreach ($control_pond as $controlList) {
+                        if ($controlList->active == 1) {
+                            $pumInControl = Pump_In::where('id', '=', $controlList->id_pump_in)->first();
+                            if ($pumInControl->status == 1) {
+                                $pumInControl->status = 0;
+                            } else {
+                                $pumInControl->status = 1;
+                            }
+                            $pumInControl->update();
+
+                            $pumOutControl = Pump_out::where('id', '=', $controlList->id_pump_out)->first();
+                            if ($pumOutControl->status != 1) {
+                                $pumOutControl->status = 1;
+                                $pumOutControl->update();
+                            }
+                        }
+                    }
+                }
+            }
+
             if ($warning == 1) {
                 if ($ph <= $ph_min || $ph >= $ph_max) {
                     $user = User::find($id_user);
@@ -443,6 +466,28 @@ class PondController extends Controller
 
             $pond = Pond::where('id', '=', $toolkit->id_pond)->first();
             $id_user = $pond->id_user;
+
+            $auto_Light = Temperature::find($id_light);
+            if ($auto_Light->auto_control == 1) {
+                $control_pond = Control::where('id_pond', '=', $toolkit->id_pond)->get();
+                foreach ($control_pond as $controlList) {
+                    if ($controlList->active == 1) {
+                        $LampControl = Lamp::where('id', '=', $controlList->id_lamp)->first();
+                        if ($light == 1) {
+                            if ($LampControl->status != 1) {
+                                $LampControl->status = 1;
+                                $LampControl->update();
+                            }
+                        }
+                        if ($light == 0) {
+                            if ($LampControl->status != 0) {
+                                $LampControl->status = 0;
+                                $LampControl->update();
+                            }
+                        }
+                    }
+                }
+            }
 
             if ($warning == 1) {
                 if ($light == 1) {
@@ -527,6 +572,7 @@ class PondController extends Controller
             ->update(['auto_control' => $request->get("auto_control")]);
         return \response()->json($pond, 200);
     }
+
     public function setAutoPh(Request $request)
     {
         $pond = DB::table('phs')
@@ -534,6 +580,7 @@ class PondController extends Controller
             ->update(['auto_control' => $request->get("auto_control")]);
         return \response()->json($pond, 200);
     }
+
     public function setAutoLight(Request $request)
     {
         $pond = DB::table('lights')
