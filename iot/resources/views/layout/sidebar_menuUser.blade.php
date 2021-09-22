@@ -13,7 +13,12 @@
             <div class="sidebar-menu-container">
                 <ul class="sidebar-menu mt-4 mb-4">
                     <li class="parent">
-                        <a href="{{route('homeUs')}}" class=""><i class="fas fa-user-cog mr-3"></i>
+                        <a href="{{route('homeUs')}}" class=""><i class="fas fa-home mr-3"></i>
+                            <span class="none">Trang chủ</span>
+                        </a>
+                    </li>
+                    <li class="parent">
+                        <a href="{{route('pondConfig')}}" class=""><i class="fas fa-user-cog mr-3"></i>
                             <span class="none">Cài đặt ao nuôi</span>
                         </a>
                     </li>

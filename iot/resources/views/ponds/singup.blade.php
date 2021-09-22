@@ -79,10 +79,10 @@
                         <div class="form-group row" style="margin-top: 40px">
                             <p class="form">
                             <div class="col-sm-6">
-                                <a href="{{route('homeUs')}}" class="col-sm-12 btn btn-danger">Hủy</a>
+                                <a href="{{route('pondConfig')}}" class="col-sm-12 btn btn-danger">Hủy</a>
                             </div>
                             <div class="col-sm-6">
-                                <input type="submit" name="singupPond" class="col-sm-12 btn btn-theme" value="Xác nhận đăng ký"/>
+                                <input type="submit" name="singupPond" class="col-sm-12 btn btn-theme" value="Xác nhận"/>
                             </div>
                             @error('singupPond')
                             <small class="form-text text-danger" style="font-size: 15px; margin-top: 15px; margin-left: 50px">{{ $message }}</small>

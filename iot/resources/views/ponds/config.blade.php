@@ -78,7 +78,7 @@
                         <div class="form-group row" style="margin-top: 40px">
                             <div class="col-sm-6">
                                 <p class="form">
-                                <a href="{{route('homeUs')}}" class="col-sm-12 btn btn-danger">Hủy</a>
+                                <a href="{{route('pondConfig')}}" class="col-sm-12 btn btn-danger">Hủy</a>
                             </div>
                             <div class="col-sm-6">
                                 <input type="submit" name="submit_editPond" class="col-sm-12 btn btn-theme" value="Cập nhật thông tin"/>

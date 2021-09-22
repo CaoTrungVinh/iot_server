@@ -19,6 +19,12 @@ use Illuminate\Support\Facades\Session;
 
 class ConfigPondController extends Controller
 {
+    public function showPond(){
+        $pondUser = Pond::withCount('toolkits')->withCount('controls')
+            ->where('id_user', '=', session('UserID'))->get();
+       return view('ponds.pondUser', ['pondUser'=>$pondUser]);
+    }
+
     public function showSingup()
     {
         return view('ponds.singup');
@@ -176,7 +182,7 @@ class ConfigPondController extends Controller
         } else {
             Session::flash('error', 'Xóa ao nuôi thất bại!');
         }
-        return redirect()->route('homeUs');
+        return redirect()->route('pondConfig');
     }
 
     private function messages()

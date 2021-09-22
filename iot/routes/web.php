@@ -39,6 +39,7 @@ Route::group(['middleware' => 'checkUserLogin'], function () {
     Route::post('/updateProfile', [\App\Http\Controllers\User\UserAuthController::class, 'updateProfileUser'])->name('userupdateProfile');
 
 //
+    Route::get('/pond/config', [\App\Http\Controllers\User\ConfigPondController::class, 'showPond'])->name('pondConfig');
     Route::get('/pond/singup', [\App\Http\Controllers\User\ConfigPondController::class, 'showSingup'])->name('pondSingup');
     Route::post('/postSingupPond', [\App\Http\Controllers\User\ConfigPondController::class, 'doSingup'])->name('postSingup');
     Route::get('/pond/editInfo/{id}', [\App\Http\Controllers\User\ConfigPondController::class, 'showViewEdit'])->name('pondEdit');

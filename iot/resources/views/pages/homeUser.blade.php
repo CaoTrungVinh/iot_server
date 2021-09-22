@@ -1,121 +1,106 @@
 @extends('layout.indexUser')
 @section('content')
     <div class="col-sm-9 col-xs-12 content pt-3 pl-0">
-        <?php //Hiển thị thông báo thành công?>
-
-        @if ( Session::has('success') )
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <strong>{{ Session::get('success') }}</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
-                </button>
-            </div>
-        @endif
-
-        <?php //Hiển thị thông báo lỗi?>
-        @if ( Session::has('error') )
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <strong>{{ Session::get('error') }}</strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span>
-                </button>
-            </div>
-        @endif
-
-        <div class="mt-4 mb-4 p-3 bg-white border shadow-sm lh-sm">
-            <!--Order Listing-->
-            <div class="product-list">
-                <div class="row border-bottom mb-4">
-                    <div class="col-sm-8 pt-2"><h5 class="mb-0" ><strong>Cài đặt ao nuôi</strong></h5></div>
-                    <div class="col-sm-4 text-right pb-3">
-                        <button type="button" class="btn btn-danger shadow pull-right">
-                            <a style="color: white; font-weight: normal" href="{{route('pondSingup')}}">Tạo ao nuôi</a>
-                        </button>
+        <div class="mt-1 mb-3 button-container">
+            <div class="row pl-0">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3" onclick="window.location='{{route('pondConfig')}}'">
+                    <div class="bg-white border shadow">
+                        <div class="media p-4">
+                            <div class="align-self-center mr-3 rounded-circle notify-icon">
+                                {{--                                <i class="fas fa-users"></i>--}}
+                                <img src="{{ asset('assets/img/pond.png') }}" style="width: 60px; height: 60px;"/>
+                            </div>
+                            <div class="media-body pl-2">
+                                <h3 class="mt-0 mb-0"><strong>{{$count_Pond}}</strong></h3>
+                                <p>
+                                    <small class="text-muted bc-description" style="color: black!important">Ao
+                                        nuôi</small>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3"
+                     onclick="window.location='{{route('configToolkit')}}'">
+                    <div class="bg-white border shadow">
+                        <div class="media p-4">
+                            <div class="align-self-center mr-3 rounded-circle notify-icon">
+                                {{--                                <i class="fas fa-user-check"></i>--}}
+                                <img src="{{ asset('assets/img/microchip.png') }}" style="width: 60px; height: 60px;"/>
+                            </div>
+                            <div class="media-body pl-2">
+                                <h3 class="mt-0 mb-0"><strong>{{$sum_Tool}}</strong></h3>
+                                <p>
+                                    <small class="text-muted bc-description" style="color: black!important">Bộ
+                                        đo</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-3"
+                     onclick="window.location='{{route('configControl')}}'">
+                    <div class="bg-white border shadow">
+                        <div class="media p-4">
+                            <div class="align-self-center mr-3 rounded-circle notify-icon">
+                                {{--                                <i class="fas fa-user-check"></i>--}}
+                                <img src="{{ asset('assets/img/monitoring.png') }}" style="width: 60px; height: 60px;"/>
+                            </div>
+                            <div class="media-body pl-2">
+                                <h3 class="mt-0 mb-0"><strong>{{$sum_Control}}</strong></h3>
+                                <p>
+                                    <small class="text-muted bc-description" style="color: black!important">Bộ điều
+                                        khiển</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="mt-1 mb-3 button-container">
+            <div class="p-3 bg-white border shadow-sm lh-sm">
                 <div class="table-responsive product-list">
-                    <table class="table table-bordered mt-3" id="productList">
+
+                    <table class="table table-bordered table-striped mt-0" id="productList">
                         <thead>
                         <tr style="color: #f6f6f7; background-color: #007bff; text-align: center">
-                            <th>Tên ao</th>
-                            <th>SĐT liên hệ</th>
-                            <th>Địa chỉ ao</th>
-                            <th>Số bộ đo</th>
+                            <th>Tên ao nuôi</th>
+                            <th>Địa chỉ</th>
+                            <th>Số Bộ đo</th>
                             <th>Số bộ điều khiển</th>
                             <th>Trạng thái</th>
-                            <th>Tùy chọn</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($pondUser as $pondUser)
-                            @if($pondUser->active!=3)
+                        @foreach($getPond as $getPond)
                             <tr style="text-align: center">
-                                <td>{{$pondUser->name}}</td>
-                                <td>{{Session::get('User')->phone}}</td>
-                                <td>{{$pondUser->address}}</td>
-                                <td>{{$pondUser->toolkits_count}}</td>
-                                <td>{{$pondUser->controls_count}}</td>
+                                <td>{{$getPond->name}}</td>
+                                <td>{{$getPond->address}}</td>
+                                <td>{{$getPond->toolkits_count}}</td>
+                                <td>{{$getPond->controls_count}}</td>
                                 <td class="align-middle">
-                                @if(($pondUser->active)==1)
+                                    @if(($getPond->active)==1)
                                         <span class="badge badge-success">Hoạt động</span>
-                                    @elseif(($pondUser->active)==0)
-                                        <span class="badge badge-danger">Đăng ký</span>
-                                    @elseif(($pondUser->active)==2)
+                                    @elseif(($getPond->active)==2)
                                         <span class="badge badge-danger">Tạm khóa</span>
                                     @endif
                                 </td>
-                                <td class="align-middle text-center">
-                                    <a href="{{route('pondEdit', $pondUser->id)}}" class="btn btn-link text-themestyle p-1"><i class="fa fa-pencil"></i></a>
-                                    <button onclick="viewModalDelete({{$pondUser->id}}, '{{$pondUser->name}}')" class="btn btn-link text-danger p-1" id="btn_delete"><i class="fas fa-trash"></i></button>
-                                </td>
                             </tr>
-                            @endif
                         @endforeach
                         </tbody>
                     </table>
-                </div>
-            </div>
-            <!--/Order Listing-->
 
-            {{--            modal delete User--}}
-            <div id="id01" class="modal" style="display: none; position: fixed; z-index: 1; left: 0; top: 0;  width: 50%;  height: 35%;  background-color: rgba(77, 85, 101, 0.44); margin: auto;">
-                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
-                <form class="modal-content">
-                    <div class="container">
-                        <h3 id="title_delete"></h3>
-                        <p id="conten"></p>
-                        <div class="clearfix">
-                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-                            <button type="button" id="btn-de" class="deletebtn">Delete</button>
-                        </div>
+                    <div class="text-right" style="margin-top: 5px">
+                        <button class="btn btn-outline-theme"><a href="{{route('pondConfig')}}"><i class="fa fa-eye"
+                                                                                             style="margin-right: 5px"></i>Chi
+                                tiết</a></button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
-
-    @push('additionalJS')
-        <script>
-            function viewModalDelete(p_id, p_name){
-                document.getElementById('id01').style.display='block';
-                document.getElementById("title_delete").innerText = "Xóa ao nuôi ".concat(p_name);
-                document.getElementById("conten").innerText = "Có chắc muốn xóa ao nuôi?";
-
-                var de = document.getElementById('btn-de');
-                window.onclick = function(event) {
-                    if (event.target == de) {
-                        document.getElementById('id01').style.display='none';
-                        location.href = '{!! url('/delete/pond') !!}'+ '/' + p_id;
-                        // modal.style.display = "none";
-                    }
-                }
-            }
-
-        </script>
-    @endpush
 
 @endsection
 
