@@ -106,8 +106,8 @@
 
             function viewModalDelete(p_id, p_name){
                 document.getElementById('id01').style.display='block';
-                document.getElementById("title_delete").innerText = "Xóa bộ đo ".concat(p_name);
-                document.getElementById("conten").innerText = "Có chắc muốn xóa bộ đo này khỏi danh sách đăng ký?";
+                document.getElementById("title_delete").innerText = "Xóa bộ điều khiển ".concat(p_name);
+                document.getElementById("conten").innerText = "Có chắc muốn xóa bộ điều khiển này khỏi danh sách đăng ký?";
 
                 var de = document.getElementById('btn-de');
                 window.onclick = function(event) {
@@ -121,8 +121,8 @@
 
             function viewModalOk(p_id, p_name){
                 document.getElementById('id02').style.display='block';
-                document.getElementById("title_ok").innerText = "Xác nhận tạo bộ đo ".concat(p_name);
-                document.getElementById("conten_ok").innerText = "Đồng ý thêm bộ đo mới vào hệ thống!!!";
+                document.getElementById("title_ok").innerText = "Xác nhận tạo bộ điều khiển ".concat(p_name);
+                document.getElementById("conten_ok").innerText = "Đồng ý thêm bộ điều khiển mới vào hệ thống!!!";
 
                 var de = document.getElementById('btn-ok');
                 window.onclick = function(event) {
