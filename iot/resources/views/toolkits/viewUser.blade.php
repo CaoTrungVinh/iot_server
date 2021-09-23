@@ -245,7 +245,7 @@
                         if (data[3].warning == 0) {
                             document.getElementById("cb_as").innerText = "Tắt";
                         } else document.getElementById("cb_as").innerText = "Bật";
-                        document.getElementById("dateCreate").innerText = data[0].created_date;
+                        document.getElementById("dateCreate").innerText = data[0].create_date;
                     },
                     error: function (data) {
                         console.log('Error: ', data);

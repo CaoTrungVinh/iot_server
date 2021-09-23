@@ -283,7 +283,7 @@
                             }
                             document.getElementById("bat_den").innerText = data[3].timer_on;
                             document.getElementById("tat_den").innerText = data[3].timer_off;
-                            document.getElementById("create").innerText = data[0].created_date;
+                            document.getElementById("create").innerText = data[0].create_date;
                         },
                         error: function (data) {
                             console.log('Error: ', data);
