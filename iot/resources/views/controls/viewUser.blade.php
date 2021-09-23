@@ -243,9 +243,9 @@
                             document.getElementById("exampleModalLongTitle").innerText = "Thông tin chi tiết của bộ điều khiển " + data[0].name;
                             document.getElementById("addControl").innerText = data[0].address;
                             if (data[0].active == 1) {
-                                document.getElementById("acControl").innerText = "Đang đo";
+                                document.getElementById("acControl").innerText = "Hoạt động";
                             } else {
-                                document.getElementById("acControl").innerText = "Khóa tạm thời";
+                                document.getElementById("acControl").innerText = "Khóa";
                             }
                             if(data[1].status==0){
                                 document.getElementById("pumpIn").innerText = "Tắt";
