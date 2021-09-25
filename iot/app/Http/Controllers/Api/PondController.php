@@ -21,6 +21,7 @@ use App\Models\Token_FCM;
 use App\Models\Toolkit;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 use NotificationChannels\Fcm\FcmChannel;
@@ -327,6 +328,7 @@ class PondController extends Controller
             if ($toolkit->active == 4) {
                 if ($request->key == $toolkit->key_active) {
                     $toolkit->active = 1;
+                    $toolkit->dateLap = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
                     $toolkit->update();
                 }
                 return \response()->json("Kich hoat thanh cong", 200);
@@ -362,6 +364,15 @@ class PondController extends Controller
                             if ($oxygenControl->status != 1)
                                 $oxygenControl->status = 1;
                             $oxygenControl->update();
+                        }
+                    }
+                } else {
+                    $c_pond = Control::where('id_pond', '=', $toolkit->id_pond)->get();
+                    foreach ($c_pond as $controlList) {
+                        if ($controlList->active == 1) {
+                            $oxy = Oxygen_fan::where('id', '=', $controlList->id_oxygen_fan)->first();
+                            $oxy->status = 0;
+                            $oxy->update();
                         }
                     }
                 }
@@ -430,6 +441,19 @@ class PondController extends Controller
                             }
                         }
                     }
+                } else {
+                    $control_pond = Control::where('id_pond', '=', $toolkit->id_pond)->get();
+                    foreach ($control_pond as $controlList) {
+                        if ($controlList->active == 1) {
+                            $pumInControl = Pump_In::where('id', '=', $controlList->id_pump_in)->first();
+                            $pumInControl->status = 0;
+                            $pumInControl->update();
+
+                            $pumOutControl = Pump_out::where('id', '=', $controlList->id_pump_out)->first();
+                            $pumOutControl->status = 0;
+                            $pumOutControl->update();
+                        }
+                    }
                 }
             }
 
@@ -442,10 +466,12 @@ class PondController extends Controller
         } else {
             return \response()->json("Error", 200);
         }
+
         return \response()->json($id_ph, 200);
     }
 
-    public function setDataLight(Request $request)
+    public
+    function setDataLight(Request $request)
     {
         $toolkit = Toolkit::find($request->id);
         $id_light = $toolkit->id_light;
@@ -502,14 +528,16 @@ class PondController extends Controller
     }
 
 
-    // điều khiển
-    public function activeControl(Request $request)
+// điều khiển
+    public
+    function activeControl(Request $request)
     {
         $control = Control::find($request->id);
         if ($control != null) {
             if ($control->active == 4) {
                 if ($request->key == $control->key_active) {
                     $control->active = 1;
+                    $control->date_active = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
                     $control->update();
                 }
                 return \response()->json("Kich hoat thanh cong", 200);
@@ -517,7 +545,8 @@ class PondController extends Controller
         }
     }
 
-    public function getDataPumpIn(Request $request)
+    public
+    function getDataPumpIn(Request $request)
     {
         $control = Control::find($request->id);
         $id_pump = $control->id_pump_in;
@@ -529,7 +558,8 @@ class PondController extends Controller
         }
     }
 
-    public function getDataPumpOut(Request $request)
+    public
+    function getDataPumpOut(Request $request)
     {
         $control = Control::find($request->id);
         $id_pump = $control->id_pump_out;
@@ -541,7 +571,8 @@ class PondController extends Controller
         }
     }
 
-    public function getDataLamp(Request $request)
+    public
+    function getDataLamp(Request $request)
     {
         $control = Control::find($request->id);
         $id_pump = $control->id_lamp;
@@ -553,7 +584,8 @@ class PondController extends Controller
         }
     }
 
-    public function getDataOxygenFan(Request $request)
+    public
+    function getDataOxygenFan(Request $request)
     {
         $control = Control::find($request->id);
         $id_pump = $control->id_oxygen_fan;
@@ -565,7 +597,8 @@ class PondController extends Controller
         }
     }
 
-    public function setAutoTemp(Request $request)
+    public
+    function setAutoTemp(Request $request)
     {
         $pond = DB::table('temperatures')
             ->where('id', $request->get("id"))
@@ -573,7 +606,8 @@ class PondController extends Controller
         return \response()->json($pond, 200);
     }
 
-    public function setAutoPh(Request $request)
+    public
+    function setAutoPh(Request $request)
     {
         $pond = DB::table('phs')
             ->where('id', $request->get("id"))
@@ -581,7 +615,8 @@ class PondController extends Controller
         return \response()->json($pond, 200);
     }
 
-    public function setAutoLight(Request $request)
+    public
+    function setAutoLight(Request $request)
     {
         $pond = DB::table('lights')
             ->where('id', $request->get("id"))
