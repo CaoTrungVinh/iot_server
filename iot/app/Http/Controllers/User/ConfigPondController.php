@@ -5,10 +5,14 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Control;
 use App\Models\ControlDelete;
+use App\Models\Lamp;
 use App\Models\Light;
+use App\Models\Oxygen_fan;
 use App\Models\PH;
 use App\Models\Pond;
 use App\Models\PondDelete;
+use App\Models\Pump_In;
+use App\Models\Pump_out;
 use App\Models\Temperature;
 use App\Models\Toolkit;
 use App\Models\ToolkitDelete;
@@ -88,30 +92,68 @@ class ConfigPondController extends Controller
                     $toolkit_IDPond = Toolkit::where('id_pond', '=', $id)->get();
                     foreach ($toolkit_IDPond as $toolkit){
                         if($toolkit->active!=0) {
-                            $ph = PH::find($toolkit->id_ph);
-                            $ph->value = null;
-                            $ph->ph_min = null;
-                            $ph->ph_max = null;
-                            $ph->warning = 0;
-                            $ph->update();
+                            if($toolkit->active==1) {
+                                $ph = PH::find($toolkit->id_ph);
+                                $ph->value = null;
+                                $ph->ph_min = null;
+                                $ph->ph_max = null;
+                                $ph->warning = 0;
+                                $ph->update();
 
-                            $nd = Temperature::find($toolkit->id_temperature);
-                            $nd->temperature = null;
-                            $nd->temperature_min = null;
-                            $nd->temperature_max = null;
-                            $nd->warning = 0;
-                            $nd->update();
+                                $nd = Temperature::find($toolkit->id_temperature);
+                                $nd->temperature = null;
+                                $nd->temperature_min = null;
+                                $nd->temperature_max = null;
+                                $nd->warning = 0;
+                                $nd->update();
 
-                            $as = Light::find($toolkit->id_light);
-                            $as->light = null;
-                            $as->description = null;
-                            $as->warning = 0;
-                            $as->update();
+                                $as = Light::find($toolkit->id_light);
+                                $as->light = null;
+                                $as->description = null;
+                                $as->warning = 0;
+                                $as->update();
 
-                            $toolkit->active = 2;
-                            $toolkit->update();
+                                $toolkit->active = 2;
+                                $toolkit->update();
+                            }
                         }else{
                             $toolkit->delete();
+                        }
+                    }
+
+                    $control_IDPond = Control::where('id_pond', '=', $id)->get();
+                    foreach ($control_IDPond as $control){
+                        if($control->active!=0) {
+                            if($control->active==1) {
+                                $pumpIn = Pump_In::find($control->id_pump_in);
+                                $pumpIn->status = 0;
+                                $pumpIn->timer_on = null;
+                                $pumpIn->timer_off = null;
+                                $pumpIn->update();
+
+                                $pumpOut = Pump_out::find($control->id_pump_out);
+                                $pumpOut->status = 0;
+                                $pumpOut->timer_on = null;
+                                $pumpOut->timer_off = null;
+                                $pumpOut->update();
+
+                                $lamp = Lamp::find($control->id_lamp);
+                                $lamp->status = 0;
+                                $lamp->timer_on = null;
+                                $lamp->timer_off = null;
+                                $lamp->update();
+
+                                $oxy = Oxygen_fan::find($control->id_oxygen_fan);
+                                $oxy->status = 0;
+                                $oxy->timer_on = null;
+                                $oxy->timer_off = null;
+                                $oxy->update();
+
+                                $control->active = 2;
+                                $control->update();
+                            }
+                        }else{
+                            $control->delete();
                         }
                     }
                 }
